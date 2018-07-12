@@ -1,7 +1,7 @@
 package fkt
 
-import fkt.core.*
-import fkt.util.*
+import fkt.java.*
+import fkt.java.util.*
 import java.util.ArrayList
 import java.util.HashMap
 
@@ -82,7 +82,7 @@ class Times {
       doTime = true
       field = millis
     }
-  val elapsed: Long
+  private val elapsed: Long
     get() {
       val now = nowMillis
       if (now - then > resetWait) {
@@ -178,6 +178,7 @@ class Facets(top: String, trace: Boolean) : Tracer(top) {
   }
 
   fun buildApp(app: FacetsApp) {
+    trace(".buildApp: times=$times")
     this.onRetargeted = { title -> app.onRetargeted(title) }
     trace("Building surface...")
     val trees = app.getContentTrees()

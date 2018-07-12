@@ -1,10 +1,5 @@
 package fkt
-import fkt.IndexingCoupler
-import fkt.NumericCoupler
-import fkt.TargetCoupler
-import fkt.TextualCoupler
-import fkt.TogglingCoupler
-import fkt.core.STarget
+import fkt.java.STarget
 import fkt.SimpleTitles as Simples
 open class SimpleSurface(test:TargetTest,trace:Boolean):SurfaceCore(newFacets(trace),test){
 	override fun getContentTrees():Any {

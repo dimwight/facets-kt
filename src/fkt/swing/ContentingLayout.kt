@@ -1,15 +1,10 @@
 package fkt.swing
-import fkt.SelectableType.Companion.Chooser
-import fkt.SelectableType.Companion.ShowChars
-import fkt.SelectableType.Companion.Standard
 import java.awt.Container
 import java.awt.GridLayout
 import javax.swing.JPanel
 import fkt.ContentingSurface
 import fkt.SelectableType
 import fkt.TargetTest
-import fkt.core.STarget
-import fkt.Facets
 import fkt.SelectingTitles as Titles
 internal class ContentingLayout(pane:Container, test:TargetTest, surface:ContentingSurface):SelectingLayout(pane, test, surface) {
   override fun build() {

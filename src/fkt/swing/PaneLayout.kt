@@ -2,7 +2,7 @@ package fkt.swing
 import fkt.Facets
 import fkt.SurfaceCore
 import fkt.TargetTest
-import fkt.util.Tracer
+import fkt.java.util.Tracer
 import java.awt.Container
 import java.awt.Font
 import java.awt.event.ActionEvent

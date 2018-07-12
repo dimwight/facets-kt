@@ -1,10 +1,9 @@
 package fkt.swing
-import fkt.util.Tracer
+import fkt.java.util.Tracer
 import fkt.Facets
 import java.awt.FlowLayout
 import java.awt.event.ActionEvent
 import java.awt.event.ActionListener
-import java.util.function.Consumer
 import javax.swing.JButton
 import javax.swing.JComponent
 import javax.swing.JLabel

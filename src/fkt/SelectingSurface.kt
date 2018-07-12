@@ -1,8 +1,6 @@
 package fkt
 
-import fkt.core.STarget
-import java.util.Arrays
-import fkt.Facets.*
+import fkt.java.STarget
 import fkt.SelectingTitles as Titles
 import fkt.SimpleTitles as Simples
 
