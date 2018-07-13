@@ -1,8 +1,4 @@
 package fkt.facets.util
-
-import fkt.java.util.Objects
-import fkt.java.util.Util
-
 object Debug {
   var trace = false
   fun info(o: Any?): String {
