@@ -1,7 +1,7 @@
 package fkt
 import fkt.java.util.Titled
 
-class SelectableType protected constructor(val title:String):Titled {
+class SelectableType protected constructor(val title:String): Titled {
   fun titleTail():String =
   		if (this === ShowChars) SelectingTitles.CharsTail else ""
   override fun title()=title

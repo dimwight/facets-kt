@@ -1,5 +1,4 @@
 package fkt.java;
-import fkt.facets.TargetCoupler;
 import fkt.java.util.Debug;
 import fkt.java.util.NumberPolicy;
 import fkt.java.util.Util;

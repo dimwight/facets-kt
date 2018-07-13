@@ -1,5 +1,4 @@
 package fkt.java;
-import fkt.facets.TargetCoupler;
 import fkt.java.util.Debug;
 
 /**

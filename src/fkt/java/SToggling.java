@@ -1,7 +1,4 @@
 package fkt.java;
-
-import fkt.facets.TargetCoupler;
-
 /**
 {@link STarget} representing a Boolean value. 
 <p>{@link SToggling} represents a Boolean value to 
