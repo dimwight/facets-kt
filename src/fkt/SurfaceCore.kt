@@ -1,5 +1,5 @@
 package fkt
-import fkt.java.util.Titled
+import fkt.facets.util.Titled
 import fkt.java.util.Tracer
 import fkt.facets.Facets
 import fkt.facets.FacetsApp
