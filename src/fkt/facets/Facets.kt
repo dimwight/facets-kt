@@ -4,7 +4,7 @@ import fkt.SelectingSurface
 import fkt.SimpleSurface
 import fkt.TargetTest
 import fkt.java.*
-import fkt.java.util.Debug
+import fkt.facets.util.Debug
 import fkt.java.util.NumberPolicy
 import fkt.facets.util.Tracer
 import fkt.java.util.Util
@@ -247,6 +247,7 @@ class Facets(top: String, trace: Boolean) : Tracer(top) {
   fun newTargetGroup(title: String, members: Array<STarget>): STarget {
     val group = TargetCore(title, *members)
     trace(" > Created target group " + Debug.info(group) + " ", members)
+    System.exit(0)
     return group
   }
 

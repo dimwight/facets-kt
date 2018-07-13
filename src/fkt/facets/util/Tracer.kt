@@ -1,5 +1,5 @@
 package fkt.facets.util
-import fkt.java.util.Debug
+import fkt.facets.util.Debug
 import fkt.java.util.Util
 import fkt.java.util.Util.arrayPrintString
 

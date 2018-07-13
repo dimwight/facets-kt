@@ -20,7 +20,7 @@ public final class Objects{
 	public static String toString(Object[]array){
 		return toString(array,",");
 	}
-	static String toLines(Object[]array){
+	public static String toLines(Object[]array){
 	  if(array==null)return "null";
 	  ArrayList list=new ArrayList();
 	  for(int i=0;i<array.length;i++)
