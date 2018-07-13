@@ -1,5 +1,5 @@
 package fkt.swing
-import fkt.Facets
+import fkt.ts.Facets
 import fkt.SurfaceCore
 import fkt.TargetTest
 import fkt.java.util.Tracer
@@ -26,7 +26,7 @@ abstract class PaneLayout(pane:Container, test:TargetTest, surface:SurfaceCore)
   protected val pane:Container
   protected val test:TargetTest
   protected val surface:SurfaceCore
-  protected val facets:Facets
+  protected val facets: Facets
   init{
     this.pane = pane
     this.test = test

@@ -1,6 +1,6 @@
 package fkt.swing
 import fkt.java.util.Tracer
-import fkt.Facets
+import fkt.ts.Facets
 import java.awt.FlowLayout
 import java.awt.event.ActionEvent
 import java.awt.event.ActionListener
@@ -9,7 +9,7 @@ import javax.swing.JComponent
 import javax.swing.JLabel
 import javax.swing.JPanel
 abstract class SwingFacet<C : JComponent>
-		(val field:C, val title:String, val facets:Facets):Tracer(), ActionListener {
+		(val field:C, val title:String, val facets: Facets):Tracer(), ActionListener {
   val mount:JPanel
   private lateinit var label:JLabel
   protected abstract val fieldState:Any
