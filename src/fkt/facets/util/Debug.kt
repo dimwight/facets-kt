@@ -16,7 +16,7 @@ object Debug {
     val classe = o.javaClass
     val name = classe.simpleName
     var id = ""
-    var title = if (false) "o instanceof Titled" else classe.name
+    var title = classe.name
     if (o is Identified) id = " #" + o.identity()
     if (o is Titled) title = " " + o.title()
     return name + id + title
