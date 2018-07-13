@@ -247,7 +247,7 @@ class Facets(top: String, trace: Boolean) : Tracer(top) {
   fun newTargetGroup(title: String, members: Array<STarget>): STarget {
     val group = TargetCore(title, *members)
     trace(" > Created target group " + Debug.info(group) + " ", members)
-    System.exit(0)
+    if(false)System.exit(0)
     return group
   }
 
@@ -341,8 +341,18 @@ class Facets(top: String, trace: Boolean) : Tracer(top) {
     targeter.attachFacet(facet)
   }
 
-  private fun titleTarget(title: String): STarget? =
-    titleTargeters[title]?.target()?:throw Error("Null targeter for $title")
+  private fun titleTarget(title: String): STarget? {
+    var target: STarget?=null
+    try{
+      target = titleTargeters[title]?.target()
+        ?: throw Error("Null targeter for $title")
+    }
+    catch(e:Error){
+      print(e)
+      System.exit(1)
+    }
+    return target
+  }
 
   fun updateTargetState(title: String, update: Any) {
     trace(" > Updating target state for title=$title update=", update)
