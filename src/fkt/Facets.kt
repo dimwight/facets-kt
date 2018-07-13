@@ -20,11 +20,6 @@ private class LocalIndexingFrame(title: String,
   }
 }
 
-interface FacetsApp {
-  fun getContentTrees(): Any
-  fun onRetargeted(activeTitle: String)
-  fun buildLayout()
-}
 
 class Times {
   var doTime = false
@@ -97,7 +92,6 @@ class Facets(top: String, trace: Boolean) : Tracer(top) {
       if (times.doTime) times.traceElapsed(msg)
       else trace(msg)
     }
-
     override fun title(): String {
       throw RuntimeException("Not implemented in " + this)
     }
@@ -108,7 +102,6 @@ class Facets(top: String, trace: Boolean) : Tracer(top) {
   override fun doTraceMsg(msg: String) {
     if (doTrace || (Debug.trace && msg.startsWith(">>"))) super.doTraceMsg(msg)
   }
-
   init {
     this.doTrace = trace
     activeContentTitle = "Facets#" + identity() + ":Active Content"

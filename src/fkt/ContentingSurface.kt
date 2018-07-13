@@ -11,7 +11,7 @@ open class ContentingSurface(trace:Boolean)
     return arrayOf<STarget>(
     		newContentTree(list.get(0)), 
     		newContentTree(list.get(2)), 
-    		facets.newIndexingFrame(object:IndexingFramePolicy() {
+    		facets.newIndexingFrame(object: IndexingFramePolicy() {
     			override val frameTitle = Titles.Chooser
 					override val indexingTitle = Titles.Select
 					override val getIndexables = { list.toTypedArray() }
@@ -20,7 +20,7 @@ open class ContentingSurface(trace:Boolean)
     			}
     			override val newFrameTargets = {
   					arrayOf(facets.newTriggerTarget(Titles.OpenEdit, 
-    							object:TextualCoupler() {
+    							object: TextualCoupler() {
 						override val targetStateUpdated = {_:Any, _:String->
               active = facets.getIndexingState(Titles.Select).indexed as TextContent
           		edit = active.clone()
@@ -37,13 +37,13 @@ open class ContentingSurface(trace:Boolean)
     val members = ArrayList<STarget>()
     members.add(newEditTarget(content, tail))
     if (type === SelectableType.ShowChars) members.add(newCharsTarget(tail))
-    members.add(facets.newTriggerTarget(Titles.Save + tail, object:TargetCoupler() {
+    members.add(facets.newTriggerTarget(Titles.Save + tail, object: TargetCoupler() {
       override val targetStateUpdated = { _:Any, _:String->
 	      active.copyClone(edit)
 	      activateChooser()
       }
     }))
-    members.add(facets.newTriggerTarget(Titles.Cancel + tail, object:TargetCoupler() {
+    members.add(facets.newTriggerTarget(Titles.Cancel + tail, object: TargetCoupler() {
     	override val targetStateUpdated = {_:Any, _:String-> 
     		activateChooser()
     	}

@@ -1,5 +1,5 @@
 package fkt
-import fkt.java.STarget
+import fkt.java.*
 import fkt.SimpleTitles as Simples
 open class SimpleSurface(test:TargetTest,trace:Boolean):SurfaceCore(newFacets(trace),test){
 	override fun getContentTrees():Any {
@@ -24,7 +24,7 @@ open class SimpleSurface(test:TargetTest,trace:Boolean):SurfaceCore(newFacets(tr
     if (true && facets.doTrace) super.doTraceMsg(msg)
   }
   protected fun newTrigger(title:String):STarget {
-    return facets.newTriggerTarget(title, object:TargetCoupler(){
+    return facets.newTriggerTarget(title, object: TargetCoupler(){
       override val targetStateUpdated= { _:Any, title:String->
           trace(" > Trigger fired: title=" + title)
           val got:String? = facets.getTargetState(Simples.Triggerings) as String
@@ -43,7 +43,7 @@ open class SimpleSurface(test:TargetTest,trace:Boolean):SurfaceCore(newFacets(tr
     return facets.newTextualTarget(title, coupler)
   }
   protected fun newNumeric(title:String):STarget {
-    val coupler = object:NumericCoupler() {
+    val coupler = object: NumericCoupler() {
         override val passValue = Simples.StartNumber
         override val min = 5.0
         override val max = 25.0
@@ -53,7 +53,7 @@ open class SimpleSurface(test:TargetTest,trace:Boolean):SurfaceCore(newFacets(tr
   }
   protected fun newToggling(title:String, state:Boolean):STarget {
     trace(" > Generating toggling target state=", state)
-    val coupler = object:TogglingCoupler() {
+    val coupler = object: TogglingCoupler() {
       override val passSet = state
       override val targetStateUpdated = {
 				state:Any, title:String->
@@ -65,7 +65,7 @@ open class SimpleSurface(test:TargetTest,trace:Boolean):SurfaceCore(newFacets(tr
   }
   protected fun newIndexing(title:String, indexables:Array<out String>, indexStart:Int):STarget {
     trace(" > Generating indexing target state=", indexStart)
-    val coupler = object:IndexingCoupler() {
+    val coupler = object: IndexingCoupler() {
     		override val targetStateUpdated=null
         override val getIndexables = { _:String-> indexables }
         override val newUiSelectable = { indexable:Any-> indexable as String }
@@ -73,21 +73,21 @@ open class SimpleSurface(test:TargetTest,trace:Boolean):SurfaceCore(newFacets(tr
     }
     return facets.newIndexingTarget(title, coupler)
   }
-  protected fun newTextualCouplerCore(title:String):TextualCoupler {
+  protected fun newTextualCouplerCore(title:String): TextualCoupler {
     val textTextual = title + " text in " + this.title()
     return when (title){
-			Simples.NumericValue->object:TextualCoupler() {
+			Simples.NumericValue->object: TextualCoupler() {
       override val getText = {_:String->
        val state = facets.getTargetState(Simples.NumericField)
        ("Number is " + (if (state != null) Math.rint(state as Double) else " not yet set")).replace(("\\.\\d+").toRegex(), "")
 			}
     }
-			Simples.Toggled->object:TextualCoupler() {
+			Simples.Toggled->object: TextualCoupler() {
       override val getText = { _:String->
 				"Set to " + facets.getTargetState(Simples.Toggling)
 			 }
     }
-			Simples.Indexed->object:TextualCoupler() {
+			Simples.Indexed->object: TextualCoupler() {
         override val getText = { _:String->
 					if (facets.getTargetState(Simples.Indexing) == null)
            ("No data yet for " + Simples.Indexing)
@@ -95,13 +95,13 @@ open class SimpleSurface(test:TargetTest,trace:Boolean):SurfaceCore(newFacets(tr
            facets.getIndexingState(Simples.Indexing).indexed as String
 				}
     }
-      Simples.Index->object:TextualCoupler() {
+      Simples.Index->object: TextualCoupler() {
         override val getText = { _:String->
            val state = facets.getTargetState(Simples.Indexing)
            if (state == null) ("No data yet for " + Simples.Indexing) else (state).toString()
 			}
     }
-      Simples.MasterTextual->object:TextualCoupler() {
+      Simples.MasterTextual->object: TextualCoupler() {
         override val getText = { _:String-> textTextual }
         override val targetStateUpdated = { state:Any, title:String->
           trace(" > Textual state updated: title=" + title + " state=", state)
@@ -109,14 +109,14 @@ open class SimpleSurface(test:TargetTest,trace:Boolean):SurfaceCore(newFacets(tr
                                    Simples.MasterTextual + " has changed to: " + state)
 				}
     }
-      Simples.Triggerings->object:TextualCoupler() {
+      Simples.Triggerings->object: TextualCoupler() {
         override val passText = "0"
         override val targetStateUpdated = { state:Any, _:String->
 					 if (Integer.valueOf(state as String) > 4)
 						 facets.setTargetLive(Simples.Trigger, false)
 				 }
     }
-       else->object:TextualCoupler() {
+       else->object: TextualCoupler() {
         override val passText = textTextual
        }
 		}
