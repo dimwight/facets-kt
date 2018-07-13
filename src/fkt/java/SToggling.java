@@ -1,6 +1,6 @@
 package fkt.java;
 
-import fkt.ts.TargetCoupler;
+import fkt.facets.TargetCoupler;
 
 /**
 {@link STarget} representing a Boolean value. 

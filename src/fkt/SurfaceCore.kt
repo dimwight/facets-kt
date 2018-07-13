@@ -1,8 +1,8 @@
 package fkt
 import fkt.java.util.Titled
 import fkt.java.util.Tracer
-import fkt.ts.Facets
-import fkt.ts.FacetsApp
+import fkt.facets.Facets
+import fkt.facets.FacetsApp
 import fkt.SelectingTitles as Selectings
 enum class TargetTest {
 	Textual, TogglingLive, Indexing, Numeric, Trigger, Selecting, Contenting;

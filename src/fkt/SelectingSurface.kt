@@ -1,10 +1,10 @@
 package fkt
 
 import fkt.java.STarget
-import fkt.ts.IndexingFramePolicy
-import fkt.ts.TextualCoupler
-import fkt.ts.TogglingCoupler
-import fkt.ts.newFacets
+import fkt.facets.IndexingFramePolicy
+import fkt.facets.TextualCoupler
+import fkt.facets.TogglingCoupler
+import fkt.facets.newFacets
 import fkt.SelectingTitles as Titles
 import fkt.SimpleTitles as Simples
 

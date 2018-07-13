@@ -1,5 +1,5 @@
 package fkt.java;
-import fkt.ts.TargetCoupler;
+import fkt.facets.TargetCoupler;
 import fkt.java.util.Debug;
 /**
 {@link STarget} representing an application process. 

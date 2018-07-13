@@ -1,5 +1,5 @@
 package fkt.swing
-import fkt.ts.Facets
+import fkt.facets.Facets
 import fkt.SurfaceCore
 import fkt.TargetTest
 import fkt.java.util.Tracer

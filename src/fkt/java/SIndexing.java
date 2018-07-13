@@ -2,7 +2,7 @@ package fkt.java;
 import java.util.ArrayList;
 import java.util.List;
 
-import fkt.ts.TargetCoupler;
+import fkt.facets.TargetCoupler;
 import fkt.java.util.Debug;
 
 /**
