@@ -41,7 +41,7 @@ open class SimpleSurface(test:TargetTest,trace:Boolean):SurfaceCore(newFacets(tr
     val coupler = newTextualCouplerCore(title)
     val passText = coupler.passText
     trace(" > Generating textual target state=",
-      if (passText != null) passText else coupler.getText?.invoke(title))
+      passText ?: coupler.getText?.invoke(title) ?: Error("No textual state"))
     return facets.newTextualTarget(title, coupler)
   }
   protected fun newNumeric(title:String):STarget {

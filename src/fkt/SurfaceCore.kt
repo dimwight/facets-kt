@@ -1,6 +1,6 @@
 package fkt
 import fkt.facets.util.Titled
-import fkt.java.util.Tracer
+import fkt.facets.util.Tracer
 import fkt.facets.Facets
 import fkt.facets.FacetsApp
 import fkt.SelectingTitles as Selectings

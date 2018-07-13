@@ -9,7 +9,7 @@ public final class Util{
 	public static void printOut(String msg,Object o){
 	  printOut(msg+o);
 	}
-	static String arrayPrintString(Object[]toPrint){
+	public static String arrayPrintString(Object[]toPrint){
 		String msg=toPrint==null?"null":Debug.toStringWithHeader(toPrint);
 		return msg;
 	}
