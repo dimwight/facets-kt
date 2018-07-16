@@ -116,7 +116,7 @@ class Facets(top: String, trace: Boolean) : Tracer(top) {
       if (false) putTitleTargeters(rootTargeter)
       callOnRetargeted()
       rootTargeter.retargetFacets()
-      msg = "> FacetsWorks retargeted in " + Debug.info(rootTargeter)
+      msg = "> FacetWorks retargeted in " + Debug.info(rootTargeter)
       if (times.doTime) times.traceElapsed(msg)
       else trace(msg)
     }
@@ -132,7 +132,7 @@ class Facets(top: String, trace: Boolean) : Tracer(top) {
   }
   init {
     this.doTrace = trace
-    activeContentTitle = "FacetsWorks#" + identity() + ":Active Content"
+    activeContentTitle = "FacetWorks#" + identity() + ":Active Content"
     val indexing = SIndexing("RootIndexing", object : SIndexing.Coupler() {
       private var thenTrees: Array<STarget>? = null
       override fun getIndexables(i: SIndexing): Array<STarget> {
@@ -364,4 +364,4 @@ class Facets(top: String, trace: Boolean) : Tracer(top) {
   fun isTargetLive(title: String) =
     titleTarget(title)?.isLive ?:throw IllegalStateException("Null target for $title")
 }
-fun newFacets(trace: Boolean) = Facets("FacetsWorks", trace)
+fun newFacets(trace: Boolean) = Facets("FacetWorks", trace)

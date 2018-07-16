@@ -3,10 +3,10 @@ import fkt.facets.core.*
 import fkt.facets.core.Target
 import fkt.facets.util.Tracer
 import fkt.facets.util.Util
-fun newFacetsWorks(trace: Boolean): Facets {
-  return FacetsWorks(trace)
+fun newFacetWorks(trace: Boolean): Facets {
+  return FacetWorks(trace)
 }
-class FacetsWorks(override var doTrace: Boolean,override val supplement:()->Unit={})
+class FacetWorks(override var doTrace: Boolean, override val supplement:()->Unit={})
     : Facets, Tracer("Facets") {
   override fun newNumericTarget(title: String, coupler: NumericCoupler): Target {
     throw Error("Not implemented")
@@ -45,7 +45,7 @@ class FacetsWorks(override var doTrace: Boolean,override val supplement:()->Unit
   private val root: IndexingFrame;
   private var rootTargeter: Targeter? = null
   init {
-    activeContentTitle = "FacetsWorks#" + identity() + ":Active Content"
+    activeContentTitle = "FacetWorks#" + identity() + ":Active Content"
     val indexing = Indexing("RootIndexing", object : IndexingCoupler() {
       private var thenTrees: Array<Targety>? = null
       override val getIndexables = fun(_: String): Array<out Any> {

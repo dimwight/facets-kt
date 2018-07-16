@@ -83,7 +83,7 @@ public class TargetCore extends NotifyingCore implements STarget{
 	/**
 	 Create and return a targeter suitable for retargeting to 
 	 this target. 
-	 <p>This is the key method used by FacetsWorks to implement dynamic
+	 <p>This is the key method used by FacetWorks to implement dynamic
 	 creation of a surface targeter tree. During initial retargeting 
 	 each {@link TargeterCore} queries its <code>target</code> 
 	 for any child elements, and calls this method on each child 

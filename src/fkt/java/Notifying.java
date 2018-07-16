@@ -1,14 +1,14 @@
 package fkt.java;
 /**
-Potential element of the FacetsWorks notification tree.
-<p>{@link Notifying} is the root of the FacetsWorks type hierarchy
+Potential element of the FacetWorks notification tree.
+<p>{@link Notifying} is the root of the FacetWorks type hierarchy
   for both targets and targeters. 
 <p>Whenever a target acts on the element it represents in the 
   surface (usually though not necessarily in response to widget 
   input relayed by a surface) the surface must 
   be notified that a retargeting is needed to ensure view and 
   control consistency. 
-<p>Notification is triggered in the FacetsWorks implementation of by calling {@link #notify(Object)}
+<p>Notification is triggered in the FacetWorks implementation of by calling {@link #notify(Object)}
   target, and relayed to the application root via a tree of {@link Notifying}s, 
   all either {@link fkt.java.STarget}s or {@link fkt.java.STargeter}s.
 <p>A {@link Notifying} is attached to the tree with {@link #setNotifiable(Notifiable)} 
@@ -24,7 +24,7 @@ Potential element of the FacetsWorks notification tree.
     tree; for the root of the targeter tree, the surface itself</li>
 </ul>
 <p>In all three cases the {@link Notifiable} is set during retargeting; 
-the FacetsWorks framework typically ensures that notification
+the FacetWorks framework typically ensures that notification
   is triggered whenever a target acts on the application element it represents. 
 
  */

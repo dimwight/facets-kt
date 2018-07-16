@@ -18,7 +18,7 @@ public interface Facetable{
 	void attachFacet(SFacet facet);
 	/**
 	Retarget any attached facets. 
-	<p>FacetsWorks (if any) will have been attached with {@link #attachFacet(SFacet)}
+	<p>FacetWorks (if any) will have been attached with {@link #attachFacet(SFacet)}
 	 */
 	void retargetFacets();
 }
