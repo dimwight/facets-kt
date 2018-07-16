@@ -1,11 +1,11 @@
 package fkt.facets
-import fkt.ContentingSurface
-import fkt.SelectingSurface
-import fkt.SimpleSurface
-import fkt.TargetTest
 import fkt.java.*
 import fkt.java.util.*
-
+interface FacetsApp {
+  fun getContentTrees(): Any
+  fun onRetargeted(activeTitle: String)
+  fun buildLayout()
+}
 abstract class TargetCoupler {
   open val targetStateUpdated: ((Any, String) -> Unit)? = null
 }
@@ -54,11 +54,6 @@ private class LocalIndexingFrame(title: String,
     return p.newIndexedTree?.invoke(indexed, indexedTargetsTitle)
       ?: TargetCore(indexedTargetsTitle)
   }
-}
-interface FacetsApp {
-  fun getContentTrees(): Any
-  fun onRetargeted(activeTitle: String)
-  fun buildLayout()
 }
 class Times(private var then: Long = 0, private var start: Long = 0) {
   var doTime = false

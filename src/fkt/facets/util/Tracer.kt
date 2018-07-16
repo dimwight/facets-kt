@@ -1,4 +1,4 @@
-package fkt.facets_.util
+package fkt.facets.util
 import fkt.java.util.Identified
 import fkt.java.util.Util
 import fkt.java.util.Util.arrayPrintString

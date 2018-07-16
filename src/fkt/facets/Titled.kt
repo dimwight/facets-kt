@@ -1,4 +1,4 @@
-package fkt.facets_
+package fkt.facets
 /**
 Has a single-line, human-readable identifying text.
 <p>The text may be shared with other objects to indicate
@@ -7,7 +7,7 @@ common origin or purpose, or used as a persistable unique identifier.
 <i>label</i> or <i>caption</i>; the distinct term was originally devised to
 avoid collision in code with these widely-used terms).
  */
-interface Titled {
+interface Titled_ {
   /**
   Return human-readable identifying text.
   @return non-<code>null</code>, non-empty string with no structural whitespace

@@ -1,4 +1,4 @@
-package fkt.facets_.util
+package fkt.facets.util
 import java.util.ArrayList
 /**
  * Utility methods for arrays.

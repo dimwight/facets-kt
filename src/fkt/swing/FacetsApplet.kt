@@ -30,7 +30,7 @@ class FacetsApplet : JApplet() {
     val simples = TargetTest.simpleValues()
     val tests =
       if (true) simples
-      else arrayOf(if (false) Selecting else Contenting)
+      else arrayOf(if (true) Selecting else Contenting)
     content.layout = GridLayout(if (tests.contentEquals(simples)) 3 else 2, 1)
     for (test in tests) {
       if (false && (!(!tests.contentEquals(simples) || test === TogglingLive)))
@@ -39,8 +39,8 @@ class FacetsApplet : JApplet() {
       pane.border = createCompoundBorder(createEmptyBorder(10, 10, 10, 10),
         createEtchedBorder(EtchedBorder.LOWERED))
       content.add(pane)
-      val trace = true
-      val surface = when {
+      val trace = false
+      when {
         test.isSimple -> object : SimpleSurface(test, trace) {
           override fun buildLayout() {
             facets.times.resetWait = 50
@@ -56,12 +56,11 @@ class FacetsApplet : JApplet() {
           private val layout = ContentingLayout(pane, test, this)
           override fun buildLayout() = layout.build()
         }
-        else -> object : SelectingSurface(TargetTest.Selecting, trace) {
+        else -> object : SelectingSurface(Selecting, trace) {
           private val layout = SelectingLayout(pane, test, this)
           override fun buildLayout() = layout.build()
         }
-      }
-      surface.buildSurface()
+      }.buildSurface()
     }
   }
 }

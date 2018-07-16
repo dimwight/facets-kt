@@ -2,7 +2,7 @@ package fkt
 import fkt.facets.Facets
 import fkt.facets.FacetsApp
 import fkt.java.util.Titled
-import fkt.facets_.util.Tracer
+import fkt.facets.util.Tracer
 import fkt.SelectingTitles as Selectings
 enum class TargetTest {
 	Textual, TogglingLive, Indexing, Numeric, Trigger, Selecting, Contenting;
@@ -18,12 +18,10 @@ enum class TargetTest {
 		}
 	}
 }
-abstract class SurfaceCore(facets: Facets, test:TargetTest)
+abstract class SurfaceCore(val facets: Facets, test:TargetTest)
 		:Tracer(test.name), Titled, FacetsApp {
-  val facets: Facets
   protected val test:TargetTest
   init{
-    this.facets = facets
     this.test = if (true || test == TargetTest.Selecting) test else TargetTest.Indexing
     facets.times.doTime = false || facets.doTrace
   }
@@ -33,9 +31,9 @@ abstract class SurfaceCore(facets: Facets, test:TargetTest)
   protected fun generateFacets(vararg titles:String) {
     for (title in titles){
       trace(" > Generating facet for title=", title)
-      facets.attachFacet(title, { value->
-				trace((" > Facet for " + title + " updated: value="), value)
-			})
+      facets.attachFacet(title) { value->
+        trace((" > Facet for $title updated: value="), value)
+      }
     }
   }
   override fun title():String {
@@ -53,5 +51,5 @@ fun main(args: Array<String>) {
     it.buildSurface()
     tested.add(it)
   }
-  fkt.java.util.Tracer.TracerTopped(SurfaceCore::class.simpleName).trace("Tested apps:",tested.toArray())
+  Tracer.TracerTopped(SurfaceCore::class.simpleName!!).trace("Tested apps:",tested.toArray())
 }
