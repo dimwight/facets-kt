@@ -1,41 +1,44 @@
 package fkt.facets.core
+
+import fkt.java.STarget
+
 interface Target{
 }
 typealias SimpleState=Any
 typealias FacetUpdater=(state:SimpleState)->Unit
-interface TargetCoupler{
-fun targetStateUpdated(state:SimpleState,title:String)
+abstract class TargetCoupler {
+  open val targetStateUpdated: ((Any, String) -> Unit)? = null
 }
-interface TextualCoupler : TargetCoupler{
-var passText:String?
-fun getText(title:String):String?
-fun isValidText(text:String,title:String):Boolean?
+abstract class TextualCoupler : TargetCoupler() {
+  open val passText: String? = null
+  open val getText: ((String) -> String)? = null
+  open val isValidText: ((String, String) -> Boolean)? = null
 }
-interface TogglingCoupler : TargetCoupler{
-var passSet:Boolean
+abstract class TogglingCoupler : TargetCoupler() {
+  abstract val passSet: Boolean
 }
-interface NumericCoupler : TargetCoupler{
-var passValue:Int
-var min:Int
-var max:Int
+abstract class NumericCoupler : TargetCoupler() {
+  abstract val passValue: Double
+  open val min: Double? = null
+  open val max: Double? = null
 }
-interface IndexingCoupler : TargetCoupler{
-val passIndex:Int
-fun getIndexables(title:String):Array<Any> 
-fun newUiSelectable(indexable:Any):Any?
+abstract class IndexingCoupler : TargetCoupler() {
+  abstract val getIndexables: (String) -> Array<out Any>
+  open val passIndex: Int? = null
+  open val newUiSelectable: ((Any) -> String)? = null
 }
-interface IndexingState{
-var uiSelectables:Array<String> 
-var indexed:Any
+abstract class IndexingState {
+  abstract val uiSelectables: Array<String>
+  abstract val indexed: Any
 }
-interface IndexingFramePolicy{
-var frameTitle:String?
-var indexingTitle:String?
-fun getIndexables():Array<Any> 
-fun newUiSelectable(indexable:Any):Any?
-fun newFrameTargets():Array<Target> ?
-fun newIndexedTreeTitle(indexed:Any):String?
-fun newIndexedTree(indexed:Any,title:String):Target?
+abstract class IndexingFramePolicy {
+  open val indexingTitle: String? = null
+  abstract val getIndexables: () -> (Array<out Any>)
+  open val frameTitle: String? = null
+  open val newUiSelectable: ((Any) -> String)? = null
+  open val newFrameTargets: (() -> (Array<Target>))? = null
+  open val newIndexedTreeTitle: ((Any) -> String)? = null
+  open val newIndexedTree: ((Any, String) -> Target)? = null
 }
 interface Times{
 var doTime:Boolean
@@ -64,7 +67,7 @@ fun notifyTargetUpdated(title:String)
 fun updateTargetWithNotify(title:String,update:SimpleState)
 fun setTargetLive(title:String,live:Boolean)
 fun isTargetLive(title:String):Boolean
-var supplement:Any
+fun supplement()
 fun buildApp(app:FacetsApp)
 fun newInstance(trace:Boolean):Facets
 }

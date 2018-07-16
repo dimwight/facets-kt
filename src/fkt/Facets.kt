@@ -144,12 +144,7 @@ class Facets(top: String, trace: Boolean) : Tracer(top) {
     })
     root = object : IndexingFrame("RootFrame", indexing) {
       override fun lazyElements(): Array<out STarget> {
-        return arrayOf(STextual(activeContentTitle, object : STextual.Coupler() {
-          override fun getText(t: STextual): String {
-            return root.indexedTarget().title()
-          }
-        })
-        )}
+        return arrayOf(        )}
     }
     if (false) trace(" > Created trees root ", root)
   }

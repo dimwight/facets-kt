@@ -45,7 +45,7 @@ object Util {
   }
 
 
-  fun arraysEqual(now: Array<Any>, then: Array<Any>?): Boolean {
+  fun arraysEqual(now: Array<out Any>, then: Array<out Any>?): Boolean {
     var equal = false
     if (then != null && then.size == now.size) {
       equal = true

@@ -2,19 +2,21 @@ package fkt.facets
 import fkt.facets.core.*
 import fkt.facets.core.Target
 import fkt.facets.util.Tracer
+import fkt.facets.util.Util
+import fkt.java.SIndexing
+import fkt.java.STarget
+
 fun newInstance(trace: Boolean): Facets {
   return FacetsWorks(trace)
 }
 class FacetsWorks(override var doTrace: Boolean) : Facets, Tracer("Facets") {
+  override fun supplement() {}
   override fun newNumericTarget(title: String, coupler: NumericCoupler): Target {
     throw Error("Not implemented")
   }
   override fun updateTargetWithNotify(title: String, update: SimpleState) {
     throw Error("Not implemented")
   }
-  override var supplement: Any
-    get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
-    set(value) {}
   override fun newInstance(trace: Boolean): Facets {
     throw Error("Not implemented")
   }
@@ -36,30 +38,49 @@ class FacetsWorks(override var doTrace: Boolean) : Facets, Tracer("Facets") {
   override var activeContentTitle = "[Active Content Tree]"
   var notifiable: Notifiable = object : Notifiable {
     override fun notify(notice: Any) {
-      trace("Notified with" + rootTargeter.title())
-      rootTargeter.retarget(rootTargeter.target())
+      val rt=rootTargeter!!
+      trace("Notified with" + rt.title())
+      rt.retarget(rt.target())
       callOnRetargeted()
-      rootTargeter.retargetFacets()
+      rt.retargetFacets()
     }
   }
   lateinit var onRetargeted: (title: String) -> Any
-  var titleTargeters = HashMap<String, Targeter>()
-  var titleTrees = HashMap<String, Targety>()
-  lateinit var root: IndexingFrame
-  lateinit var rootTargeter: Targeter
+  val titleTargeters = HashMap<String, Targeter>()
+  val titleTrees = HashMap<String, Targety>()
+  lateinit var root: IndexingFrame;
+  var rootTargeter: Targeter?=null
+  init {
+    activeContentTitle = "FacetsWorks#" + identity() + ":Active Content"
+    val indexing = Indexing("RootIndexing", object : IndexingCoupler() {
+      private var thenTrees: Array<Targety>? = null
+      override val getIndexables=fun(_:String):Array<out Any>{
+        val trees = titleTrees.values.toTypedArray()
+        if (!Util.arraysEqual(trees, thenTrees)) trace("> New trees: ", trees)
+        thenTrees = trees
+        return trees
+      }
+    })
+    root = object : IndexingFrame("RootFrame", indexing) {
+      override fun lazyElements(): Array<out STarget> {
+        return arrayOf(        )}
+    }
+    if (false) trace(" > Created trees root ", root)
+  }
   override fun buildApp(app: FacetsApp) {
     onRetargeted = { title ->
       app.onRetargeted(title)
     }
     val trees = app.getContentTrees()
-    (trees as Array<Targety>).forEach({ t ->
+    (trees as Array<Targety>).forEach{ t ->
       addContentTree(t)
-    })
-    trace("Building targeter tree for root=" + root.title())
+    }
+    trace("Building targeter tree for root${root?.title()?:throw Error("No root")}")
     if (rootTargeter == null) rootTargeter = (root as TargetCore).newTargeter()
-    rootTargeter.setNotifiable(notifiable)
-    rootTargeter.retarget(root)
-    addTitleTargeters(rootTargeter)
+    val rt=rootTargeter!!
+    rt.setNotifiable(notifiable)
+    rt.retarget(root)
+    addTitleTargeters(rt)
     callOnRetargeted()
     app.buildLayout()
   }
