@@ -1,4 +1,4 @@
-package fkt.facets
+package fkt.facets.util
 /**
 Specifies a unique identity.
  */
