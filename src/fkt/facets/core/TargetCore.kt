@@ -5,8 +5,8 @@ open class TargetCore(title: String, var extra: Any? = null) : NotifyingCore(Tar
 {
   private var live = true
   val NoState = "No state set"
-  var state_: SimpleState = NoState
-  override fun state(): SimpleState {
+  var state_: Any = NoState
+  override fun state(): Any {
     return this.state_
   }
 
@@ -30,7 +30,7 @@ open class TargetCore(title: String, var extra: Any? = null) : NotifyingCore(Tar
     return arrayOf()
   }
 
-  override fun updateState(update: SimpleState) {
+  override fun updateState(update: Any) {
     this.state_ = update
     val extra = this.extra
     if (!(extra == null || extra is Array<*>)) (extra as TargetCoupler).targetStateUpdated?.invoke(this.state(), this.title())

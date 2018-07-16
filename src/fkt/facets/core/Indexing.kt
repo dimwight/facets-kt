@@ -32,7 +32,7 @@ class Indexing(title: String, coupler: IndexingCoupler) : TargetCore(title, coup
       if (i === indexable) this.setIndex(at)
     })
   }
-  override fun updateState(update: SimpleState) {
+  override fun updateState(update: Any) {
     this.setIndex(update as Int)
   }
 }

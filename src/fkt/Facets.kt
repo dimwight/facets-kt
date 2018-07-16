@@ -2,11 +2,6 @@ package fkt
 import fkt.java.util.NumberPolicy
 import fkt.java.*
 import fkt.java.util.*
-interface FacetsApp {
-  fun getContentTrees(): Any
-  fun onRetargeted(activeTitle: String)
-  fun buildLayout()
-}
 abstract class TargetCoupler {
   open val targetStateUpdated: ((Any, String) -> Unit)? = null
 }
@@ -365,3 +360,8 @@ class Facets(top: String, trace: Boolean) : Tracer(top) {
     titleTarget(title)?.isLive ?:throw IllegalStateException("Null target for $title")
 }
 fun newFacets(trace: Boolean) = Facets("FacetWorks", trace)
+interface FacetsApp {
+  fun getContentTrees(): Any
+  fun onRetargeted(activeTitle: String)
+  fun buildLayout()
+}

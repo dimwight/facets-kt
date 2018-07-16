@@ -11,7 +11,7 @@ class FacetWorks(override var doTrace: Boolean, override val supplement:()->Unit
   override fun newNumericTarget(title: String, coupler: NumericCoupler): Target {
     throw Error("Not implemented")
   }
-  override fun updateTargetWithNotify(title: String, update: SimpleState) {
+  override fun updateTargetWithNotify(title: String, update: Any) {
     throw Error("Not implemented")
   }
   override fun trace(msg: String) {
@@ -127,11 +127,11 @@ class FacetWorks(override var doTrace: Boolean, override val supplement:()->Unit
     }
     t.attachFacet(facet)
   }
-  override fun updateTargetState(title: String, update: SimpleState){
+  override fun updateTargetState(title: String, update: Any){
     titleTarget(title).updateState(update)
     notifiable.notify(title)
   }
-  override fun getTargetState(title: String): SimpleState {
+  override fun getTargetState(title: String): Any {
     return titleTarget(title).state()
   }
   override fun isTargetLive(title: String): Boolean {

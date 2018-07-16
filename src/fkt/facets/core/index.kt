@@ -2,8 +2,7 @@ package fkt.facets.core
 
 interface Target{
 }
-typealias SimpleState=Any
-typealias FacetUpdater=(state:SimpleState)->Unit
+typealias FacetUpdater=(state:Any)->Unit
 abstract class TargetCoupler {
   open val targetStateUpdated: ((Any, String) -> Unit)? = null
 }
@@ -59,10 +58,10 @@ fun newIndexingFrame(p:IndexingFramePolicy):Target
 fun addContentTree(tree:Target)
 fun activateContentTree(title:String)
 fun attachFacet(title:String,updater:FacetUpdater)
-fun updateTargetState(title:String,update:SimpleState)
-fun getTargetState(title:String):SimpleState
+fun updateTargetState(title:String,update:Any)
+fun getTargetState(title:String):Any
 fun notifyTargetUpdated(title:String)
-fun updateTargetWithNotify(title:String,update:SimpleState)
+fun updateTargetWithNotify(title:String,update:Any)
 fun setTargetLive(title:String,live:Boolean)
 fun isTargetLive(title:String):Boolean
 fun buildApp(app:FacetsApp)
