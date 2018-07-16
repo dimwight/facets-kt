@@ -1,6 +1,6 @@
 package fkt.swing
 import fkt.facets.util.Tracer
-import fkt.facets.Facets
+import fkt.Facets
 import java.awt.FlowLayout
 import java.awt.event.ActionEvent
 import java.awt.event.ActionListener

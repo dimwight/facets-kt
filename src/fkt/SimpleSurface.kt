@@ -1,5 +1,4 @@
 package fkt
-import fkt.facets.*
 import fkt.java.*
 import fkt.SimpleTitles as Simples
 open class SimpleSurface(test:TargetTest,trace:Boolean):SurfaceCore(newFacets(trace),test){
