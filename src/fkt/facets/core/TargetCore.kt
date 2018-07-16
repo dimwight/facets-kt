@@ -1,15 +1,10 @@
 package fkt.facets.core
-
-import fkt.facets.core.SimpleState
-import fkt.facets.core.TargetCoupler
-
-// public static type='Targety';
-val TargetCoreType = "Targety"
+const val TargetCoreType = "Targety"
 
 open class TargetCore(title: String, var extra: Any? = null) : NotifyingCore(TargetCoreType, title), Targety// any=Targety[]|TargetCoupler
 {
   private var live = true
-  var NoState = "No state set"
+  val NoState = "No state set"
   var state_: SimpleState = NoState
   override fun state(): SimpleState {
     return this.state_
