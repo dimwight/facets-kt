@@ -1,7 +1,5 @@
 package fkt.facets.core
 
-import fkt.java.STarget
-
 interface Target{
 }
 typealias SimpleState=Any
@@ -36,7 +34,7 @@ abstract class IndexingFramePolicy {
   abstract val getIndexables: () -> (Array<out Any>)
   open val frameTitle: String? = null
   open val newUiSelectable: ((Any) -> String)? = null
-  open val newFrameTargets: (() -> (Array<Target>))? = null
+  open val newFrameTargets: (() -> (Array<out Target>))? = null
   open val newIndexedTreeTitle: ((Any) -> String)? = null
   open val newIndexedTree: ((Any, String) -> Target)? = null
 }
@@ -57,8 +55,8 @@ fun newTriggerTarget(title:String,coupler:TargetCoupler):Target
 fun newTargetGroup(title:String,members:Array<Target> ):Target
 fun newIndexingTarget(title:String,coupler:IndexingCoupler):Target
 fun getIndexingState(title:String):IndexingState
-fun newIndexingFrame(policy:IndexingFramePolicy):Target
-fun addContentTree(add:Target)
+fun newIndexingFrame(p:IndexingFramePolicy):Target
+fun addContentTree(tree:Target)
 fun activateContentTree(title:String)
 fun attachFacet(title:String,updater:FacetUpdater)
 fun updateTargetState(title:String,update:SimpleState)
@@ -67,9 +65,8 @@ fun notifyTargetUpdated(title:String)
 fun updateTargetWithNotify(title:String,update:SimpleState)
 fun setTargetLive(title:String,live:Boolean)
 fun isTargetLive(title:String):Boolean
-fun supplement()
 fun buildApp(app:FacetsApp)
-fun newInstance(trace:Boolean):Facets
+val supplement:()->Unit
 }
 interface FacetsApp{
 fun getContentTrees():Array<Target> 

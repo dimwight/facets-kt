@@ -31,14 +31,14 @@ open class TargetCore(title: String, var extra: Any? = null) : NotifyingCore(Tar
     } else return arrayOf()
   }
 
-  open fun lazyElements(): Array<Targety> {
+  open fun lazyElements(): Array<out Targety> {
     return arrayOf()
   }
 
   override fun updateState(update: SimpleState) {
     this.state_ = update
     val extra = this.extra
-    if (!(extra == null || extra is Array<*>)) (extra as TargetCoupler).targetStateUpdated(this.state(), this.title())
+    if (!(extra == null || extra is Array<*>)) (extra as TargetCoupler).targetStateUpdated?.invoke(this.state(), this.title())
   }
 
   open fun newTargeter(): Targeter {

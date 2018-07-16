@@ -3,21 +3,15 @@ import fkt.facets.core.*
 import fkt.facets.core.Target
 import fkt.facets.util.Tracer
 import fkt.facets.util.Util
-import fkt.java.SIndexing
-import fkt.java.STarget
-
-fun newInstance(trace: Boolean): Facets {
+fun newFacetsWorks(trace: Boolean): Facets {
   return FacetsWorks(trace)
 }
-class FacetsWorks(override var doTrace: Boolean) : Facets, Tracer("Facets") {
-  override fun supplement() {}
+class FacetsWorks(override var doTrace: Boolean,override val supplement:()->Unit={})
+    : Facets, Tracer("Facets") {
   override fun newNumericTarget(title: String, coupler: NumericCoupler): Target {
     throw Error("Not implemented")
   }
   override fun updateTargetWithNotify(title: String, update: SimpleState) {
-    throw Error("Not implemented")
-  }
-  override fun newInstance(trace: Boolean): Facets {
     throw Error("Not implemented")
   }
   override fun trace(msg: String) {
@@ -36,9 +30,9 @@ class FacetsWorks(override var doTrace: Boolean) : Facets, Tracer("Facets") {
     override var doTime = false
   }
   override var activeContentTitle = "[Active Content Tree]"
-  var notifiable: Notifiable = object : Notifiable {
+  val notifiable = object : Notifiable {
     override fun notify(notice: Any) {
-      val rt=rootTargeter!!
+      val rt = rootTargeter?:throw Error("Null rootTargeter")
       trace("Notified with" + rt.title())
       rt.retarget(rt.target())
       callOnRetargeted()
@@ -46,15 +40,15 @@ class FacetsWorks(override var doTrace: Boolean) : Facets, Tracer("Facets") {
     }
   }
   lateinit var onRetargeted: (title: String) -> Any
-  val titleTargeters = HashMap<String, Targeter>()
-  val titleTrees = HashMap<String, Targety>()
-  lateinit var root: IndexingFrame;
-  var rootTargeter: Targeter?=null
+  private val titleTargeters = HashMap<String, Targeter?>()
+  private val titleTrees = HashMap<String, Targety>()
+  private val root: IndexingFrame;
+  private var rootTargeter: Targeter? = null
   init {
     activeContentTitle = "FacetsWorks#" + identity() + ":Active Content"
     val indexing = Indexing("RootIndexing", object : IndexingCoupler() {
       private var thenTrees: Array<Targety>? = null
-      override val getIndexables=fun(_:String):Array<out Any>{
+      override val getIndexables = fun(_: String): Array<out Any> {
         val trees = titleTrees.values.toTypedArray()
         if (!Util.arraysEqual(trees, thenTrees)) trace("> New trees: ", trees)
         thenTrees = trees
@@ -62,8 +56,9 @@ class FacetsWorks(override var doTrace: Boolean) : Facets, Tracer("Facets") {
       }
     })
     root = object : IndexingFrame("RootFrame", indexing) {
-      override fun lazyElements(): Array<out STarget> {
-        return arrayOf(        )}
+      override fun lazyElements(): Array<out Targety> {
+        return arrayOf()
+      }
     }
     if (false) trace(" > Created trees root ", root)
   }
@@ -72,12 +67,10 @@ class FacetsWorks(override var doTrace: Boolean) : Facets, Tracer("Facets") {
       app.onRetargeted(title)
     }
     val trees = app.getContentTrees()
-    (trees as Array<Targety>).forEach{ t ->
-      addContentTree(t)
-    }
-    trace("Building targeter tree for root${root?.title()?:throw Error("No root")}")
+    (trees as Array<Targety>).forEach { t ->addContentTree(t)}
+    trace("Building targeter tree for root${root.title()}")
     if (rootTargeter == null) rootTargeter = (root as TargetCore).newTargeter()
-    val rt=rootTargeter!!
+    val rt = rootTargeter!!
     rt.setNotifiable(notifiable)
     rt.retarget(root)
     addTitleTargeters(rt)
@@ -121,22 +114,20 @@ class FacetsWorks(override var doTrace: Boolean) : Facets, Tracer("Facets") {
     val elements: Array<Targeter> = (t as TargeterCore).titleElements()
     titleTargeters.set(title, t)
     trace("Added targeter: title=" + title + ": elements=" + elements.size)
-    elements.forEach { e ->addTitleTargeters(e)}
+    elements.forEach { e -> addTitleTargeters(e) }
   }
-  override fun attachFacet(title: String, updater: FacetUpdater): Unit {
-    val t: Targeter = titleTargeters.get(title) as Targeter
-    if (t == null) throw Error("No targeter for" + title)
-    trace("Attaching facet: title=" + title)
+  override fun attachFacet(title: String, updater: FacetUpdater){
+    val t = titleTargeters[title] ?: throw Error("No targeter for $title")
+    trace("Attaching facet: title=$title")
     val facet: Facet = object : Facet {
       override fun retarget(ta: Targety) {
-        trace("Facet retargeted title=" + ta.title())
-// +' state='+ta.state()
+        trace("Facet retargeted title=${ta.title()} state=${ta.state()}")
         updater(ta.state())
       }
     }
     t.attachFacet(facet)
   }
-  override fun updateTargetState(title: String, update: SimpleState): Unit {
+  override fun updateTargetState(title: String, update: SimpleState){
     titleTarget(title).updateState(update)
     notifiable.notify(title)
   }
@@ -153,11 +144,8 @@ class FacetsWorks(override var doTrace: Boolean) : Facets, Tracer("Facets") {
     val target = titleTarget(title)
     target.notifyParent()
   }
-  fun titleTarget(title: String): Targety {
-    val got = titleTargeters.get(title)
-    if (got == null) throw Error("No targeter for" + title)
-    return got.target()
-  }
+  private fun titleTarget(title: String): Targety =
+     (titleTargeters[title]?:throw Error("No targeter for$title")).target()
   override fun newIndexingTarget(title: String, coupler: IndexingCoupler): Targety {
     val indexing = Indexing(title, coupler)
     trace("Created indexing title=" + title)
@@ -166,41 +154,31 @@ class FacetsWorks(override var doTrace: Boolean) : Facets, Tracer("Facets") {
   override fun getIndexingState(title: String): IndexingState {
     val i: Indexing = titleTarget(title) as Indexing
     if (i == null) throw Error("No target for title=" + title)
-    else return object : IndexingState {
+    else return object : IndexingState() {
       override var uiSelectables = i.uiSelectables()
       override var indexed = i.indexed()
     }
   }
   var indexingFrames = 0
   override fun newIndexingFrame(p: IndexingFramePolicy): Targety {
-    val frameTitle = if (p.frameTitle != null) p.frameTitle else "IndexingFrame" + indexingFrames
-// ++
-    val indexingTitle = if (p.indexingTitle != null) p.indexingTitle else frameTitle + ".Indexing"
-    val indexing = Indexing(indexingTitle!!, object : IndexingCoupler {
-      override fun targetStateUpdated(state: SimpleState, title: String) {
+    val frameTitle = p.frameTitle ?: "IndexingFrame"+indexingFrames++
+    val indexingTitle = p.indexingTitle ?: "$frameTitle.Indexing"
+    val indexing = Indexing(indexingTitle, object : IndexingCoupler() {
+      override val getIndexables = { _: String -> p.getIndexables() }
+      override val newUiSelectable = { indexable: Any ->
+        p.newUiSelectable?.invoke(indexable) ?: throw Error()
       }
-      override var passIndex = 0
-      override fun getIndexables(title: String) =
-        p.getIndexables()
-      // newUiSelectable:indexable=>!p.newUiSelectable?null:p.newUiSelectable(indexable)
-      override fun newUiSelectable(indexable: Any) =
-        p.newUiSelectable(indexable)
     })
-    trace("Created indexing" + indexingTitle)
+    trace("Created indexing$indexingTitle")
     val frame = object : IndexingFrame(frameTitle!!, indexing) {
-      override fun lazyElements(): Array<Targety> {
-        return if (p.newFrameTargets() != null) p.newFrameTargets() as Array<Targety> else arrayOf()
-      }
+      override fun lazyElements(): Array<Targety> =
+        (p.newFrameTargets?.invoke() ?: arrayOf()) as Array<Targety>
       override fun newIndexedTargets(indexed: Any): Targety {
-        val titler = p.newIndexedTreeTitle(indexed)
-        val title = if (titler != null) titler else title()
-// +'|indexed'
-        val newTree = p.newIndexedTree(indexed, title)
-        return if (newTree != null) newTree as Targety else TargetCore(title)
+        val title = p.newIndexedTreeTitle?.invoke(indexed) ?: title()+"|indexed"
+        return (p.newIndexedTree?.invoke(indexed, title) ?: TargetCore(title)) as Targety
       }
     }
-// (frameTitle, indexing)
-    trace("Created indexing frame" + frameTitle)
+    trace("Created indexing frame$frameTitle")
     return frame
   }
 }
