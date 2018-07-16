@@ -313,7 +313,7 @@ class Facets(top: String, trace: Boolean) : Tracer(top) {
       override fun getFacetSelectables(i: SIndexing): Array<String> {
         val getter = p.newUiSelectable ?: return super.getFacetSelectables(i)
         val selectables = i.indexables().map{getter(it)}
-        val got = selectables.toTypedArray<String>()
+        val got = selectables.toTypedArray()
         if (!Util.arraysEqual(got, thenSelectables))
           trace("> Got new selectables in " + Debug.info(i) + ": ", got)
         thenSelectables = got
@@ -331,7 +331,7 @@ class Facets(top: String, trace: Boolean) : Tracer(top) {
     val facet = object : SFacet {
       private val id = Tracer.ids++
       override fun retarget(target: STarget) {
-        val state = target.getState()
+        val state = target.state
         val title_ = target.title()
         trace(" > Updating UI for $title_ with state=", state)
         updater.invoke(state)
@@ -361,7 +361,7 @@ class Facets(top: String, trace: Boolean) : Tracer(top) {
   }
 
   fun getTargetState(title: String): Any? {
-    val state = titleTarget(title)?.getState()
+    val state = titleTarget(title)?.state
     trace(" > Getting target state for title=$title state=", state)
     return state
   }
@@ -370,23 +370,7 @@ class Facets(top: String, trace: Boolean) : Tracer(top) {
     titleTarget(title)?.setLive(live)
       ?:throw IllegalStateException("Null target for $title")
 
-  fun isTargetLive(title: String): Boolean =
-    titleTarget(title)?.isLive()
-      ?:throw IllegalStateException("Null target for $title")
+  fun isTargetLive(title: String) =
+    titleTarget(title)?.isLive ?:throw IllegalStateException("Null target for $title")
 }
-fun newFacets(trace: Boolean): Facets {
-  return Facets("Facets", trace)
-}
-fun main(args: Array<String>) {
-  val trace = false
-  val tested= arrayListOf<FacetsApp>()
-  arrayOf(
-    SimpleSurface(TargetTest.Trigger, trace),
-    SelectingSurface(TargetTest.Selecting, trace),
-    ContentingSurface(trace)
-  ).forEach{ it ->
-    it.buildSurface()
-    tested.add(it)
-  }
-  Tracer.TracerTopped(Facets::class.simpleName).trace("Tested apps:",tested.toArray())
-}
+fun newFacets(trace: Boolean) = Facets("Facets", trace)

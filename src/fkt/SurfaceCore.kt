@@ -42,3 +42,16 @@ abstract class SurfaceCore(facets: Facets, test:TargetTest)
     return test.name
   }
 }
+fun main(args: Array<String>) {
+  val trace = false
+  val tested= arrayListOf<FacetsApp>()
+  arrayOf(
+    SimpleSurface(TargetTest.Trigger, trace),
+    SelectingSurface(TargetTest.Selecting, trace),
+    ContentingSurface(trace)
+  ).forEach{ it ->
+    it.buildSurface()
+    tested.add(it)
+  }
+  fkt.java.util.Tracer.TracerTopped(SurfaceCore::class.simpleName).trace("Tested apps:",tested.toArray())
+}
