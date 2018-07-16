@@ -1,7 +1,5 @@
 package fkt
 import fkt.java.*
-import fkt.facets.*
-import fkt.facets.TargetCoupler
 import fkt.SimpleTitles as Simples
 open class SimpleSurface(test:TargetTest,trace:Boolean):SurfaceCore(newFacets(trace),test){
 	override fun getContentTrees():Any {
