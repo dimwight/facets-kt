@@ -390,9 +390,9 @@ fun newFacets(trace: Boolean): Facets {
 
 fun main(args: Array<String>) {
   val trace = true
-  if (false) arrayOf(
+  if (true) arrayOf(
     SimpleSurface(TargetTest.Trigger, trace),
     SelectingSurface(TargetTest.Selecting, trace),
     ContentingSurface(trace)
-  )[0].buildSurface()
+  )[2].buildSurface()
 }
