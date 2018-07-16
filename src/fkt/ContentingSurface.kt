@@ -1,4 +1,7 @@
 package fkt
+import fkt.facets.IndexingFramePolicy
+import fkt.facets.TargetCoupler
+import fkt.facets.TextualCoupler
 import java.util.ArrayList
 import fkt.java.STarget
 import fkt.SelectingTitles as Titles
