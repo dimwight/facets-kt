@@ -82,12 +82,12 @@ open class SimpleSurface(test:TargetTest,trace:Boolean):SurfaceCore(newFacets(tr
        ("Number is " + (if (state != null) Math.rint(state as Double) else " not yet set")).replace(("\\.\\d+").toRegex(), "")
 			}
     }
-			Simples.Toggled->object: TextualCoupler() {
+		Simples.Toggled->object: TextualCoupler() {
       override val getText = { _:String->
 				"Set to " + facets.getTargetState(Simples.Toggling)
 			 }
     }
-			Simples.Indexed->object: TextualCoupler() {
+		Simples.Indexed->object: TextualCoupler() {
         override val getText = { _:String->
 					if (facets.getTargetState(Simples.Indexing) == null)
            ("No data yet for " + Simples.Indexing)
@@ -95,13 +95,13 @@ open class SimpleSurface(test:TargetTest,trace:Boolean):SurfaceCore(newFacets(tr
            facets.getIndexingState(Simples.Indexing).indexed as String
 				}
     }
-      Simples.Index->object: TextualCoupler() {
+    Simples.Index->object: TextualCoupler() {
         override val getText = { _:String->
            val state = facets.getTargetState(Simples.Indexing)
            if (state == null) ("No data yet for " + Simples.Indexing) else (state).toString()
 			}
     }
-      Simples.MasterTextual->object: TextualCoupler() {
+    Simples.MasterTextual->object: TextualCoupler() {
         override val getText = { _:String-> textTextual }
         override val targetStateUpdated = { state:Any, title:String->
           trace(" > Textual state updated: title=" + title + " state=", state)
@@ -109,14 +109,14 @@ open class SimpleSurface(test:TargetTest,trace:Boolean):SurfaceCore(newFacets(tr
                                    Simples.MasterTextual + " has changed to: " + state)
 				}
     }
-      Simples.Triggerings->object: TextualCoupler() {
+    Simples.Triggerings->object: TextualCoupler() {
         override val passText = "0"
         override val targetStateUpdated = { state:Any, _:String->
 					 if (Integer.valueOf(state as String) > 4)
 						 facets.setTargetLive(Simples.Trigger, false)
 				 }
     }
-       else->object: TextualCoupler() {
+    else->object: TextualCoupler() {
         override val passText = textTextual
        }
 		}

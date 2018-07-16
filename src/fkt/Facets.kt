@@ -18,6 +18,11 @@ abstract class NumericCoupler : TargetCoupler() {
   open val min: Double? = null
   open val max: Double? = null
 }
+abstract class IndexingCoupler : TargetCoupler() {
+  abstract val getIndexables: (String) -> Array<out Any>
+  open val passIndex: Int? = null
+  open val newUiSelectable: ((Any) -> String)? = null
+}
 abstract class IndexingState {
   abstract val uiSelectables: Array<String>
   abstract val indexed: Any
@@ -30,26 +35,6 @@ abstract class IndexingFramePolicy {
   open val newFrameTargets: (() -> (Array<STarget>))? = null
   open val newIndexedTreeTitle: ((Any) -> String)? = null
   open val newIndexedTree: ((Any, String) -> STarget)? = null
-}
-abstract class IndexingCoupler : TargetCoupler() {
-  abstract val getIndexables: (String) -> Array<out Any>
-  open val passIndex: Int? = null
-  open val newUiSelectable: ((Any) -> String)? = null
-}
-private class LocalIndexingFrame(title: String,
-                                 indexing: SIndexing,
-                                 private val p: IndexingFramePolicy)
-  : IndexingFrame(title, indexing) {
-  override fun lazyElements(): Array<STarget> {
-    val got = p.newFrameTargets?.invoke() ?: arrayOf()
-    return STarget.newTargets(got) ?: arrayOf()
-  }
-  override fun newIndexedTargets(indexed: Any): STarget {
-    val indexedTargetsTitle = p.newIndexedTreeTitle?.invoke(indexed)
-      ?: title() + "|indexed"
-    return p.newIndexedTree?.invoke(indexed, indexedTargetsTitle)
-      ?: TargetCore(indexedTargetsTitle)
-  }
 }
 class Times(private var then: Long = 0, private var start: Long = 0) {
   var doTime = false
@@ -122,6 +107,29 @@ class Facets(top: String, trace: Boolean) : Tracer(top) {
   private lateinit var rootTargeter: STargeter
   private lateinit var onRetargeted: (String) -> Unit
   private var indexingFrames: Int = 0
+  private fun putTitleTargeters(t: STargeter) {
+    val title = t.title()
+    val then = titleTargeters[title]
+    titleTargeters[title] = t
+    val elements = (t as TargeterCore).titleElements()
+    if (false && then == null)trace(("> Added targeter: title=$title" +
+      (if (false)(": elements=" + elements.size)
+      else (": titleTargeters=" + titleTargeters.values.size))))
+    for (e in elements) putTitleTargeters(e)
+  }
+  private fun titleTarget(title: String): STarget? =
+    titleTargeters[title]?.target()
+  private fun updatedTarget(target: STarget, c: TargetCoupler) {
+    val title = target.title()
+    trace(" > Updated target ", target)
+    val state = target.state
+    c.targetStateUpdated?.invoke(state, title)
+  }
+  private fun callOnRetargeted() {
+    val title = root.indexedTarget().title()
+    trace(" > Calling onRetargeted with active=$title")
+    onRetargeted(title)
+  }
   override fun doTraceMsg(msg: String) {
     if (doTrace || (Debug.trace && msg.startsWith(">>"))) super.doTraceMsg(msg)
   }
@@ -173,21 +181,6 @@ class Facets(top: String, trace: Boolean) : Tracer(top) {
     val tree = titleTrees[title] ?:throw IllegalStateException("Null tree in " + this)
     root.indexing().setIndexed(tree)
     notifiable.notify(root)
-  }
-  private fun putTitleTargeters(t: STargeter) {
-    val title = t.title()
-    val then = titleTargeters[title]
-    titleTargeters[title] = t
-    val elements = (t as TargeterCore).titleElements()
-    if (false && then == null)trace(("> Added targeter: title=$title" +
-      (if (false)(": elements=" + elements.size)
-      else (": titleTargeters=" + titleTargeters.values.size))))
-    for (e in elements) putTitleTargeters(e)
-  }
-  private fun callOnRetargeted() {
-    val title = root.indexedTarget().title()
-    trace(" > Calling onRetargeted with active=$title")
-    onRetargeted(title)
   }
   fun newTextualTarget(title: String, c: TextualCoupler): STarget {
     if (c.passText == null && c.getText == null)
@@ -248,12 +241,6 @@ class Facets(top: String, trace: Boolean) : Tracer(top) {
     trace(" > Created target group " + Debug.info(group) + " ", members)
     return group
   }
-  private fun updatedTarget(target: STarget, c: TargetCoupler) {
-    val title = target.title()
-    trace(" > Updated target ", target)
-    val state = target.state
-    c.targetStateUpdated?.invoke(state, title)
-  }
   fun newIndexingTarget(title: String, c: IndexingCoupler): STarget {
     val indexing = SIndexing(title, object : SIndexing.Coupler() {
       override fun getIndexables(i: SIndexing): Array<out Any> {
@@ -307,6 +294,21 @@ class Facets(top: String, trace: Boolean) : Tracer(top) {
       }
     })
     indexing.setIndex(0)
+    class LocalIndexingFrame(title: String,
+                                     indexing: SIndexing,
+                                     private val p: IndexingFramePolicy)
+      : IndexingFrame(title, indexing) {
+      override fun lazyElements(): Array<STarget> {
+        val got = p.newFrameTargets?.invoke() ?: arrayOf()
+        return STarget.newTargets(got) ?: arrayOf()
+      }
+      override fun newIndexedTargets(indexed: Any): STarget {
+        val indexedTargetsTitle = p.newIndexedTreeTitle?.invoke(indexed)
+          ?: title() + "|indexed"
+        return p.newIndexedTree?.invoke(indexed, indexedTargetsTitle)
+          ?: TargetCore(indexedTargetsTitle)
+      }
+    }
     val frame = LocalIndexingFrame(frameTitle, indexing, p)
     trace(" > Created indexing frame ", frame)
     return frame
@@ -329,9 +331,6 @@ class Facets(top: String, trace: Boolean) : Tracer(top) {
     trace(" > Attaching facet $facet to", targeter)
     targeter.attachFacet(facet)
   }
-  private fun titleTarget(title: String): STarget? =
-    titleTargeters[title]?.target()
-
   fun updateTargetState(title: String, update: Any) {
     trace(" > Updating target state for title=$title update=", update)
     titleTarget(title)?.updateState(update)
@@ -340,22 +339,18 @@ class Facets(top: String, trace: Boolean) : Tracer(top) {
   fun notifyTargetUpdated(title: String) =
     titleTarget(title)?.notifyParent()
       ?:throw IllegalStateException("Null target for $title")
-
   fun updateTargetWithNotify(title: String, update: Any) {
     updateTargetState(title, update)
     notifyTargetUpdated(title)
   }
-
-  fun getTargetState(title: String): Any? {
-    val state = titleTarget(title)?.state
+  fun getTargetState(title: String): Any {
+    val state = titleTarget(title)?.state?:throw Error("Null titleTarget")
     trace(" > Getting target state for title=$title state=", state)
     return state
   }
-
   fun setTargetLive(title: String, live: Boolean) =
     titleTarget(title)?.setLive(live)
       ?:throw IllegalStateException("Null target for $title")
-
   fun isTargetLive(title: String) =
     titleTarget(title)?.isLive ?:throw IllegalStateException("Null target for $title")
 }

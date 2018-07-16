@@ -47,6 +47,9 @@ interface Facets{
 val activeContentTitle:String
 val times:Times
 var doTrace:Boolean
+fun buildApp(app:FacetsApp)
+fun addContentTree(tree:Target)
+fun activateContentTree(title:String)
 fun newTextualTarget(title:String,coupler:TextualCoupler):Target
 fun newTogglingTarget(title:String,coupler:TogglingCoupler):Target
 fun newNumericTarget(title:String,coupler:NumericCoupler):Target
@@ -55,16 +58,13 @@ fun newTargetGroup(title:String,members:Array<Target> ):Target
 fun newIndexingTarget(title:String,coupler:IndexingCoupler):Target
 fun getIndexingState(title:String):IndexingState
 fun newIndexingFrame(p:IndexingFramePolicy):Target
-fun addContentTree(tree:Target)
-fun activateContentTree(title:String)
 fun attachFacet(title:String,updater:FacetUpdater)
 fun updateTargetState(title:String,update:Any)
-fun getTargetState(title:String):Any
 fun notifyTargetUpdated(title:String)
 fun updateTargetWithNotify(title:String,update:Any)
+fun getTargetState(title:String):Any
 fun setTargetLive(title:String,live:Boolean)
 fun isTargetLive(title:String):Boolean
-fun buildApp(app:FacetsApp)
 val supplement:()->Unit
 }
 interface FacetsApp{
