@@ -1,4 +1,8 @@
 package fkt.facets.util
+
+import fkt.java.util.Identified
+import fkt.java.util.Titled
+
 object Debug {
   var trace = false
   fun info(o: Any?): String {
@@ -22,7 +26,7 @@ object Debug {
     return name + id + title
   }
   fun arrayInfo(array: Array<Any>): String {
-    return "arrayInfo"
+    return "arrayInfo:${array.size}"
   }
   fun traceEvent(string: String) {
     Util.printOut(">>$string")

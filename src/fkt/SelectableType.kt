@@ -1,5 +1,5 @@
 package fkt
-import fkt.facets.util.Titled
+import fkt.java.util.Titled
 
 class SelectableType protected constructor(val title:String): Titled {
   fun titleTail():String =
