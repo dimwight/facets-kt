@@ -1,6 +1,6 @@
 package fkt.facets
 import fkt.facets.core.*
-import fkt.facets.core.Target
+import fkt.java.Target
 import fkt.facets.util.Tracer
 import fkt.facets.util.Util
 fun newFacetWorks(trace: Boolean): Facets {

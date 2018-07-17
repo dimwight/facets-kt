@@ -1,5 +1,8 @@
 package fkt.facets.core
-interface Targety : Notifying,Target{
+
+import fkt.java.Target
+
+interface Targety : Notifying, Target {
 override fun title():String
 override fun elements():Array<Targety> 
 open fun updateState(update:Any):Unit
