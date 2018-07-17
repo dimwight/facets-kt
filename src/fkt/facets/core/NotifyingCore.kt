@@ -1,6 +1,9 @@
 package fkt.facets.core
 
-abstract class NotifyingCore(val type: String, val title: String) : Notifying {
+import fkt.java.util.Tracer
+
+abstract class NotifyingCore(val type: String, val title: String) :Tracer(::class.),
+  Notifying {
   lateinit var notifiable_: Notifiable
   override fun title(): String {
     return this.title

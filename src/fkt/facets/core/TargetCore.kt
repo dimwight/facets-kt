@@ -18,13 +18,12 @@ open class TargetCore(title: String, var extra: Any? = null)
 
   override fun elements(): Array<Targety> {
     if (this.extra != null) this.extra = this.lazyElements()
-    if (this.extra is Array<*>) {
+    return if (this.extra is Array<*>) {
       val extra = this.extra!! as Array<Targety>
-      extra.forEach({ e ->
-        e.setNotifiable(this)
-      })
-      return extra
-    } else return arrayOf()
+      trace(".elements: extra=$extra")
+      extra.forEach { e ->e.setNotifiable(this)}
+      extra
+    } else arrayOf()
   }
 
   open fun lazyElements(): Array<out Targety> {

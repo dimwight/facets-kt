@@ -54,7 +54,9 @@ class FacetWorks(override var doTrace: Boolean, override val supplement:()->Unit
     })
     root = object : IndexingFrame("RootFrame", indexing) {
       override fun lazyElements(): Array<out Targety> {
-        return arrayOf()
+        return arrayOf(
+          Textual(activeContentTitle,object:TextualCoupler(){})
+        )
       }
     }
     if (false) trace(" > Created trees root ", root)
@@ -107,13 +109,15 @@ class FacetWorks(override var doTrace: Boolean, override val supplement:()->Unit
   }
   override fun newTargetGroup(title: String, members: Array<out TTarget>): TTarget {
     val grouped = members.map { it as Targety }
-    return TargetCore(title, grouped)
+    val group = TargetCore(title, grouped)
+    trace("Created group title=$title")
+    return group
   }
   private fun addTitleTargeters(t: Targeter) {
     val title = t.title()
     val elements: Array<Targeter> = (t as TargeterCore).titleElements()
-    titleTargeters.set(title, t)
-    trace("Added targeter: title=" + title + ": elements=" + elements.size)
+    titleTargeters[title] = t
+    trace("Added targeter: title=$title: elements=${elements.size}")
     elements.forEach { e -> addTitleTargeters(e) }
   }
   override fun attachFacet(title: String, updater: FacetUpdater){
