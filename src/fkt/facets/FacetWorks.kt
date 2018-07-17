@@ -3,7 +3,7 @@ import fkt.facets.core.*
 import fkt.java.TTarget
 import fkt.facets.util.Tracer
 import fkt.facets.util.Util
-fun newFacetWorks(trace: Boolean): Facets {
+fun newFacets(trace: Boolean): Facets {
   return FacetWorks(trace)
 }
 class FacetWorks(override var doTrace: Boolean, override val supplement:()->Unit={})

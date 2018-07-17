@@ -59,7 +59,7 @@ open class SelectingSurface(test: TargetTest,trace:Boolean)
 		})
 	}
 
-	fun getIndexedType(): SelectableType {
+	private fun getIndexedType(): SelectableType {
 		val content = facets.getIndexingState(
 						Titles.Select).indexed as TextContent
 		return SelectableType.getContentType(content)

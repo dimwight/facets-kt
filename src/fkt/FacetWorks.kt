@@ -83,7 +83,7 @@ class Facets(top: String, trace: Boolean) : Tracer(top) {
   var doTrace = false
   private val titleTargeters = HashMap<String, STargeter>()
   private val titleTrees = HashMap<String, STarget>()
-  private val root: IndexingFrame
+  private lateinit var root: IndexingFrame
   private val notifiable = object : Notifiable {
     override fun notify(notice: Any) {
       var msg = "> Surface for " + Debug.info(rootTargeter) + " notified by " + notice
@@ -113,8 +113,8 @@ class Facets(top: String, trace: Boolean) : Tracer(top) {
     val then = titleTargeters[title]
     titleTargeters[title] = t
     val elements = (t as TargeterCore).titleElements()
-    if (false && then == null)trace(("> Added targeter: title=$title" +
-      (if (false)(": elements=" + elements.size)
+    if (true && then == null)trace(("> Added targeter: title=$title" +
+      (if (true)(": elements=" + elements.size)
       else (": titleTargeters=" + titleTargeters.values.size))))
     for (e in elements) putTitleTargeters(e)
   }
@@ -147,8 +147,12 @@ class Facets(top: String, trace: Boolean) : Tracer(top) {
       }
     })
     root = object : IndexingFrame("RootFrame", indexing) {
-      override fun lazyElements(): Array<out STarget> {
-        return arrayOf(        )}
+      override fun lazyElements(): Array<out STarget> =
+        arrayOf(STextual(activeContentTitle, object : STextual.Coupler() {
+          override fun getText(t: STextual): String =
+            (root.indexedTarget() as STarget).title()
+        })
+        )
     }
     if (false) trace(" > Created trees root ", root)
   }
@@ -164,7 +168,7 @@ class Facets(top: String, trace: Boolean) : Tracer(top) {
     rootTargeter.setNotifiable(notifiable)
     rootTargeter.retarget(root)
     putTitleTargeters(rootTargeter)
-    trace(" > Created targeters=" + titleTargeters.values.size)
+    trace(" > Created targeters=",titleTargeters.keys.toTypedArray())
     callOnRetargeted()
     this.trace("Built targets, created targeters")
     app.buildLayout()

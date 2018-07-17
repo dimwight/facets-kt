@@ -10,8 +10,8 @@ open class ContentingSurface(trace:Boolean)
   private lateinit var edit:TextContent
 	override fun getContentTrees(): Any {
     return arrayOf<TTarget>(
-    		newContentTree(list.get(0)), 
-    		newContentTree(list.get(2)), 
+    		newContentTree(list[0]),
+    		newContentTree(list[2]),
     		facets.newIndexingFrame(object: IndexingFramePolicy() {
     			override val frameTitle = Titles.Chooser
 					override val indexingTitle = Titles.Select
