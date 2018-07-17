@@ -113,7 +113,7 @@ class Facets(top: String, trace: Boolean) : Tracer(top) {
     val then = titleTargeters[title]
     titleTargeters[title] = t
     val elements = (t as TargeterCore).titleElements()
-    if (true && then == null)trace(("> Added targeter: title=$title" +
+    if (false && then == null)trace(("> Added targeter: title=$title" +
       (if (true)(": elements=" + elements.size)
       else (": titleTargeters=" + titleTargeters.values.size))))
     for (e in elements) putTitleTargeters(e)
@@ -168,7 +168,7 @@ class Facets(top: String, trace: Boolean) : Tracer(top) {
     rootTargeter.setNotifiable(notifiable)
     rootTargeter.retarget(root)
     putTitleTargeters(rootTargeter)
-    trace(" > Created targeters=",titleTargeters.keys.toTypedArray())
+    trace(" > Created targeters=",titleTargeters.size)
     callOnRetargeted()
     this.trace("Built targets, created targeters")
     app.buildLayout()
