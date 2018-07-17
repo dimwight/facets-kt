@@ -1,6 +1,8 @@
 package fkt.facets.core
 
-interface Target{
+import fkt.java.FacetsTarget
+
+interface Target:FacetsTarget{
 }
 typealias FacetUpdater=(state:Any)->Unit
 abstract class TargetCoupler {
