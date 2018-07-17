@@ -60,7 +60,7 @@ fun attachFacet(title:String,updater:FacetUpdater)
 fun updateTargetState(title:String,update:Any)
 fun notifyTargetUpdated(title:String)
 fun updateTargetWithNotify(title:String,update:Any)
-fun getTargetState(title:String):Any
+fun getTargetState(title:String):Any?
 fun setTargetLive(title:String,live:Boolean)
 fun isTargetLive(title:String):Boolean
 val supplement:()->Unit

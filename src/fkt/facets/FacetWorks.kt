@@ -39,7 +39,7 @@ class FacetWorks(override var doTrace: Boolean, override val supplement:()->Unit
       rt.retargetFacets()
     }
   }
-  lateinit var onRetargeted: (title: String) -> Any
+  private lateinit var onRetargeted: (title: String) -> Any
   private val titleTargeters = HashMap<String, Targeter?>()
   private val titleTrees = HashMap<String, Targety>()
   private val root: IndexingFrame;
@@ -131,8 +131,12 @@ class FacetWorks(override var doTrace: Boolean, override val supplement:()->Unit
     titleTarget(title).updateState(update)
     notifiable.notify(title)
   }
-  override fun getTargetState(title: String): Any {
-    return titleTarget(title).state()
+  override fun getTargetState(title: String): Any? {
+    return try {
+      titleTarget(title).state()
+    }catch (e:Error){
+      null
+    }
   }
   override fun isTargetLive(title: String): Boolean {
     return titleTarget(title).isLive()
