@@ -45,18 +45,18 @@ fun main(args: Array<String>) {
   val trace = true
   val tested= arrayListOf<FacetsApp>()
   arrayOf(
-    SimpleSurface(TargetTest.Textual, trace),
-    SimpleSurface(TargetTest.Indexing, trace),
-    SimpleSurface(TargetTest.Trigger, trace),
-    SimpleSurface(TargetTest.TogglingLive, trace),
-    SimpleSurface(TargetTest.Numeric, trace),
-    SelectingSurface(TargetTest.Selecting, trace),
-    ContentingSurface(trace)
+    SimpleSurface(TargetTest.Textual, trace)
+    /*
+    ,SimpleSurface(TargetTest.Indexing, trace)
+    ,SimpleSurface(TargetTest.Trigger, trace)
+    ,SimpleSurface(TargetTest.TogglingLive, trace)
+    ,SimpleSurface(TargetTest.Numeric, trace)
+    ,SelectingSurface(TargetTest.Selecting, trace)
+    ,ContentingSurface(trace)
+    */
   ).forEach{ it ->
-    if(true||it is SimpleSurface){
-      it.buildSurface()
-      tested.add(it)
-    }
+    it.buildSurface()
+    tested.add(it)
   }
   Tracer.TracerTopped(SurfaceCore::class.simpleName!!).trace("Tested apps:",tested.toArray())
 }
