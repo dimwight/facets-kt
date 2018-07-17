@@ -1,7 +1,5 @@
 package fkt.facets.core
-
 import fkt.java.Target
-
 typealias FacetUpdater=(state:Any)->Unit
 abstract class TargetCoupler {
   open val targetStateUpdated: ((Any, String) -> Unit)? = null

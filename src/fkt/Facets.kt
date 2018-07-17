@@ -1,4 +1,5 @@
 package fkt
+import fkt.facets.core.FacetUpdater
 import fkt.java.util.NumberPolicy
 import fkt.java.*
 import fkt.java.util.*
@@ -313,7 +314,7 @@ class Facets(top: String, trace: Boolean) : Tracer(top) {
     trace(" > Created indexing frame ", frame)
     return frame
   }
-  fun attachFacet(title: String, updater: (Any) -> Unit) {
+  fun attachFacet(title: String, updater: FacetUpdater) {
     val targeter = titleTargeters[title]
       ?:throw IllegalArgumentException("Null targeter for $title")
     val facet = object : SFacet {
