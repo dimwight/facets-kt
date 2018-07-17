@@ -60,4 +60,4 @@ fun main(args: Array<String>) {
   }
   Tracer.TracerTopped(SurfaceCore::class.simpleName!!).trace("Tested apps:",tested.toArray())
 }
-fun newFacets(trace: Boolean):Facets = if(true)FacetsJava(trace)else FacetWorks(trace)
+fun newFacets(trace: Boolean):Facets = if(false)FacetsJava(trace)else FacetWorks(trace)
