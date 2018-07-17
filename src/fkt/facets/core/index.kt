@@ -48,12 +48,12 @@ var doTrace:Boolean
 fun buildApp(app:FacetsApp)
 fun addContentTree(tree: TTarget)
 fun activateContentTree(title:String)
-fun newTextualTarget(title:String,coupler:TextualCoupler): TTarget
-fun newTogglingTarget(title:String,coupler:TogglingCoupler): TTarget
-fun newNumericTarget(title:String,coupler:NumericCoupler): TTarget
-fun newTriggerTarget(title:String,coupler:TargetCoupler): TTarget
+fun newTextualTarget(title:String,c:TextualCoupler): TTarget
+fun newTogglingTarget(title:String,c:TogglingCoupler): TTarget
+fun newNumericTarget(title:String,c:NumericCoupler): TTarget
+fun newTriggerTarget(title:String,c:TargetCoupler): TTarget
 fun newTargetGroup(title:String,members:Array<TTarget> ): TTarget
-fun newIndexingTarget(title:String,coupler:IndexingCoupler): TTarget
+fun newIndexingTarget(title:String,c:IndexingCoupler): TTarget
 fun getIndexingState(title:String):IndexingState
 fun newIndexingFrame(p:IndexingFramePolicy): TTarget
 fun attachFacet(title:String,updater:FacetUpdater)

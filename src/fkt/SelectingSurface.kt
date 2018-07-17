@@ -20,7 +20,7 @@ class TextContent(var text: String) {
 }
 
 open class SelectingSurface(test: TargetTest,trace:Boolean)
-	: SurfaceCore(newFacets(trace),test) {
+	: SurfaceCore(trace,test) {
 	protected val list = mutableListOf(
 					TextContent("Hello world!"),
 					TextContent("Hello Dolly!"),

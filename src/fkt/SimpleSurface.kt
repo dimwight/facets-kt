@@ -2,7 +2,7 @@ package fkt
 import fkt.facets.core.*
 import fkt.java.TTarget
 import fkt.SimpleTitles as Simples
-open class SimpleSurface(test:TargetTest,trace:Boolean):SurfaceCore(newFacets(trace),test){
+open class SimpleSurface(test:TargetTest,trace:Boolean):SurfaceCore(trace,test){
 	override fun getContentTrees():Any {
     trace(" > Generating targets")
     val treeTitle = test.toString() + " Test"

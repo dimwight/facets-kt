@@ -7,7 +7,7 @@ fun newFacets(trace: Boolean): Facets {
   return FacetWorks(trace)
 }
 class FacetWorks(override var doTrace: Boolean, override val supplement:()->Unit={})
-    : Facets, Tracer("FacetWorks") {
+    : Facets, Tracer("Facets") {
   override fun newNumericTarget(title: String, coupler: NumericCoupler): TTarget {
     throw Error("Not implemented")
   }
@@ -45,7 +45,7 @@ class FacetWorks(override var doTrace: Boolean, override val supplement:()->Unit
   private val root: IndexingFrame;
   private var rootTargeter: Targeter? = null
   init {
-    activeContentTitle = "FacetWorks#" + identity() + ":Active Content"
+    activeContentTitle = "FacetsJava#" + identity() + ":Active Content"
     val indexing = Indexing("RootIndexing", object : IndexingCoupler() {
       private var thenTrees: Array<Targety>? = null
       override val getIndexables = fun(_: String): Array<out Any> {

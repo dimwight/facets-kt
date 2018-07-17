@@ -1,5 +1,6 @@
 package fkt
-import fkt.facets.core.FacetsApp
+import fkt.facets.FacetWorks
+import fkt.facets.core.*
 import fkt.java.util.Titled
 import fkt.facets.util.Tracer
 import fkt.SelectingTitles as Selectings
@@ -17,8 +18,9 @@ enum class TargetTest {
 		}
 	}
 }
-abstract class SurfaceCore(val facets: FacetWorks, test:TargetTest)
+abstract class SurfaceCore(trace:Boolean, test:TargetTest)
 		:Tracer(test.name), Titled, FacetsApp {
+  val facets: Facets= newFacets(trace)
   protected val test:TargetTest
   init{
     this.test = if (true || test == TargetTest.Selecting) test else TargetTest.Indexing
@@ -52,3 +54,4 @@ fun main(args: Array<String>) {
   }
   Tracer.TracerTopped(SurfaceCore::class.simpleName!!).trace("Tested apps:",tested.toArray())
 }
+fun newFacets(trace: Boolean):Facets = if(true)FacetsJava(trace)else FacetWorks(trace)

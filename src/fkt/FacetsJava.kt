@@ -9,7 +9,7 @@ import fkt.java.TargeterCore
 import fkt.java.util.*
 class TimeWorks(private var then: Long = 0, private var start: Long = 0):Times {
   override fun setResetWait(millis: Int) {
-    throw Error("Not implemented")
+    resetWait=millis.toLong()
   }
   override fun elapsed(): Int {
     throw Error("Not implemented")
@@ -17,9 +17,9 @@ class TimeWorks(private var then: Long = 0, private var start: Long = 0):Times {
   override var doTime = false
   private var restarted: Boolean = false
   private val debug = false
-  var resetWait = 1000L
+  private var resetWait = 1000L
     set(millis){
-      if (debug) Util.printOut("TimeWorks.resetWait=", millis)
+      if (debug) Util.printOut("Times.resetWait=", millis)
       start = nowMillis
       doTime = true
       field = millis
@@ -53,7 +53,7 @@ class TimeWorks(private var then: Long = 0, private var start: Long = 0):Times {
   }
   private val nowMillis get()= System.nanoTime()/1000
 }
-class FacetWorks(top: String, trace: Boolean) : Tracer(top),Facets {
+class FacetsJava(trace: Boolean) : Tracer("Facets"),Facets {
   override val supplement={}
   override val activeContentTitle: String
   override val times = TimeWorks()
@@ -74,7 +74,7 @@ class FacetWorks(top: String, trace: Boolean) : Tracer(top),Facets {
       if (false) putTitleTargeters(rootTargeter)
       callOnRetargeted()
       rootTargeter.retargetFacets()
-      msg = "> FacetWorks retargeted in " + Debug.info(rootTargeter)
+      msg = "> FacetsJava retargeted in " + Debug.info(rootTargeter)
       if (times.doTime) times.traceElapsed(msg)
       else trace(msg)
     }
@@ -113,7 +113,7 @@ class FacetWorks(top: String, trace: Boolean) : Tracer(top),Facets {
   }
   init {
     this.doTrace = trace
-    activeContentTitle = "FacetWorks#" + identity() + ":Active Content"
+    activeContentTitle = "FacetsJava#" + identity() + ":Active Content"
     val indexing = SIndexing("RootIndexing", object : SIndexing.Coupler() {
       private var thenTrees: Array<STarget>? = null
       override fun getIndexables(i: SIndexing): Array<STarget> {
@@ -152,11 +152,11 @@ class FacetWorks(top: String, trace: Boolean) : Tracer(top),Facets {
     trace("Attached and laid out facets")
     trace("Surface built.")
   }
-  override fun addContentTree(add: TTarget) {
-    val title = (add as STarget).title()
+  override fun addContentTree(tree: TTarget) {
+    val title = (tree as STarget).title()
     trace(" > Adding content title=$title")
-    titleTrees[title] = add
-    root.indexing().setIndexed(add)
+    titleTrees[title] = tree
+    root.indexing().setIndexed(tree)
   }
   override fun activateContentTree(title: String) {
     trace(" > Activating content title=$title")
@@ -337,5 +337,4 @@ class FacetWorks(top: String, trace: Boolean) : Tracer(top),Facets {
   override fun isTargetLive(title: String) =
     titleTarget(title)?.isLive ?:throw IllegalStateException("Null target for $title")
 }
-fun newFacets(trace: Boolean) = FacetWorks("FacetWorks", trace)
 

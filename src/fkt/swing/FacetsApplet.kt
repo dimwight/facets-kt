@@ -41,7 +41,7 @@ class FacetsApplet : JApplet() {
       when {
         test.isSimple -> object : SimpleSurface(test, trace) {
           override fun buildLayout() {
-            facets.times.resetWait = 50
+            facets.times.setResetWait(50)
             facets.times.doTime = false
             if (test === TogglingLive) {
               val live = facets.getTargetState(Titles.Toggling) as Boolean

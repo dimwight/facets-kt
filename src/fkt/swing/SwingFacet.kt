@@ -1,6 +1,6 @@
 package fkt.swing
 import fkt.facets.util.Tracer
-import fkt.FacetWorks
+import fkt.facets.core.Facets
 import java.awt.FlowLayout
 import java.awt.event.ActionEvent
 import java.awt.event.ActionListener
@@ -9,18 +9,18 @@ import javax.swing.JComponent
 import javax.swing.JLabel
 import javax.swing.JPanel
 abstract class SwingFacet<C : JComponent>
-		(val field:C, val title:String, val facets: FacetWorks):Tracer("SwingFacet"), ActionListener {
-  val mount:JPanel
+		(val field:C, val title:String, val facets: Facets,
+     val mount: JPanel = JPanel(FlowLayout(FlowLayout.LEFT)))
+  :Tracer("SwingFacet"),ActionListener {
   private lateinit var label:JLabel
   protected abstract val fieldState:Any
-  val updater:(Any)->Unit={
+  private val updater:(Any)->Unit={
 	  updateField(it)
 	  val live = facets.isTargetLive(title)
-	  field.setEnabled(live)
-	  label.setEnabled(live)
+    field.isEnabled = live
+    label.isEnabled = live
 	}
   init{
-    mount = JPanel(FlowLayout(FlowLayout.LEFT))
     label = JLabel(stripTitleTail(title))
     if (!(field is JButton)) mount.add(label)
     mount.add(field)
