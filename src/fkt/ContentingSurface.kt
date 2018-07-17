@@ -3,7 +3,6 @@ import fkt.facets.core.IndexingFramePolicy
 import fkt.facets.core.TargetCoupler
 import fkt.facets.core.TextualCoupler
 import java.util.ArrayList
-import fkt.java.STarget
 import fkt.java.TTarget
 import fkt.SelectingTitles as Titles
 import fkt.SimpleTitles as Simples

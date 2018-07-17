@@ -218,7 +218,7 @@ class FacetsJava(trace: Boolean) : Tracer("Facets"),Facets {
     trace(" > Created trigger ", trigger)
     return trigger
   }
-  override fun newTargetGroup(title: String, members: Array<TTarget>): TTarget {
+  override fun newTargetGroup(title: String, members: Array<out TTarget>): TTarget {
     val grouped=members.map { it as STarget }.toTypedArray()
     val group = TargetCore(title, *grouped)
     trace(" > Created target group " + Debug.info(group) + " ", members)

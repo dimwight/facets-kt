@@ -6,7 +6,7 @@ import fkt.facets.util.Tracer
 import fkt.SelectingTitles as Selectings
 enum class TargetTest {
 	Textual, TogglingLive, Indexing, Numeric, Trigger, Selecting, Contenting;
-	fun indexingTitle():String {
+	fun indexingTitle_():String {
 		if (this.ordinal < Selecting.ordinal)
 			throw RuntimeException("Not implemented in " + this)
 		return if (this == Selecting) Selectings.Select else Selectings.Switch
@@ -21,9 +21,9 @@ enum class TargetTest {
 abstract class SurfaceCore(trace:Boolean, test:TargetTest)
 		:Tracer(test.name), Titled, FacetsApp {
   val facets: Facets= newFacets(trace)
-  protected val test:TargetTest
+  protected val test:TargetTest = if (true || test == TargetTest.Selecting) test else TargetTest.Indexing
+
   init{
-    this.test = if (true || test == TargetTest.Selecting) test else TargetTest.Indexing
     facets.times.doTime = false || facets.doTrace
   }
   open fun buildSurface() {
@@ -49,8 +49,10 @@ fun main(args: Array<String>) {
     SelectingSurface(TargetTest.Selecting, trace),
     ContentingSurface(trace)
   ).forEach{ it ->
-    it.buildSurface()
-    tested.add(it)
+    if(true||it is SimpleSurface){
+      it.buildSurface()
+      tested.add(it)
+    }
   }
   Tracer.TracerTopped(SurfaceCore::class.simpleName!!).trace("Tested apps:",tested.toArray())
 }

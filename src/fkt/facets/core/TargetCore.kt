@@ -1,7 +1,8 @@
 package fkt.facets.core
 const val TargetCoreType = "Targety"
 
-open class TargetCore(title: String, var extra: Any? = null) : NotifyingCore(TargetCoreType, title), Targety// any=Targety[]|TargetCoupler
+open class TargetCore(title: String, var extra: Any? = null)
+  : NotifyingCore(TargetCoreType, title), Targety// any=Targety[]|TargetCoupler
 {
   private var live = true
   val NoState = "No state set"

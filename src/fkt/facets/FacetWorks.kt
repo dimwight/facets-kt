@@ -3,9 +3,6 @@ import fkt.facets.core.*
 import fkt.java.TTarget
 import fkt.facets.util.Tracer
 import fkt.facets.util.Util
-fun newFacets(trace: Boolean): Facets {
-  return FacetWorks(trace)
-}
 class FacetWorks(override var doTrace: Boolean, override val supplement:()->Unit={})
     : Facets, Tracer("Facets") {
   override fun newNumericTarget(title: String, coupler: NumericCoupler): TTarget {
@@ -105,8 +102,9 @@ class FacetWorks(override var doTrace: Boolean, override val supplement:()->Unit
     trace("Created trigger title=$title")
     return trigger
   }
-  override fun newTargetGroup(title: String, members: Array<TTarget>): TTarget {
-    return TargetCore(title, members as Array<Targety>)
+  override fun newTargetGroup(title: String, members: Array<out TTarget>): TTarget {
+    val grouped = members.map { it as Targety }
+    return TargetCore(title, grouped)
   }
   private fun addTitleTargeters(t: Targeter) {
     val title = t.title()
