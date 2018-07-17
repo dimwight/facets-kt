@@ -1,7 +1,7 @@
 package fkt
 import fkt.facets.FacetWorks
 import fkt.facets.core.*
-import fkt.java.util.Titled
+import fkt.facets.util.Titled
 import fkt.facets.util.Tracer
 import fkt.SelectingTitles as Selectings
 enum class TargetTest {

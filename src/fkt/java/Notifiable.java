@@ -1,5 +1,5 @@
 package fkt.java;
-import fkt.java.util.Titled;
+import fkt.facets.util.Titled;
 /**
 Undertakes to respond to notification. 
 <p>{@link Notifiable} is basically an observer, with a slightly stronger

@@ -20,7 +20,7 @@ open class TargetCore(title: String, var extra: Any? = null)
     if (this.extra != null) this.extra = this.lazyElements()
     return if (this.extra is Array<*>) {
       val extra = this.extra!! as Array<Targety>
-      trace(".elements: extra=$extra")
+      trace(".elements: extra=",extra.size)
       extra.forEach { e ->e.setNotifiable(this)}
       extra
     } else arrayOf()

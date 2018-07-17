@@ -1,7 +1,5 @@
 package fkt.facets.util
 
-import fkt.java.util.Identified
-import fkt.java.util.Titled
 
 object Debug {
   var trace = false
@@ -17,10 +15,10 @@ object Debug {
       val length = text!!.length
       return text.substring(0, Math.min(length, 60)) + if (true) "" else ": length=$length"
     }
-    val classe = o.javaClass
+    val classe = o::class
     val name = classe.simpleName
     var id = ""
-    var title = classe.name
+    var title = ""
     if (o is Identified) id = " #" + o.identity()
     if (o is Titled) title = " " + o.title()
     return name + id + title

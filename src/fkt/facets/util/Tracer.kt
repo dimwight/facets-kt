@@ -2,10 +2,6 @@ package fkt.facets.util
 import fkt.java.util.Identified
 import fkt.java.util.Util
 import fkt.java.util.Util.arrayPrintString
-
-/**
-Utility superclass that can issue trace messages.
- */
 abstract class Tracer(private val top:String?): Identified {
   private val id = ++ids
   class TracerTopped(top: String):Tracer(top) {
@@ -29,7 +25,7 @@ abstract class Tracer(private val top:String?): Identified {
       doTraceMsg(msg + Debug.info(o))
   }
   protected open fun doTraceMsg(msg:String) {
-    Util.printOut((if (top != null) ("$top #$id") else Debug.info(this)) + " " + msg)
+    Util.printOut((if (false&&top != null) ("$top #$id") else Debug.info(this)) + " " + msg)
   }
   private fun newArrayText(array:Array<Any>):String {
     if (false) return arrayPrintString(array)

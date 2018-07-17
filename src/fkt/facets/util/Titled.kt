@@ -7,7 +7,7 @@ common origin or purpose, or used as a persistable unique identifier.
 <i>label</i> or <i>caption</i>; the distinct term was originally devised to
 avoid collision in code with these widely-used terms).
  */
-interface Titled_ {
+interface Titled {
   /**
   Return human-readable identifying text.
   @return non-<code>null</code>, non-empty string with no structural whitespace
