@@ -23,7 +23,7 @@ open class SimpleSurface(test:TargetTest,trace:Boolean):SurfaceCore(newFacets(tr
   override protected fun doTraceMsg(msg:String) {
     if (true && facets.doTrace) super.doTraceMsg(msg)
   }
-  protected fun newTrigger(title:String):STarget {
+  protected fun newTrigger(title:String):TTarget {
     return facets.newTriggerTarget(title, object: TargetCoupler(){
       override val targetStateUpdated= { _:Any, title:String->
           trace(" > Trigger fired: title=" + title)
@@ -35,14 +35,14 @@ open class SimpleSurface(test:TargetTest,trace:Boolean):SurfaceCore(newFacets(tr
 			 }
      })
   }
-  protected fun newTextual(title:String):STarget {
+  protected fun newTextual(title:String):TTarget {
     val coupler = newTextualCouplerCore(title)
     val passText = coupler.passText
     trace(" > Generating textual target state=",
       passText ?: coupler.getText?.invoke(title) ?: Error("No textual state"))
     return facets.newTextualTarget(title, coupler)
   }
-  protected fun newNumeric(title:String):STarget {
+  protected fun newNumeric(title:String):TTarget {
     val coupler = object: NumericCoupler() {
         override val passValue = Simples.StartNumber
         override val min = 5.0
@@ -51,7 +51,7 @@ open class SimpleSurface(test:TargetTest,trace:Boolean):SurfaceCore(newFacets(tr
     trace(" > Generating numeric target state=", coupler.passValue)
     return facets.newNumericTarget(title, coupler)
   }
-  protected fun newToggling(title:String, state:Boolean):STarget {
+  protected fun newToggling(title:String, state:Boolean):TTarget {
     trace(" > Generating toggling target state=", state)
     val coupler = object: TogglingCoupler() {
       override val passSet = state
@@ -63,7 +63,7 @@ open class SimpleSurface(test:TargetTest,trace:Boolean):SurfaceCore(newFacets(tr
     }
     return facets.newTogglingTarget(title, coupler)
   }
-  protected fun newIndexing(title:String, indexables:Array<out String>, indexStart:Int):STarget {
+  protected fun newIndexing(title:String, indexables:Array<out String>, indexStart:Int):TTarget {
     trace(" > Generating indexing target state=", indexStart)
     val coupler = object: IndexingCoupler() {
     		override val targetStateUpdated=null

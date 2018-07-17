@@ -1,6 +1,7 @@
 package fkt
 import java.util.ArrayList
 import fkt.java.STarget
+import fkt.java.TTarget
 import fkt.SelectingTitles as Titles
 import fkt.SimpleTitles as Simples
 open class ContentingSurface(trace:Boolean)
@@ -8,7 +9,7 @@ open class ContentingSurface(trace:Boolean)
   private lateinit var active:TextContent
   private lateinit var edit:TextContent
 	override fun getContentTrees(): Any {
-    return arrayOf<STarget>(
+    return arrayOf<TTarget>(
     		newContentTree(list.get(0)), 
     		newContentTree(list.get(2)), 
     		facets.newIndexingFrame(object: IndexingFramePolicy() {
@@ -31,10 +32,10 @@ open class ContentingSurface(trace:Boolean)
 			}
     }))
   }
-  private fun newContentTree(content:TextContent):STarget {
+  private fun newContentTree(content:TextContent):TTarget {
     val type = SelectableType.getContentType(content)
     val tail = type.titleTail()
-    val members = ArrayList<STarget>()
+    val members = ArrayList<TTarget>()
     members.add(newEditTarget(content, tail))
     if (type === SelectableType.ShowChars) members.add(newCharsTarget(tail))
     members.add(facets.newTriggerTarget(Titles.Save + tail, object: TargetCoupler() {

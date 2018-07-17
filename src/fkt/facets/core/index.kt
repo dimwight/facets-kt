@@ -1,5 +1,5 @@
 package fkt.facets.core
-import fkt.java.Target
+import fkt.java.TTarget
 typealias FacetUpdater=(state:Any)->Unit
 abstract class TargetCoupler {
   open val targetStateUpdated: ((Any, String) -> Unit)? = null
@@ -31,9 +31,9 @@ abstract class IndexingFramePolicy {
   abstract val getIndexables: () -> (Array<out Any>)
   open val frameTitle: String? = null
   open val newUiSelectable: ((Any) -> String)? = null
-  open val newFrameTargets: (() -> (Array<out Target>))? = null
+  open val newFrameTargets: (() -> (Array<out TTarget>))? = null
   open val newIndexedTreeTitle: ((Any) -> String)? = null
-  open val newIndexedTree: ((Any, String) -> Target)? = null
+  open val newIndexedTree: ((Any, String) -> TTarget)? = null
 }
 interface Times{
 var doTime:Boolean
@@ -46,16 +46,16 @@ val activeContentTitle:String
 val times:Times
 var doTrace:Boolean
 fun buildApp(app:FacetsApp)
-fun addContentTree(tree:Target)
+fun addContentTree(tree: TTarget)
 fun activateContentTree(title:String)
-fun newTextualTarget(title:String,coupler:TextualCoupler):Target
-fun newTogglingTarget(title:String,coupler:TogglingCoupler):Target
-fun newNumericTarget(title:String,coupler:NumericCoupler):Target
-fun newTriggerTarget(title:String,coupler:TargetCoupler):Target
-fun newTargetGroup(title:String,members:Array<Target> ):Target
-fun newIndexingTarget(title:String,coupler:IndexingCoupler):Target
+fun newTextualTarget(title:String,coupler:TextualCoupler): TTarget
+fun newTogglingTarget(title:String,coupler:TogglingCoupler): TTarget
+fun newNumericTarget(title:String,coupler:NumericCoupler): TTarget
+fun newTriggerTarget(title:String,coupler:TargetCoupler): TTarget
+fun newTargetGroup(title:String,members:Array<TTarget> ): TTarget
+fun newIndexingTarget(title:String,coupler:IndexingCoupler): TTarget
 fun getIndexingState(title:String):IndexingState
-fun newIndexingFrame(p:IndexingFramePolicy):Target
+fun newIndexingFrame(p:IndexingFramePolicy): TTarget
 fun attachFacet(title:String,updater:FacetUpdater)
 fun updateTargetState(title:String,update:Any)
 fun notifyTargetUpdated(title:String)
@@ -66,7 +66,7 @@ fun isTargetLive(title:String):Boolean
 val supplement:()->Unit
 }
 interface FacetsApp{
-fun getContentTrees():Array<Target> 
+fun getContentTrees():Array<TTarget>
 fun onRetargeted(activeTitle:String)
 fun buildLayout()
 }

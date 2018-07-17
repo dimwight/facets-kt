@@ -8,7 +8,7 @@ public class IndexingFrameTargeter extends TargeterCore{
   final private Map<String,STargeter>titleTargeters=new HashMap();
 	private STargeter indexing,indexed;
 	private SIndexing indexingTarget;
-	private STarget indexedTarget;
+	private TTarget indexedTarget;
 	private String indexedTitle;
 	public void retarget(STarget target){
 		super.retarget(target);
@@ -24,7 +24,7 @@ public class IndexingFrameTargeter extends TargeterCore{
 				updateToTarget();
 				indexed=((TargetCore)indexedTarget).newTargeter();
 				indexed.setNotifiable(this); 
-				indexed.retarget(indexedTarget);
+				indexed.retarget((STarget) indexedTarget);
 				titleTargeters.put(indexedTitle,indexed);
 			}
 			indexingTarget.setIndex(atThen);
@@ -33,13 +33,13 @@ public class IndexingFrameTargeter extends TargeterCore{
 		indexing.retarget(indexingTarget);
 		indexed=titleTargeters.get(indexedTitle);
 		if(indexed==null)throw new IllegalStateException("Null indexed in "+this);
-	  indexed.retarget(indexedTarget);
+	  indexed.retarget((STarget) indexedTarget);
 	}
 	private void updateToTarget(){
 		IndexingFrame frame=(IndexingFrame)target();
 		indexingTarget=frame.indexing();
 		indexedTarget=frame.indexedTarget();
-		indexedTitle=indexedTarget.title();
+		indexedTitle=((STarget) indexedTarget).title();
 	}
   public void retargetFacets(){
     super.retargetFacets();

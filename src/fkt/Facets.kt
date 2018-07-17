@@ -33,9 +33,9 @@ abstract class IndexingFramePolicy {
   abstract val getIndexables: () -> (Array<out Any>)
   open val frameTitle: String? = null
   open val newUiSelectable: ((Any) -> String)? = null
-  open val newFrameTargets: (() -> (Array<STarget>))? = null
+  open val newFrameTargets: (() -> (Array<TTarget>))? = null
   open val newIndexedTreeTitle: ((Any) -> String)? = null
-  open val newIndexedTree: ((Any, String) -> STarget)? = null
+  open val newIndexedTree: ((Any, String) -> TTarget)? = null
 }
 class Times(private var then: Long = 0, private var start: Long = 0) {
   var doTime = false
@@ -127,7 +127,7 @@ class Facets(top: String, trace: Boolean) : Tracer(top) {
     c.targetStateUpdated?.invoke(state, title)
   }
   private fun callOnRetargeted() {
-    val title = root.indexedTarget().title()
+    val title = (root.indexedTarget()as STarget).title()
     trace(" > Calling onRetargeted with active=$title")
     onRetargeted(title)
   }
@@ -171,8 +171,8 @@ class Facets(top: String, trace: Boolean) : Tracer(top) {
     trace("Attached and laid out facets")
     trace("Surface built.")
   }
-  fun addContentTree(add: STarget) {
-    val title = add.title()
+  fun addContentTree(add: TTarget) {
+    val title = (add as STarget).title()
     trace(" > Adding content title=$title")
     titleTrees[title] = add
     root.indexing().setIndexed(add)
@@ -183,7 +183,7 @@ class Facets(top: String, trace: Boolean) : Tracer(top) {
     root.indexing().setIndexed(tree)
     notifiable.notify(root)
   }
-  fun newTextualTarget(title: String, c: TextualCoupler): STarget {
+  fun newTextualTarget(title: String, c: TextualCoupler): TTarget {
     if (c.passText == null && c.getText == null)
       throw IllegalArgumentException("No way to get text in $title")
     val textual = STextual(title, object : STextual.Coupler() {
@@ -205,7 +205,7 @@ class Facets(top: String, trace: Boolean) : Tracer(top) {
     trace(" > Created textual ", textual)
     return textual
   }
-  fun newTogglingTarget(title: String, c: TogglingCoupler): STarget {
+  fun newTogglingTarget(title: String, c: TogglingCoupler): TTarget {
     val toggling = SToggling(title, c.passSet, object : SToggling.Coupler() {
       override fun stateSet(target: SToggling) {
         updatedTarget(target, c)
@@ -214,7 +214,7 @@ class Facets(top: String, trace: Boolean) : Tracer(top) {
     trace(" > Created toggling ", toggling)
     return toggling
   }
-  fun newNumericTarget(title: String, c: NumericCoupler): STarget {
+  fun newNumericTarget(title: String, c: NumericCoupler): TTarget {
     val numeric = SNumeric(title, c.passValue, object : SNumeric.Coupler() {
       override fun valueSet(n: SNumeric) {
         updatedTarget(n, c)
@@ -228,7 +228,7 @@ class Facets(top: String, trace: Boolean) : Tracer(top) {
     trace(" > Created numeric ", numeric)
     return numeric
   }
-  fun newTriggerTarget(title: String, c: TargetCoupler): STarget {
+  fun newTriggerTarget(title: String, c: TargetCoupler): TTarget {
     val trigger = STrigger(title, object : STrigger.Coupler() {
       override fun fired(t: STrigger) {
         updatedTarget(t, c)
@@ -237,12 +237,12 @@ class Facets(top: String, trace: Boolean) : Tracer(top) {
     trace(" > Created trigger ", trigger)
     return trigger
   }
-  fun newTargetGroup(title: String, members: Array<STarget>): STarget {
-    val group = TargetCore(title, *members)
+  fun newTargetGroup(title: String, members: Array<TTarget>): TTarget {
+    val group = TargetCore(title, *members as Array<STarget>)
     trace(" > Created target group " + Debug.info(group) + " ", members)
     return group
   }
-  fun newIndexingTarget(title: String, c: IndexingCoupler): STarget {
+  fun newIndexingTarget(title: String, c: IndexingCoupler): TTarget {
     val indexing = SIndexing(title, object : SIndexing.Coupler() {
       override fun getIndexables(i: SIndexing): Array<out Any> {
         return c.getIndexables(i.title())
@@ -271,7 +271,7 @@ class Facets(top: String, trace: Boolean) : Tracer(top) {
       override val indexed = indexing.indexed()
     }
   }
-  fun newIndexingFrame(p: IndexingFramePolicy): STarget {
+  fun newIndexingFrame(p: IndexingFramePolicy): TTarget {
     val frameTitle = p.frameTitle ?: "IndexingFrame" + indexingFrames++
     val indexingTitle = p.indexingTitle ?: "$frameTitle.Indexing"
     val indexing = SIndexing(indexingTitle, object : SIndexing.Coupler() {
@@ -303,7 +303,7 @@ class Facets(top: String, trace: Boolean) : Tracer(top) {
         val got = p.newFrameTargets?.invoke() ?: arrayOf()
         return STarget.newTargets(got) ?: arrayOf()
       }
-      override fun newIndexedTargets(indexed: Any): STarget {
+      override fun newIndexedTargets(indexed: Any): TTarget {
         val indexedTargetsTitle = p.newIndexedTreeTitle?.invoke(indexed)
           ?: title() + "|indexed"
         return p.newIndexedTree?.invoke(indexed, indexedTargetsTitle)

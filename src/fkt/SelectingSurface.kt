@@ -1,6 +1,7 @@
 package fkt
 
 import fkt.java.STarget
+import fkt.java.TTarget
 import fkt.SelectingTitles as Titles
 import fkt.SimpleTitles as Simples
 
@@ -108,7 +109,7 @@ open class SelectingSurface(test: TargetTest,trace:Boolean)
 						Titles.Select,
 						Titles.EditText)
 	}
-	protected fun newEditTarget(indexed: TextContent, tail: String): STarget =
+	protected fun newEditTarget(indexed: TextContent, tail: String): TTarget =
 		facets.newTextualTarget(
 						Titles.EditText + tail,
 						object : TextualCoupler() {
@@ -120,7 +121,7 @@ open class SelectingSurface(test: TargetTest,trace:Boolean)
 		}
 		)
 
-	protected fun newCharsTarget(tail: String): STarget =
+	protected fun newCharsTarget(tail: String): TTarget =
 		facets.newTextualTarget(Titles.CharsCount + tail, object : TextualCoupler() {
 			override val getText = { _: String ->
 				"" + (facets.getTargetState(Titles.EditText + Titles.CharsTail) as String).length

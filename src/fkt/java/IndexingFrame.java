@@ -20,16 +20,16 @@ public class IndexingFrame extends TargetCore{
 	/**
 	<p>Returns the {@link STarget} created in {@link #newIndexedTargets(Object)}. 
 	 */
-	final public STarget indexedTarget(){
+	final public TTarget indexedTarget(){
 		Object indexed=indexing.indexed();
-		return indexed instanceof STarget?(STarget)indexed:newIndexedTargets(indexed);
+		return indexed instanceof TTarget?(TTarget)indexed:newIndexedTargets(indexed);
 	}
 	/**
 	Create targets exposing non-{STarget) indexed. 
 	Default is invalid stub.
 	@param indexed the currently indexed member of {@link #indexing}
 	 */
-	protected STarget newIndexedTargets(Object indexed){
+	protected TTarget newIndexedTargets(Object indexed){
 		throw new RuntimeException("Not implemented in "+this);
 	}
 	/** 

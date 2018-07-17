@@ -1,6 +1,6 @@
 package fkt.facets
 import fkt.facets.core.*
-import fkt.java.Target
+import fkt.java.TTarget
 import fkt.facets.util.Tracer
 import fkt.facets.util.Util
 fun newFacetWorks(trace: Boolean): Facets {
@@ -8,7 +8,7 @@ fun newFacetWorks(trace: Boolean): Facets {
 }
 class FacetWorks(override var doTrace: Boolean, override val supplement:()->Unit={})
     : Facets, Tracer("Facets") {
-  override fun newNumericTarget(title: String, coupler: NumericCoupler): Target {
+  override fun newNumericTarget(title: String, coupler: NumericCoupler): TTarget {
     throw Error("Not implemented")
   }
   override fun updateTargetWithNotify(title: String, update: Any) {
@@ -82,7 +82,7 @@ class FacetWorks(override var doTrace: Boolean, override val supplement:()->Unit
     trace("Calling disableAll with active=$title")
     onRetargeted(title)
   }
-  override fun addContentTree(tree: Target) {
+  override fun addContentTree(tree: TTarget) {
     titleTrees[(tree as Targety).title()] = tree
     root.indexing().setIndexed(tree)
   }
@@ -91,22 +91,22 @@ class FacetWorks(override var doTrace: Boolean, override val supplement:()->Unit
     root.indexing().setIndexed(tree)
     notifiable.notify(title)
   }
-  override fun newTextualTarget(title: String, coupler: TextualCoupler): Target {
+  override fun newTextualTarget(title: String, coupler: TextualCoupler): TTarget {
     val textual = Textual(title, coupler)
     trace("Created textual title=$title")
     return textual
   }
-  override fun newTogglingTarget(title: String, coupler: TogglingCoupler): Target {
+  override fun newTogglingTarget(title: String, coupler: TogglingCoupler): TTarget {
     val toggling = Toggling(title, coupler)
     trace("Created toggling title=$title")
     return toggling
   }
-  override fun newTriggerTarget(title: String, coupler: TargetCoupler): Target {
+  override fun newTriggerTarget(title: String, coupler: TargetCoupler): TTarget {
     val trigger = TargetCore(title, coupler)
     trace("Created trigger title=$title")
     return trigger
   }
-  override fun newTargetGroup(title: String, members: Array<Target>): Target {
+  override fun newTargetGroup(title: String, members: Array<TTarget>): TTarget {
     return TargetCore(title, members as Array<Targety>)
   }
   private fun addTitleTargeters(t: Targeter) {

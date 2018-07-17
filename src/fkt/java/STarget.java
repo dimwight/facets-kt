@@ -7,7 +7,7 @@ Superfical target.
 facets; it is also a {@link Notifying} to enable it to form part of the 
 	notification tree. 
  */
-public interface STarget extends Notifying,Target {
+public interface STarget extends Notifying,TTarget {
 	/**
 	Dynamically-defined children. 
 <p>Return {@link STarget} child elements of this {@link STarget}.
