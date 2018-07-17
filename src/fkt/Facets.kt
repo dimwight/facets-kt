@@ -238,7 +238,8 @@ class Facets(top: String, trace: Boolean) : Tracer(top) {
     return trigger
   }
   fun newTargetGroup(title: String, members: Array<TTarget>): TTarget {
-    val group = TargetCore(title, *members as Array<STarget>)
+    val grouped=members.map { it as STarget }.toTypedArray()
+    val group = TargetCore(title, *grouped)
     trace(" > Created target group " + Debug.info(group) + " ", members)
     return group
   }
