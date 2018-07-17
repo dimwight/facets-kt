@@ -26,7 +26,7 @@ class FacetsApplet : JApplet() {
     })
     val simples = TargetTest.simpleValues()
     val tests =
-      if (true) arrayOf(TargetTest.TogglingLive)
+      if (false) arrayOf(TargetTest.TogglingLive)
       else if (true) simples
       else arrayOf(if (true) Selecting else Contenting)
     content.layout = GridLayout(if (tests.contentEquals(simples)) 3 else 2, 1)
