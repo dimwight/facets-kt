@@ -12,7 +12,7 @@ class FacetWorks(override var doTrace: Boolean, override val supplement:()->Unit
     throw Error("Not implemented")
   }
   override fun trace(msg: String) {
-    if (doTrace) print(">$msg")
+    if (doTrace) println(">$msg")
   }
   override val times = object : Times {
     override fun setResetWait(millis: Int) {
@@ -67,7 +67,7 @@ class FacetWorks(override var doTrace: Boolean, override val supplement:()->Unit
     if(trees is Array<*>)
       (trees as Array<TTarget>).forEach { t ->addContentTree(t)}
     else addContentTree(trees as TTarget)
-    trace("Building targeter tree for root${root.title()}")
+    trace("Building targeter tree for root=${root.title()}")
     if (rootTargeter == null) rootTargeter = (root as TargetCore).newTargeter()
     val rt = rootTargeter!!
     rt.setNotifiable(notifiable)
