@@ -66,7 +66,7 @@ fun isTargetLive(title:String):Boolean
 val supplement:()->Unit
 }
 interface FacetsApp{
-fun getContentTrees():Array<TTarget>
+fun getContentTrees():Any
 fun onRetargeted(activeTitle:String)
 fun buildLayout()
 }

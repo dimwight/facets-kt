@@ -66,8 +66,7 @@ class FacetWorks(override var doTrace: Boolean, override val supplement:()->Unit
     onRetargeted = { title ->
       app.onRetargeted(title)
     }
-    val trees = app.getContentTrees()
-    (trees as Array<Targety>).forEach { t ->addContentTree(t)}
+    (app.getContentTrees() as Array<Targety>).forEach { t ->addContentTree(t)}
     trace("Building targeter tree for root${root.title()}")
     if (rootTargeter == null) rootTargeter = (root as TargetCore).newTargeter()
     val rt = rootTargeter!!
