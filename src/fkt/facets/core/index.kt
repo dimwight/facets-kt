@@ -39,7 +39,7 @@ interface Times{
 var doTime:Boolean
 fun setResetWait(millis:Int)
 fun elapsed():Int
-fun traceElapsed(msg:String)
+fun traceElapsed(msg:String?)
 }
 interface Facets{
 val activeContentTitle:String

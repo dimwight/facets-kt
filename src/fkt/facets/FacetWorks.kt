@@ -7,7 +7,7 @@ fun newFacets(trace: Boolean): Facets {
   return FacetWorks(trace)
 }
 class FacetWorks(override var doTrace: Boolean, override val supplement:()->Unit={})
-    : Facets, Tracer("Facets") {
+    : Facets, Tracer("FacetWorks") {
   override fun newNumericTarget(title: String, coupler: NumericCoupler): TTarget {
     throw Error("Not implemented")
   }
@@ -24,7 +24,7 @@ class FacetWorks(override var doTrace: Boolean, override val supplement:()->Unit
     override fun elapsed(): Int {
       throw Error("Not implemented")
     }
-    override fun traceElapsed(msg: String) {
+    override fun traceElapsed(msg: String?) {
       throw Error("Not implemented")
     }
     override var doTime = false

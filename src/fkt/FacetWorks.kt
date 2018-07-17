@@ -1,49 +1,25 @@
 package fkt
-import fkt.facets.core.FacetUpdater
+import fkt.facets.core.*
 import fkt.java.util.NumberPolicy
 import fkt.java.*
+import fkt.java.IndexingFrame
+import fkt.java.Notifiable
+import fkt.java.TargetCore
+import fkt.java.TargeterCore
 import fkt.java.util.*
-abstract class TargetCoupler {
-  open val targetStateUpdated: ((Any, String) -> Unit)? = null
-}
-abstract class TextualCoupler : TargetCoupler() {
-  open val passText: String? = null
-  open val getText: ((String) -> String)? = null
-  open val isValidText: ((String, String) -> Boolean)? = null
-}
-abstract class TogglingCoupler : TargetCoupler() {
-  abstract val passSet: Boolean
-}
-abstract class NumericCoupler : TargetCoupler() {
-  abstract val passValue: Double
-  open val min: Double? = null
-  open val max: Double? = null
-}
-abstract class IndexingCoupler : TargetCoupler() {
-  abstract val getIndexables: (String) -> Array<out Any>
-  open val passIndex: Int? = null
-  open val newUiSelectable: ((Any) -> String)? = null
-}
-abstract class IndexingState {
-  abstract val uiSelectables: Array<String>
-  abstract val indexed: Any
-}
-abstract class IndexingFramePolicy {
-  open val indexingTitle: String? = null
-  abstract val getIndexables: () -> (Array<out Any>)
-  open val frameTitle: String? = null
-  open val newUiSelectable: ((Any) -> String)? = null
-  open val newFrameTargets: (() -> (Array<TTarget>))? = null
-  open val newIndexedTreeTitle: ((Any) -> String)? = null
-  open val newIndexedTree: ((Any, String) -> TTarget)? = null
-}
-class Times(private var then: Long = 0, private var start: Long = 0) {
-  var doTime = false
+class TimeWorks(private var then: Long = 0, private var start: Long = 0):Times {
+  override fun setResetWait(millis: Int) {
+    throw Error("Not implemented")
+  }
+  override fun elapsed(): Int {
+    throw Error("Not implemented")
+  }
+  override var doTime = false
   private var restarted: Boolean = false
   private val debug = false
   var resetWait = 1000L
     set(millis){
-      if (debug) Util.printOut("Times.resetWait=", millis)
+      if (debug) Util.printOut("TimeWorks.resetWait=", millis)
       start = nowMillis
       doTime = true
       field = millis
@@ -53,17 +29,17 @@ class Times(private var then: Long = 0, private var start: Long = 0) {
     if (now - then > resetWait) {
       start = now
       restarted = true
-      if (debug) Util.printOut("Times: reset resetWait=$resetWait")
+      if (debug) Util.printOut("TimeWorks: reset resetWait=$resetWait")
     } else restarted = false
     then = now
     return then - start
   }
-  fun traceElapsed(msg: String?) {
+  override fun traceElapsed(msg: String?) {
     if (!doTime) {
       if (!Debug.trace) {
         then = nowMillis
         start = then
-        if (debug) Util.printOut("Times.printElapsed: times=", doTime)
+        if (debug) Util.printOut("TimeWorks.printElapsed: times=", doTime)
       }
       return
     }
@@ -77,10 +53,11 @@ class Times(private var then: Long = 0, private var start: Long = 0) {
   }
   private val nowMillis get()= System.nanoTime()/1000
 }
-class Facets(top: String, trace: Boolean) : Tracer(top) {
-  val activeContentTitle: String
-  val times = Times()
-  var doTrace = false
+class FacetWorks(top: String, trace: Boolean) : Tracer(top),Facets {
+  override val supplement={}
+  override val activeContentTitle: String
+  override val times = TimeWorks()
+  override var doTrace = false
   private val titleTargeters = HashMap<String, STargeter>()
   private val titleTrees = HashMap<String, STarget>()
   private lateinit var root: IndexingFrame
@@ -156,7 +133,7 @@ class Facets(top: String, trace: Boolean) : Tracer(top) {
     }
     if (false) trace(" > Created trees root ", root)
   }
-  fun buildApp(app: FacetsApp) {
+  override fun buildApp(app: FacetsApp) {
     this.onRetargeted = { title -> app.onRetargeted(title) }
     trace("Building surface...")
     val trees = app.getContentTrees()
@@ -175,19 +152,19 @@ class Facets(top: String, trace: Boolean) : Tracer(top) {
     trace("Attached and laid out facets")
     trace("Surface built.")
   }
-  fun addContentTree(add: TTarget) {
+  override fun addContentTree(add: TTarget) {
     val title = (add as STarget).title()
     trace(" > Adding content title=$title")
     titleTrees[title] = add
     root.indexing().setIndexed(add)
   }
-  fun activateContentTree(title: String) {
+  override fun activateContentTree(title: String) {
     trace(" > Activating content title=$title")
     val tree = titleTrees[title] ?:throw IllegalStateException("Null tree in " + this)
     root.indexing().setIndexed(tree)
     notifiable.notify(root)
   }
-  fun newTextualTarget(title: String, c: TextualCoupler): TTarget {
+  override fun newTextualTarget(title: String, c: TextualCoupler): TTarget {
     if (c.passText == null && c.getText == null)
       throw IllegalArgumentException("No way to get text in $title")
     val textual = STextual(title, object : STextual.Coupler() {
@@ -209,7 +186,7 @@ class Facets(top: String, trace: Boolean) : Tracer(top) {
     trace(" > Created textual ", textual)
     return textual
   }
-  fun newTogglingTarget(title: String, c: TogglingCoupler): TTarget {
+  override fun newTogglingTarget(title: String, c: TogglingCoupler): TTarget {
     val toggling = SToggling(title, c.passSet, object : SToggling.Coupler() {
       override fun stateSet(target: SToggling) {
         updatedTarget(target, c)
@@ -218,7 +195,7 @@ class Facets(top: String, trace: Boolean) : Tracer(top) {
     trace(" > Created toggling ", toggling)
     return toggling
   }
-  fun newNumericTarget(title: String, c: NumericCoupler): TTarget {
+  override fun newNumericTarget(title: String, c: NumericCoupler): TTarget {
     val numeric = SNumeric(title, c.passValue, object : SNumeric.Coupler() {
       override fun valueSet(n: SNumeric) {
         updatedTarget(n, c)
@@ -232,7 +209,7 @@ class Facets(top: String, trace: Boolean) : Tracer(top) {
     trace(" > Created numeric ", numeric)
     return numeric
   }
-  fun newTriggerTarget(title: String, c: TargetCoupler): TTarget {
+  override fun newTriggerTarget(title: String, c: TargetCoupler): TTarget {
     val trigger = STrigger(title, object : STrigger.Coupler() {
       override fun fired(t: STrigger) {
         updatedTarget(t, c)
@@ -241,13 +218,13 @@ class Facets(top: String, trace: Boolean) : Tracer(top) {
     trace(" > Created trigger ", trigger)
     return trigger
   }
-  fun newTargetGroup(title: String, members: Array<TTarget>): TTarget {
+  override fun newTargetGroup(title: String, members: Array<TTarget>): TTarget {
     val grouped=members.map { it as STarget }.toTypedArray()
     val group = TargetCore(title, *grouped)
     trace(" > Created target group " + Debug.info(group) + " ", members)
     return group
   }
-  fun newIndexingTarget(title: String, c: IndexingCoupler): TTarget {
+  override fun newIndexingTarget(title: String, c: IndexingCoupler): TTarget {
     val indexing = SIndexing(title, object : SIndexing.Coupler() {
       override fun getIndexables(i: SIndexing): Array<out Any> {
         return c.getIndexables(i.title())
@@ -267,7 +244,7 @@ class Facets(top: String, trace: Boolean) : Tracer(top) {
     trace(" > Created indexing ", indexing)
     return indexing
   }
-  fun getIndexingState(title: String): IndexingState {
+  override fun getIndexingState(title: String): IndexingState {
     val titleTarget = titleTarget(title)
       ?:throw IllegalStateException("Null target for $title")
     val indexing = titleTarget as SIndexing
@@ -276,7 +253,7 @@ class Facets(top: String, trace: Boolean) : Tracer(top) {
       override val indexed = indexing.indexed()
     }
   }
-  fun newIndexingFrame(p: IndexingFramePolicy): TTarget {
+  override fun newIndexingFrame(p: IndexingFramePolicy): TTarget {
     val frameTitle = p.frameTitle ?: "IndexingFrame" + indexingFrames++
     val indexingTitle = p.indexingTitle ?: "$frameTitle.Indexing"
     val indexing = SIndexing(indexingTitle, object : SIndexing.Coupler() {
@@ -319,7 +296,7 @@ class Facets(top: String, trace: Boolean) : Tracer(top) {
     trace(" > Created indexing frame ", frame)
     return frame
   }
-  fun attachFacet(title: String, updater: FacetUpdater) {
+  override fun attachFacet(title: String, updater: FacetUpdater) {
     val targeter = titleTargeters[title]
       ?:throw IllegalArgumentException("Null targeter for $title")
     val facet = object : SFacet {
@@ -337,32 +314,28 @@ class Facets(top: String, trace: Boolean) : Tracer(top) {
     trace(" > Attaching facet $facet to", targeter)
     targeter.attachFacet(facet)
   }
-  fun updateTargetState(title: String, update: Any) {
+  override fun updateTargetState(title: String, update: Any) {
     trace(" > Updating target state for title=$title update=", update)
     titleTarget(title)?.updateState(update)
       ?:throw IllegalStateException("Null target for $title")
   }
-  fun notifyTargetUpdated(title: String) =
+  override fun notifyTargetUpdated(title: String) =
     titleTarget(title)?.notifyParent()
       ?:throw IllegalStateException("Null target for $title")
-  fun updateTargetWithNotify(title: String, update: Any) {
+  override fun updateTargetWithNotify(title: String, update: Any) {
     updateTargetState(title, update)
     notifyTargetUpdated(title)
   }
-  fun getTargetState(title: String): Any? {
+  override fun getTargetState(title: String): Any? {
     val state = titleTarget(title)?.state
     trace(" > Getting target state for title=$title state=", state)
     return state
   }
-  fun setTargetLive(title: String, live: Boolean) =
+  override fun setTargetLive(title: String, live: Boolean) =
     titleTarget(title)?.setLive(live)
       ?:throw IllegalStateException("Null target for $title")
-  fun isTargetLive(title: String) =
+  override fun isTargetLive(title: String) =
     titleTarget(title)?.isLive ?:throw IllegalStateException("Null target for $title")
 }
-fun newFacets(trace: Boolean) = Facets("FacetWorks", trace)
-interface FacetsApp {
-  fun getContentTrees(): Any
-  fun onRetargeted(activeTitle: String)
-  fun buildLayout()
-}
+fun newFacets(trace: Boolean) = FacetWorks("FacetWorks", trace)
+

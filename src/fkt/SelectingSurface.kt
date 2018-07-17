@@ -1,5 +1,8 @@
 package fkt
 
+import fkt.facets.core.IndexingFramePolicy
+import fkt.facets.core.TextualCoupler
+import fkt.facets.core.TogglingCoupler
 import fkt.java.STarget
 import fkt.java.TTarget
 import fkt.SelectingTitles as Titles

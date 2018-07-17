@@ -1,5 +1,6 @@
 package fkt
-import fkt.java.*
+import fkt.facets.core.*
+import fkt.java.TTarget
 import fkt.SimpleTitles as Simples
 open class SimpleSurface(test:TargetTest,trace:Boolean):SurfaceCore(newFacets(trace),test){
 	override fun getContentTrees():Any {
@@ -23,7 +24,7 @@ open class SimpleSurface(test:TargetTest,trace:Boolean):SurfaceCore(newFacets(tr
   override fun doTraceMsg(msg:String) {
     if (true && facets.doTrace) super.doTraceMsg(msg)
   }
-  private fun newTrigger(title:String):TTarget {
+  private fun newTrigger(title:String): TTarget {
     return facets.newTriggerTarget(title, object: TargetCoupler(){
       override val targetStateUpdated= { _:Any, title:String->
           trace(" > Trigger fired: title=" + title)
