@@ -83,7 +83,7 @@ class Facets(top: String, trace: Boolean) : Tracer(top) {
   var doTrace = false
   private val titleTargeters = HashMap<String, STargeter>()
   private val titleTrees = HashMap<String, STarget>()
-  private lateinit var root: IndexingFrame
+  private val root: IndexingFrame
   private val notifiable = object : Notifiable {
     override fun notify(notice: Any) {
       var msg = "> Surface for " + Debug.info(rootTargeter) + " notified by " + notice
@@ -346,7 +346,7 @@ class Facets(top: String, trace: Boolean) : Tracer(top) {
     notifyTargetUpdated(title)
   }
   fun getTargetState(title: String): Any {
-    val state = titleTarget(title)?.state?:throw Error("Null titleTarget")
+    val state = titleTarget(title)?.state?:throw Error("Null target for $title")
     trace(" > Getting target state for title=$title state=", state)
     return state
   }
