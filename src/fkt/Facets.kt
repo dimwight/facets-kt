@@ -345,8 +345,8 @@ class Facets(top: String, trace: Boolean) : Tracer(top) {
     updateTargetState(title, update)
     notifyTargetUpdated(title)
   }
-  fun getTargetState(title: String): Any {
-    val state = titleTarget(title)?.state?:throw Error("Null target for $title")
+  fun getTargetState(title: String): Any? {
+    val state = titleTarget(title)?.state
     trace(" > Getting target state for title=$title state=", state)
     return state
   }

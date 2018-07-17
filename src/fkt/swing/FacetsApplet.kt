@@ -1,5 +1,4 @@
 package fkt.swing
-
 import fkt.ContentingSurface
 import fkt.SelectingSurface
 import fkt.SimpleSurface
@@ -14,7 +13,6 @@ import javax.swing.JFrame
 import javax.swing.JPanel
 import javax.swing.border.EtchedBorder
 import fkt.SimpleTitles as Titles
-
 class FacetsApplet : JApplet() {
   override fun init() {
     val content = contentPane as JPanel
@@ -22,14 +20,14 @@ class FacetsApplet : JApplet() {
       override fun componentResized(e: ComponentEvent) {
         if (false) println("componentResized: " + content.size)
       }
-
       override fun componentShown(e: ComponentEvent) {}
       override fun componentMoved(e: ComponentEvent) {}
       override fun componentHidden(e: ComponentEvent) {}
     })
     val simples = TargetTest.simpleValues()
     val tests =
-      if (true) simples
+      if (true) arrayOf(TargetTest.TogglingLive)
+      else if (true) simples
       else arrayOf(if (true) Selecting else Contenting)
     content.layout = GridLayout(if (tests.contentEquals(simples)) 3 else 2, 1)
     for (test in tests) {
@@ -39,7 +37,7 @@ class FacetsApplet : JApplet() {
       pane.border = createCompoundBorder(createEmptyBorder(10, 10, 10, 10),
         createEtchedBorder(EtchedBorder.LOWERED))
       content.add(pane)
-      val trace = false
+      val trace = true
       when {
         test.isSimple -> object : SimpleSurface(test, trace) {
           override fun buildLayout() {
@@ -64,7 +62,6 @@ class FacetsApplet : JApplet() {
     }
   }
 }
-
 fun main(args: Array<String>) {
   val frame = JFrame("FacetsApplet")
   frame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE

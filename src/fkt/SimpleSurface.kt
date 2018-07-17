@@ -20,10 +20,10 @@ open class SimpleSurface(test:TargetTest,trace:Boolean):SurfaceCore(newFacets(tr
     arrayOf(newTrigger(Simples.Trigger), newTextual(Simples.Triggerings))
     return facets.newTargetGroup(treeTitle, members)
   }
-  override protected fun doTraceMsg(msg:String) {
+  override fun doTraceMsg(msg:String) {
     if (true && facets.doTrace) super.doTraceMsg(msg)
   }
-  protected fun newTrigger(title:String):TTarget {
+  private fun newTrigger(title:String):TTarget {
     return facets.newTriggerTarget(title, object: TargetCoupler(){
       override val targetStateUpdated= { _:Any, title:String->
           trace(" > Trigger fired: title=" + title)
