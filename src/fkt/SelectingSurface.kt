@@ -1,21 +1,23 @@
 package fkt
-
 import fkt.facets.IndexingFramePolicy
 import fkt.facets.TextualCoupler
 import fkt.facets.TogglingCoupler
 import fkt.facets.TTarget
 import fkt.SelectingTitles as Titles
 import fkt.SimpleTitles as Simples
-
 class TextContent(var text: String) {
-	public override fun toString() = text
-	public override fun equals(other: Any?) =
+	override fun toString() = text
+	override fun equals(other: Any?) =
 					other != null && text == (other as TextContent).text
 
 	fun clone() = TextContent(text)
 	fun copyClone(clone: TextContent) {
 		this.text = clone.text
 	}
+
+  override fun hashCode(): Int {
+    return text.hashCode()
+  }
 }
 
 open class SelectingSurface(test: TargetTest,trace:Boolean)
@@ -67,7 +69,7 @@ open class SelectingSurface(test: TargetTest,trace:Boolean)
 		return SelectableType.getContentType(content)
 	}
 
-	protected override fun doTraceMsg(msg: String) {
+	override fun doTraceMsg(msg: String) {
 		if (true || facets.doTrace) super.doTraceMsg(msg)
 	}
 
@@ -76,7 +78,7 @@ open class SelectingSurface(test: TargetTest,trace:Boolean)
 		if (false) return
 		val add = {
 			list.add(TextContent("Hello sailor!"))
-			trace(" > Simulating input: update=", list.get(list.size - 1).text)
+			trace(" > Simulating input: update=", list[list.size - 1].text)
 			facets.notifyTargetUpdated(Titles.Select)
 		}
 		val edit = {

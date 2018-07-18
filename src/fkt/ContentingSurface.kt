@@ -3,7 +3,6 @@ import fkt.facets.IndexingFramePolicy
 import fkt.facets.TTarget
 import fkt.facets.TargetCoupler
 import fkt.facets.TextualCoupler
-import java.util.ArrayList
 import fkt.SelectingTitles as Titles
 import fkt.SimpleTitles as Simples
 open class ContentingSurface(trace:Boolean)
@@ -11,7 +10,7 @@ open class ContentingSurface(trace:Boolean)
   private lateinit var active:TextContent
   private lateinit var edit:TextContent
 	override fun getContentTrees(): Any {
-    return arrayOf<TTarget>(
+    return arrayOf(
     		newContentTree(list[0]),
     		newContentTree(list[2]),
     		facets.newIndexingFrame(object: IndexingFramePolicy() {

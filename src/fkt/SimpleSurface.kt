@@ -1,23 +1,25 @@
 package fkt
-import fkt.facets.*
+import fkt.facets.IndexingCoupler
+import fkt.facets.NumericCoupler
+import fkt.facets.TTarget
+import fkt.facets.TargetCoupler
+import fkt.facets.TextualCoupler
+import fkt.facets.TogglingCoupler
 import fkt.SimpleTitles as Simples
 open class SimpleSurface(test:TargetTest,trace:Boolean):SurfaceCore(trace,test){
 	override fun getContentTrees():Any {
     trace(" > Generating targets")
     val treeTitle = test.toString() + " Test"
-    val members = if (test === TargetTest.Textual)
-    arrayOf(newTextual(
-      Simples.MasterTextual), newTextual(Simples.SlaveTextual))
-    else if (test === TargetTest.TogglingLive)
-    arrayOf(newToggling(Simples.Toggling, Simples.StartToggled), newTextual(Simples.Toggled))
-    else if (test === TargetTest.Indexing)
-    arrayOf(newIndexing(Simples.Indexing, arrayOf(Simples.MasterTextual, Simples.SlaveTextual),
-                                 Simples.StartIndex), newTextual(Simples.Index), newTextual(Simples.Indexed))
-    else if (test === TargetTest.Numeric)
-    arrayOf(newNumeric(
-      Simples.NumericField), newTextual(Simples.NumericValue))
-    else
-    arrayOf(newTrigger(Simples.Trigger), newTextual(Simples.Triggerings))
+    val members = when {
+      test === TargetTest.Textual -> arrayOf(newTextual(
+        Simples.MasterTextual), newTextual(Simples.SlaveTextual))
+      test === TargetTest.TogglingLive -> arrayOf(newToggling(Simples.Toggling, Simples.StartToggled), newTextual(Simples.Toggled))
+      test === TargetTest.Indexing -> arrayOf(newIndexing(Simples.Indexing, arrayOf(Simples.MasterTextual, Simples.SlaveTextual),
+        Simples.StartIndex), newTextual(Simples.Index), newTextual(Simples.Indexed))
+      test === TargetTest.Numeric -> arrayOf(newNumeric(
+        Simples.NumericField), newTextual(Simples.NumericValue))
+      else -> arrayOf(newTrigger(Simples.Trigger), newTextual(Simples.Triggerings))
+    }
     return facets.newTargetGroup(treeTitle, members)
   }
   override fun doTraceMsg(msg:String) {
@@ -26,7 +28,7 @@ open class SimpleSurface(test:TargetTest,trace:Boolean):SurfaceCore(trace,test){
   private fun newTrigger(title:String): TTarget {
     return facets.newTriggerTarget(title, object: TargetCoupler(){
       override val targetStateUpdated= { _:Any, title:String->
-          trace(" > Trigger fired: title=" + title)
+          trace(" > Trigger fired: title=$title")
           val got:String? = facets.getTargetState(Simples.Triggerings) as String
           if (got != null){
             val valueOf = (Integer.valueOf(got) + 1).toString()
@@ -57,7 +59,7 @@ open class SimpleSurface(test:TargetTest,trace:Boolean):SurfaceCore(trace,test){
       override val passSet = state
       override val targetStateUpdated = {
 				state:Any, title:String->
-        trace(" > Toggling state updated: title=" + title + " state=", state)
+        trace(" > Toggling state updated: title=$title state=", state)
         facets.setTargetLive(Simples.Toggled, state as Boolean)
 			}
     }
@@ -66,7 +68,6 @@ open class SimpleSurface(test:TargetTest,trace:Boolean):SurfaceCore(trace,test){
   private fun newIndexing(title:String, indexables:Array<out String>, indexStart:Int): TTarget {
     trace(" > Generating indexing target state=", indexStart)
     val coupler = object: IndexingCoupler() {
-    		override val targetStateUpdated=null
         override val getIndexables = { _:String-> indexables }
         override val newUiSelectable = { indexable:Any-> indexable as String }
         override val passIndex = indexStart
@@ -98,7 +99,7 @@ open class SimpleSurface(test:TargetTest,trace:Boolean):SurfaceCore(trace,test){
     Simples.Index->object: TextualCoupler() {
         override val getText = { _:String->
            val state = facets.getTargetState(Simples.Indexing)
-           if (state == null) ("No data yet for " + Simples.Indexing) else (state).toString()
+          state?.toString() ?: "No data yet for " + Simples.Indexing
 			}
     }
     Simples.MasterTextual->object: TextualCoupler() {
@@ -123,16 +124,13 @@ open class SimpleSurface(test:TargetTest,trace:Boolean):SurfaceCore(trace,test){
   }
   override fun onRetargeted(activeTitle:String) {}
   override fun buildLayout() {
-    if (test === TargetTest.Textual)
-    generateFacets(Simples.MasterTextual)
-    else if (test === TargetTest.TogglingLive)
-    generateFacets(Simples.Toggling, Simples.Toggled)
-    else if (test === TargetTest.Numeric)
-    generateFacets(Simples.NumericField, Simples.NumericValue)
-    else if (test === TargetTest.Trigger)
-    generateFacets(Simples.Trigger, Simples.Triggerings)
-    else
-    generateFacets(Simples.Indexing, Simples.Index, Simples.Indexed)
+    when (test) {
+      TargetTest.Textual -> generateFacets(Simples.MasterTextual)
+      TargetTest.TogglingLive -> generateFacets(Simples.Toggling, Simples.Toggled)
+      TargetTest.Numeric -> generateFacets(Simples.NumericField, Simples.NumericValue)
+      TargetTest.Trigger -> generateFacets(Simples.Trigger, Simples.Triggerings)
+      else -> generateFacets(Simples.Indexing, Simples.Index, Simples.Indexed)
+    }
   }
   override fun buildSurface() {
     super.buildSurface()
@@ -144,16 +142,13 @@ open class SimpleSurface(test:TargetTest,trace:Boolean):SurfaceCore(trace,test){
 			else ->"Some updated text"
 		}
     trace(" > Simulating input: update=", update)
-    val title = if (test === TargetTest.Indexing)
-    Simples.Indexing
-    else if (test === TargetTest.TogglingLive)
-    Simples.Toggling
-    else if (test === TargetTest.Numeric)
-    Simples.NumericField
-    else if (test === TargetTest.Trigger)
-    Simples.Trigger
-    else
-    Simples.MasterTextual
+    val title = when (test) {
+      TargetTest.Indexing -> Simples.Indexing
+      TargetTest.TogglingLive -> Simples.Toggling
+      TargetTest.Numeric -> Simples.NumericField
+      TargetTest.Trigger -> Simples.Trigger
+      else -> Simples.MasterTextual
+    }
     facets.updateTargetState(title, update)
   }
 }
