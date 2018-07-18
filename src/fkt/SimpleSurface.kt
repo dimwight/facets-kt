@@ -1,6 +1,5 @@
 package fkt
-import fkt.facets.core.*
-import fkt.facets.core.TTarget
+import fkt.facets.*
 import fkt.SimpleTitles as Simples
 open class SimpleSurface(test:TargetTest,trace:Boolean):SurfaceCore(trace,test){
 	override fun getContentTrees():Any {
@@ -36,14 +35,14 @@ open class SimpleSurface(test:TargetTest,trace:Boolean):SurfaceCore(trace,test){
 			 }
      })
   }
-  private fun newTextual(title:String):TTarget {
+  private fun newTextual(title:String): TTarget {
     val coupler = newTextualCouplerCore(title)
     val passText = coupler.passText
     trace(" > Generating textual target state=",
       passText ?: coupler.getText?.invoke(title) ?: Error("No textual state"))
     return facets.newTextualTarget(title, coupler)
   }
-  private fun newNumeric(title:String):TTarget {
+  private fun newNumeric(title:String): TTarget {
     val coupler = object: NumericCoupler() {
         override val passValue = Simples.StartNumber
         override val min = 5.0
@@ -52,7 +51,7 @@ open class SimpleSurface(test:TargetTest,trace:Boolean):SurfaceCore(trace,test){
     trace(" > Generating numeric target state=", coupler.passValue)
     return facets.newNumericTarget(title, coupler)
   }
-  private fun newToggling(title:String, state:Boolean):TTarget {
+  private fun newToggling(title:String, state:Boolean): TTarget {
     trace(" > Generating toggling target state=", state)
     val coupler = object: TogglingCoupler() {
       override val passSet = state
@@ -64,7 +63,7 @@ open class SimpleSurface(test:TargetTest,trace:Boolean):SurfaceCore(trace,test){
     }
     return facets.newTogglingTarget(title, coupler)
   }
-  private fun newIndexing(title:String, indexables:Array<out String>, indexStart:Int):TTarget {
+  private fun newIndexing(title:String, indexables:Array<out String>, indexStart:Int): TTarget {
     trace(" > Generating indexing target state=", indexStart)
     val coupler = object: IndexingCoupler() {
     		override val targetStateUpdated=null

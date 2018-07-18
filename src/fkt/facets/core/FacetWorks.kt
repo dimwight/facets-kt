@@ -1,6 +1,5 @@
-package fkt.facets
-import fkt.facets.core.*
-import fkt.facets.core.TTarget
+package fkt.facets.core
+import fkt.facets.*
 import fkt.facets.util.Debug
 import fkt.facets.util.Tracer
 import fkt.facets.util.Util
@@ -37,7 +36,7 @@ class FacetWorks(override var doTrace: Boolean, override val supplement:()->Unit
     root = object : IndexingFrame("RootFrame", indexing) {
       override fun lazyElements(): Array<out Targety> {
         return arrayOf(
-          Textual(activeContentTitle,object:TextualCoupler(){})
+          Textual(activeContentTitle,object: TextualCoupler(){})
         )
       }
     }
@@ -60,8 +59,7 @@ class FacetWorks(override var doTrace: Boolean, override val supplement:()->Unit
       app.onRetargeted(title)
     }
     val got = app.getContentTrees()
-    if(got is Array<*>)
-      got.forEach { addContentTree(it as TTarget)}
+    if(got is Array<*>) got.forEach { addContentTree(it as TTarget)}
     else addContentTree(got as TTarget)
     trace("Building targeter tree for root=${root.title()}")
     if (rootTargeter == null) rootTargeter = (root as TargetCore).newTargeter()

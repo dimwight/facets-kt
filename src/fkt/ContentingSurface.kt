@@ -1,8 +1,8 @@
 package fkt
-import fkt.facets.core.IndexingFramePolicy
-import fkt.facets.core.TTarget
-import fkt.facets.core.TargetCoupler
-import fkt.facets.core.TextualCoupler
+import fkt.facets.IndexingFramePolicy
+import fkt.facets.TTarget
+import fkt.facets.TargetCoupler
+import fkt.facets.TextualCoupler
 import java.util.ArrayList
 import fkt.SelectingTitles as Titles
 import fkt.SimpleTitles as Simples
@@ -34,7 +34,7 @@ open class ContentingSurface(trace:Boolean)
 			}
     }))
   }
-  private fun newContentTree(content:TextContent):TTarget {
+  private fun newContentTree(content:TextContent): TTarget {
     val type = SelectableType.getContentType(content)
     val tail = type.titleTail()
     val members = ArrayList<TTarget>()

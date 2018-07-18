@@ -1,7 +1,7 @@
 package fkt.swing
 import fkt.SurfaceCore
 import fkt.TargetTest
-import fkt.facets.core.Facets
+import fkt.facets.Facets
 import fkt.facets.util.Tracer
 import java.awt.Container
 import java.awt.Font

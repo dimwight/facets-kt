@@ -1,4 +1,7 @@
-package fkt.facets.core
+package fkt.facets
+
+import fkt.facets.core.FacetWorks
+
 interface TTarget{}
 typealias FacetUpdater=(state:Any)->Unit
 abstract class TargetCoupler {
@@ -41,22 +44,23 @@ fun setResetWait(millis:Int)
 fun elapsed():Int
 fun traceElapsed(msg:String?)
 }
+fun newFacets(trace: Boolean): Facets = FacetWorks(trace)
 interface Facets{
 val activeContentTitle:String
-val times:Times
+val times: Times
 var doTrace:Boolean
-fun buildApp(app:FacetsApp)
+fun buildApp(app: FacetsApp)
 fun addContentTree(tree: TTarget)
 fun activateContentTree(title:String)
-fun newTextualTarget(title:String,c:TextualCoupler): TTarget
-fun newTogglingTarget(title:String,c:TogglingCoupler): TTarget
-fun newTriggerTarget(title:String,c:TargetCoupler): TTarget
-fun newNumericTarget(title:String,c:NumericCoupler): TTarget
+fun newTextualTarget(title:String,c: TextualCoupler): TTarget
+fun newTogglingTarget(title:String,c: TogglingCoupler): TTarget
+fun newTriggerTarget(title:String,c: TargetCoupler): TTarget
+fun newNumericTarget(title:String,c: NumericCoupler): TTarget
 fun newTargetGroup(title:String, members: Array<out TTarget>): TTarget
-fun newIndexingTarget(title:String,c:IndexingCoupler): TTarget
-fun getIndexingState(title:String):IndexingState
-fun newIndexingFrame(p:IndexingFramePolicy): TTarget
-fun attachFacet(title:String,updater:FacetUpdater)
+fun newIndexingTarget(title:String,c: IndexingCoupler): TTarget
+fun getIndexingState(title:String): IndexingState
+fun newIndexingFrame(p: IndexingFramePolicy): TTarget
+fun attachFacet(title:String,updater: FacetUpdater)
 fun updateTargetState(title:String,update:Any)
 fun notifyTargetUpdated(title:String)
 fun updateTargetWithNotify(title:String,update:Any)

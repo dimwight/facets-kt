@@ -1,5 +1,6 @@
 package fkt.facets.core
 
+import fkt.facets.TargetCoupler
 import fkt.facets.util.Debug
 
 const val TargetCoreType = "Targety"
@@ -12,7 +13,7 @@ open class TargetCore(title: String, var extra: Any? = null)
   var state_: Any = NoState
 
   init {
-    if(false||extra!=null&&!(extra is TargetCoupler||extra is Array<*>))
+    if(false||extra!=null&&!(extra is TargetCoupler ||extra is Array<*>))
       throw Error("Bad extra ${Debug.info(extra)} in "+Debug.info(this))
   }
 

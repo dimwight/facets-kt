@@ -1,4 +1,7 @@
 package fkt.facets.core
+
+import fkt.facets.IndexingCoupler
+
 class Indexing(title: String, coupler: IndexingCoupler) : TargetCore(title, coupler) {
   fun index(): Int {
     return state_ as Int

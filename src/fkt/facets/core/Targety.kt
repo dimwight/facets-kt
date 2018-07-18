@@ -1,5 +1,7 @@
 package fkt.facets.core
 
+import fkt.facets.TTarget
+
 interface Targety : Notifying, TTarget {
 override fun title():String
 override fun elements():Array<Targety> 

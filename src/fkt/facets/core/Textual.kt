@@ -1,4 +1,7 @@
 package fkt.facets.core
-class Textual(title:String,coupler:TextualCoupler) : TargetCore(title,coupler){
+
+import fkt.facets.TextualCoupler
+
+class Textual(title:String,coupler: TextualCoupler) : TargetCore(title,coupler){
 }
 
