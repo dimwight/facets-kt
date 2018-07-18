@@ -1,7 +1,6 @@
 package fkt.facets.core
 import fkt.facets.TextualCoupler
 import fkt.facets.util.Debug
-import java.awt.SystemColor.text
 
 class Textual(title:String,coupler: TextualCoupler) : TargetCore(title,coupler){
   init {
