@@ -1,35 +1,31 @@
 package fkt.facets.util
-
-
 object Debug {
   var trace = false
   fun info(o: Any?): String {
-    if (o == null)
-      return "null"
-    else if (o is Boolean)
-      return o.toString()
-    else if (o is Number)
-      return o.toString()
-    else if (o is String) {
-      val text = o as String?
-      val length = text!!.length
-      return text.substring(0, Math.min(length, 60)) + if (true) "" else ": length=$length"
+    when (o) {
+      null -> return "null"
+      is Boolean -> return o.toString()
+      is Number -> return o.toString()
+      is String -> {
+        val text = o as String?
+        val length = text!!.length
+        return text.substring(0, Math.min(length, 60)) + if (true) "" else ": length=$length"
+      }
+      else -> {
+        val name = o::class.simpleName
+        val id = if (o is Identified) " #" + o.identity()else ""
+        val title = if (o is Titled) " " + o.title()else ""
+        return name + id + title
+      }
     }
-    val classe = o::class
-    val name = classe.simpleName
-    var id = ""
-    var title = ""
-    if (o is Identified) id = " #" + o.identity()
-    if (o is Titled) title = " " + o.title()
-    return name + id + title
-  }
-  fun arrayInfo(array: Array<Any>): String {
-    return "arrayInfo:${array.size}"
-  }
-  fun traceEvent(string: String) {
-    Util.printOut(">>$string")
   }
   fun toStringWithHeader(array: Array<Any>): String {
     return info(array) + " [" + array.size + "] " + Objects.toLines(array)
+  }
+  fun arrayInfo_(array: Array<Any>): String {
+    return "arrayInfo:${array.size}"
+  }
+  fun traceEvent_(string: String) {
+    Util.printOut(">>$string")
   }
 }
