@@ -2,8 +2,8 @@ package fkt.facets.core
 
 import fkt.facets.util.Tracer
 
-abstract class NotifyingCore(val type: String, val title: String) :Tracer(type),
-  Notifying {
+abstract class NotifyingCore(val type: String, val title: String)
+  :Tracer(type),Notifying {
   lateinit var notifiable_: Notifiable
   override fun title(): String {
     return this.title
@@ -23,7 +23,7 @@ abstract class NotifyingCore(val type: String, val title: String) :Tracer(type),
 
   abstract override fun elements(): Array<out Notifying>
   override fun notify(notice: Any) {
-    if (notifiable_ != null) notifiable_.notify(this.title())
+    notifiable_.notify(this.title())
   }
 }
 
