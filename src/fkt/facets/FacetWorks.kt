@@ -1,6 +1,7 @@
 package fkt.facets
 import fkt.facets.core.*
-import fkt.java.TTarget
+import fkt.facets.core.TTarget
+import fkt.facets.util.Debug
 import fkt.facets.util.Tracer
 import fkt.facets.util.Util
 class FacetWorks(override var doTrace: Boolean, override val supplement:()->Unit={})
@@ -27,7 +28,7 @@ class FacetWorks(override var doTrace: Boolean, override val supplement:()->Unit
     override var doTime = false
   }
   override var activeContentTitle = "[Active Content Tree]"
-  val notifiable = object : Notifiable {
+  private val notifiable = object : Notifiable {
     override fun notify(notice: Any) {
       val rt = rootTargeter?:throw Error("Null rootTargeter")
       trace("Notified with" + rt.title())
@@ -42,12 +43,12 @@ class FacetWorks(override var doTrace: Boolean, override val supplement:()->Unit
   private val root: IndexingFrame
   private var rootTargeter: Targeter? = null
   init {
-    activeContentTitle = "FacetsJava#" + identity() + ":Active Content"
+    activeContentTitle = Debug.info(this)+":Active Content"
     val indexing = Indexing("RootIndexing", object : IndexingCoupler() {
       private var thenTrees: Array<Targety>? = null
       override val getIndexables = fun(_: String): Array<out Any> {
         val trees = titleTrees.values.toTypedArray()
-        if (!Util.arraysEqual(trees, thenTrees)) trace("> New trees: ", trees)
+        if (!Util.arraysEqual(trees, thenTrees)) trace("New trees: size=${trees.size}")
         thenTrees = trees
         return trees
       }
@@ -59,7 +60,7 @@ class FacetWorks(override var doTrace: Boolean, override val supplement:()->Unit
         )
       }
     }
-    if (false) trace(" > Created trees root ", root)
+    if (true) trace(" > Created trees root ", root)
   }
   override fun buildApp(app: FacetsApp) {
     onRetargeted = { title ->
@@ -94,7 +95,7 @@ class FacetWorks(override var doTrace: Boolean, override val supplement:()->Unit
   }
   override fun newTextualTarget(title: String, c: TextualCoupler): TTarget {
     val textual = Textual(title, c)
-    if(false)trace("Created textual title=$title")
+    trace("Created textual title=$title")
     return textual
   }
   override fun newTogglingTarget(title: String, c: TogglingCoupler): TTarget {
@@ -104,13 +105,13 @@ class FacetWorks(override var doTrace: Boolean, override val supplement:()->Unit
   }
   override fun newTriggerTarget(title: String, c: TargetCoupler): TTarget {
     val trigger = TargetCore(title, c)
-    if(false)trace("Created trigger title=$title")
+    trace("Created trigger title=$title")
     return trigger
   }
   override fun newTargetGroup(title: String, members: Array<out TTarget>): TTarget {
     val grouped = members.map { it as Targety }
     val group = TargetCore(title, grouped.toTypedArray())
-    trace("Created group title=$title members=",if(true)group.elements().size else grouped.size)
+    trace("Created group title=$title members=${grouped.size}")
     return group
   }
   private fun addTitleTargeters(t: Targeter) {

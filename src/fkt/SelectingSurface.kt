@@ -3,7 +3,7 @@ package fkt
 import fkt.facets.core.IndexingFramePolicy
 import fkt.facets.core.TextualCoupler
 import fkt.facets.core.TogglingCoupler
-import fkt.java.TTarget
+import fkt.facets.core.TTarget
 import fkt.SelectingTitles as Titles
 import fkt.SimpleTitles as Simples
 

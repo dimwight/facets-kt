@@ -1,9 +1,9 @@
 package fkt
 import fkt.facets.core.IndexingFramePolicy
+import fkt.facets.core.TTarget
 import fkt.facets.core.TargetCoupler
 import fkt.facets.core.TextualCoupler
 import java.util.ArrayList
-import fkt.java.TTarget
 import fkt.SelectingTitles as Titles
 import fkt.SimpleTitles as Simples
 open class ContentingSurface(trace:Boolean)
