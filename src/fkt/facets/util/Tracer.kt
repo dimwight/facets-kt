@@ -1,4 +1,7 @@
 package fkt.facets.util
+
+import fkt.java.util.Tracer.ids
+
 abstract class Tracer(private val top:String?): Identified {
   private val id = ++ids
   class TracerTopped(top: String):Tracer(top) {
@@ -16,10 +19,12 @@ abstract class Tracer(private val top:String?): Identified {
     doTraceMsg(msg)
   }
   fun trace(msg:String, o:Any) {
-    if (o is Array<*>)
-      doTraceMsg(msg + newArrayText(o as Array<Any>))
-    else
-      doTraceMsg(msg + Debug.info(o))
+      val trace = msg + when (o) {
+        is Collection<*> -> newArrayText((o as Collection<*>).toTypedArray() as Array<Any>)
+        is Array<*> -> newArrayText(o as Array<Any>)
+        else -> Debug.info(o)
+      }
+      doTraceMsg(trace)
   }
   protected open fun doTraceMsg(msg:String) {
     Util.printOut((if (false&&top != null) ("$top #$id") else Debug.info(this)) + " " + msg)

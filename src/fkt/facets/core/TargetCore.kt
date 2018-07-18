@@ -7,22 +7,22 @@ open class TargetCore(title: String, var extra: Any? = null)
   private var live = true
   val NoState = "No state set"
   var state_: Any = NoState
+
   override fun state(): Any {
     return this.state_
   }
 
   open fun notifiesTargeter(): Boolean {
-    val extra = this.extra
     return if (extra == null) false else extra is Array<*>
   }
 
   override fun elements(): Array<Targety> {
-    if (this.extra != null) this.extra = this.lazyElements()
-    return if (this.extra is Array<*>) {
-      val extra = this.extra!! as Array<Targety>
-      trace(".elements: extra=",extra.size)
-      extra.forEach { e ->e.setNotifiable(this)}
-      extra
+    if (extra == null) extra = this.lazyElements()
+    return if (extra is Array<*>) {
+      val elements = this.extra!! as Array<Targety>
+      if(true)trace(".elements: elements=",elements.size)
+      elements.forEach { e ->e.setNotifiable(this)}
+      elements
     } else arrayOf()
   }
 

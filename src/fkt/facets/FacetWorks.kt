@@ -5,7 +5,7 @@ import fkt.facets.util.Tracer
 import fkt.facets.util.Util
 class FacetWorks(override var doTrace: Boolean, override val supplement:()->Unit={})
     : Facets, Tracer("Facets") {
-  override fun newNumericTarget(title: String, coupler: NumericCoupler): TTarget {
+  override fun newNumericTarget(title: String, c: NumericCoupler): TTarget {
     throw Error("Not implemented")
   }
   override fun updateTargetWithNotify(title: String, update: Any) {
@@ -39,7 +39,7 @@ class FacetWorks(override var doTrace: Boolean, override val supplement:()->Unit
   private lateinit var onRetargeted: (title: String) -> Any
   private val titleTargeters = HashMap<String, Targeter?>()
   private val titleTrees = HashMap<String, Targety>()
-  private val root: IndexingFrame;
+  private val root: IndexingFrame
   private var rootTargeter: Targeter? = null
   init {
     activeContentTitle = "FacetsJava#" + identity() + ":Active Content"
@@ -67,7 +67,7 @@ class FacetWorks(override var doTrace: Boolean, override val supplement:()->Unit
     }
     val trees = app.getContentTrees()
     if(trees is Array<*>)
-      (trees as Array<TTarget>).forEach { t ->addContentTree(t)}
+      trees.forEach { t ->addContentTree(t as TTarget)}
     else addContentTree(trees as TTarget)
     trace("Building targeter tree for root=${root.title()}")
     if (rootTargeter == null) rootTargeter = (root as TargetCore).newTargeter()
@@ -92,25 +92,25 @@ class FacetWorks(override var doTrace: Boolean, override val supplement:()->Unit
     root.indexing().setIndexed(tree)
     notifiable.notify(title)
   }
-  override fun newTextualTarget(title: String, coupler: TextualCoupler): TTarget {
-    val textual = Textual(title, coupler)
-    trace("Created textual title=$title")
+  override fun newTextualTarget(title: String, c: TextualCoupler): TTarget {
+    val textual = Textual(title, c)
+    if(false)trace("Created textual title=$title")
     return textual
   }
-  override fun newTogglingTarget(title: String, coupler: TogglingCoupler): TTarget {
-    val toggling = Toggling(title, coupler)
+  override fun newTogglingTarget(title: String, c: TogglingCoupler): TTarget {
+    val toggling = Toggling(title, c)
     trace("Created toggling title=$title")
     return toggling
   }
-  override fun newTriggerTarget(title: String, coupler: TargetCoupler): TTarget {
-    val trigger = TargetCore(title, coupler)
-    trace("Created trigger title=$title")
+  override fun newTriggerTarget(title: String, c: TargetCoupler): TTarget {
+    val trigger = TargetCore(title, c)
+    if(false)trace("Created trigger title=$title")
     return trigger
   }
   override fun newTargetGroup(title: String, members: Array<out TTarget>): TTarget {
     val grouped = members.map { it as Targety }
     val group = TargetCore(title, grouped)
-    trace("Created group title=$title")
+    trace("Created group title=$title members=",if(true)group.elements().size else grouped.size)
     return group
   }
   private fun addTitleTargeters(t: Targeter) {
@@ -124,9 +124,9 @@ class FacetWorks(override var doTrace: Boolean, override val supplement:()->Unit
     val t = titleTargeters[title] ?: throw Error("No targeter for $title")
     trace("Attaching facet: title=$title")
     val facet: Facet = object : Facet {
-      override fun retarget(ta: Targety) {
-        trace("Facet retargeted title=${ta.title()} state=${ta.state()}")
-        updater(ta.state())
+      override fun retarget(target: Targety) {
+        trace("Facet retargeted title=${target.title()} state=${target.state()}")
+        updater(target.state())
       }
     }
     t.attachFacet(facet)
@@ -154,15 +154,14 @@ class FacetWorks(override var doTrace: Boolean, override val supplement:()->Unit
   }
   private fun titleTarget(title: String): Targety =
      (titleTargeters[title]?:throw Error("No targeter for$title")).target()
-  override fun newIndexingTarget(title: String, coupler: IndexingCoupler): Targety {
-    val indexing = Indexing(title, coupler)
+  override fun newIndexingTarget(title: String, c: IndexingCoupler): Targety {
+    val indexing = Indexing(title, c)
     trace("Created indexing title=" + title)
     return indexing
   }
   override fun getIndexingState(title: String): IndexingState {
     val i: Indexing = titleTarget(title) as Indexing
-    if (i == null) throw Error("No target for title=" + title)
-    else return object : IndexingState() {
+    return object : IndexingState() {
       override var uiSelectables = i.uiSelectables()
       override var indexed = i.indexed()
     }
@@ -178,7 +177,7 @@ class FacetWorks(override var doTrace: Boolean, override val supplement:()->Unit
       }
     })
     trace("Created indexing$indexingTitle")
-    val frame = object : IndexingFrame(frameTitle!!, indexing) {
+    val frame = object : IndexingFrame(frameTitle, indexing) {
       override fun lazyElements(): Array<Targety> =
         (p.newFrameTargets?.invoke() ?: arrayOf()) as Array<Targety>
       override fun newIndexedTargets(indexed: Any): Targety {
