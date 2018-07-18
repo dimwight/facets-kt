@@ -1,19 +1,19 @@
 package fkt
 interface SimpleTitles {
   companion object {
-    val MasterTextual = "Master"
-    val SlaveTextual = "Slave"
-    val Indexing = "Pick One"
-    val Index = "Pick Value"
-    val Indexed = "Picked"
-    val Toggling = "Click to toggle live"
-    val Toggled = "Toggle state"
-    val NumericField = "Number"
-    val NumericValue = "Value"
-    val Trigger = "Click Me!"
-    val Triggerings = "Click Count"
-    val StartIndex:Int = 0
-    val StartToggled = false
-    val StartNumber = 123.0
+    const val MasterTextual = "Master"
+    const val SlaveTextual = "Slave"
+    const val Indexing = "Pick One"
+    const val Index = "Pick Value"
+    const val Indexed = "Picked"
+    const val Toggling = "Click to toggle live"
+    const val Toggled = "Toggle state"
+    const val NumericField = "Number"
+    const val NumericValue = "Value"
+    const val Trigger = "Click Me!"
+    const val Triggerings = "Click Count"
+    const val StartIndex:Int = 0
+    const val StartToggled = false
+    const val StartNumber = 123.0
   }
 }
