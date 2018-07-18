@@ -96,7 +96,7 @@ class FacetWorks(override var doTrace: Boolean, override val supplement:()->Unit
     return trigger
   }
   override fun newNumericTarget(title: String, c: NumericCoupler): TTarget {
-    throw Error("Not implemented")
+    return Numeric(title,c)
   }
   override fun newTargetGroup(title: String, members: Array<out TTarget>): TTarget {
     val grouped = members.map { it as Targety }
