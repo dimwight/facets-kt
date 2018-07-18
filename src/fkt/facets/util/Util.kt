@@ -1,7 +1,5 @@
 package fkt.facets.util
 
-import fkt.java.util.Util.sf
-
 object Util {
   private const val DIGITS_SF = 3
   private const val DECIMALS_FX = 2
@@ -16,19 +14,6 @@ object Util {
 
   fun arrayPrintString(toPrint: Array<Any>?): String {
     return if (toPrint == null) "null" else Debug.toStringWithHeader(toPrint)
-  }
-
-
-  internal fun sfs(`val`: Double): String {
-    val sf = sf(`val`).toString()
-    val sfs = sf.replace("(\\d{$DIGITS_SF,})\\.0(\\D?)".toRegex(), "$1$2").replace("\\.0\\z".toRegex(), "")
-    return if (false) "[$sf>$sfs]" else sfs
-  }
-
-  fun fxs(`val`: Double): String {
-    return "0." + if (DECIMALS_FX == 1)
-      "0"
-    else if (DECIMALS_FX == 2) "00" else "000"
   }
 
   private fun shortName(className: String): String {

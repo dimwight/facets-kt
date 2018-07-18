@@ -1,7 +1,4 @@
 package fkt.facets.util
-import fkt.java.util.Identified
-import fkt.java.util.Util
-import fkt.java.util.Util.arrayPrintString
 abstract class Tracer(private val top:String?): Identified {
   private val id = ++ids
   class TracerTopped(top: String):Tracer(top) {
@@ -28,7 +25,7 @@ abstract class Tracer(private val top:String?): Identified {
     Util.printOut((if (false&&top != null) ("$top #$id") else Debug.info(this)) + " " + msg)
   }
   private fun newArrayText(array:Array<Any>):String {
-    if (false) return arrayPrintString(array)
+    if (false) return Util.arrayPrintString(array)
     var lines = "[\n"
     for (o in array)
       lines += " " + (if (true) Debug.info(o) else o.toString()) + "\n"

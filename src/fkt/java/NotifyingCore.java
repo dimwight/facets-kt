@@ -1,13 +1,6 @@
 package fkt.java;
 import fkt.java.util.Debug;
 import fkt.java.util.Tracer;
-/**
-Core implementation of key interfaces. 
-<p>{@link NotifyingCore} is the base class of both the {@link STarget} and
-{@link STargeter} class hierarchies. 
-<p>Declared <code>public</code> for documentation purposes only; client code should 
-use the concrete subclass hierarchies. 
- */
 abstract class NotifyingCore extends Tracer implements Notifying{
 	private final String title;
 	public NotifyingCore(String title){
