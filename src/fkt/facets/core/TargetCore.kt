@@ -17,13 +17,15 @@ open class TargetCore(title: String, var extra: Any? = null)
   }
 
   override fun elements(): Array<Targety> {
-    if (extra == null) extra = this.lazyElements()
-    return if (extra is Array<*>) {
-      val elements = this.extra!! as Array<Targety>
-      if(true)trace(".elements: elements=",elements.size)
-      elements.forEach { e ->e.setNotifiable(this)}
-      elements
-    } else arrayOf()
+    if(extra==null)extra=this.lazyElements()
+    trace(".elements: extra=",extra!!)
+    if(extra is Array<*>){
+      val elements=extra!! as Array<Targety>
+      elements.forEach{it.setNotifiable(this)}
+      return elements
+    }
+    else return  arrayOf()
+
   }
 
   open fun lazyElements(): Array<out Targety> {
