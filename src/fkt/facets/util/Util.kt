@@ -12,7 +12,7 @@ object Util {
     printOut(msg + o)
   }
 
-  fun arrayPrintString(toPrint: Array<Any>?): String {
+  fun arrayPrintString(toPrint: Array<*>?): String {
     return if (toPrint == null) "null" else Debug.toStringWithHeader(toPrint)
   }
 

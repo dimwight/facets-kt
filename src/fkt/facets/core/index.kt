@@ -50,8 +50,8 @@ fun addContentTree(tree: TTarget)
 fun activateContentTree(title:String)
 fun newTextualTarget(title:String,c:TextualCoupler): TTarget
 fun newTogglingTarget(title:String,c:TogglingCoupler): TTarget
-fun newNumericTarget(title:String,c:NumericCoupler): TTarget
 fun newTriggerTarget(title:String,c:TargetCoupler): TTarget
+fun newNumericTarget(title:String,c:NumericCoupler): TTarget
 fun newTargetGroup(title:String, members: Array<out TTarget>): TTarget
 fun newIndexingTarget(title:String,c:IndexingCoupler): TTarget
 fun getIndexingState(title:String):IndexingState

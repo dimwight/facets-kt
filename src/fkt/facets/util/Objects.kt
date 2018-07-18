@@ -8,7 +8,7 @@ object Objects {
   fun toString(items: Array<Any>?, spacer: String): String {
     if (items == null)
       return "null"
-    else if (items.size == 0) return ""
+    else if (items.isEmpty()) return ""
     val list = ArrayList<Any>()
     val trim = false && spacer != "\n"
     var at = 0
@@ -23,7 +23,7 @@ object Objects {
     return toString(array, ",")
   }
 
-  fun toLines(array: Array<Any>?): String {
+  fun toLines(array: Array<*>?): String {
     if (array == null) return "null"
     val list = ArrayList<Any>()
     for (i in array.indices)

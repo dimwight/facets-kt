@@ -12,14 +12,15 @@ object Debug {
         return text.substring(0, Math.min(length, 60)) + if (true) "" else ": length=$length"
       }
       else -> {
-        val name = o::class.simpleName
+        val kc = o::class
+        val name = kc.simpleName?:kc.toString()
         val id = if (o is Identified) " #" + o.identity()else ""
         val title = if (o is Titled) " " + o.title()else ""
         return name + id + title
       }
     }
   }
-  fun toStringWithHeader(array: Array<Any>): String {
+  fun toStringWithHeader(array: Array<*>): String {
     return info(array) + " [" + array.size + "] " + Objects.toLines(array)
   }
   fun arrayInfo_(array: Array<Any>): String {
