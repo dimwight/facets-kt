@@ -10,7 +10,7 @@ open class TargetCore(title: String, var extra: Any? = null)
 {
   private var live = true
   val NoState = "No state set"
-  var state_: Any = NoState
+  var state: Any = NoState
 
   init {
     if(false||extra!=null&&!(extra is TargetCoupler ||extra is Array<*>))
@@ -18,7 +18,7 @@ open class TargetCore(title: String, var extra: Any? = null)
   }
 
   override fun state(): Any {
-    return this.state_
+    return state
   }
 
   open fun notifiesTargeter(): Boolean {
@@ -26,7 +26,7 @@ open class TargetCore(title: String, var extra: Any? = null)
   }
 
   override fun elements(): Array<Targety> {
-    if(extra==null)extra=this.lazyElements()
+    if(extra==null)extra=lazyElements()
     val isArray = extra is Array<*>
     if(false)trace(".elements: extra=",isArray)
     return if(isArray){
@@ -42,9 +42,10 @@ open class TargetCore(title: String, var extra: Any? = null)
   }
 
   override fun updateState(update: Any) {
-    this.state_ = update
+    state = update
     val extra = this.extra
-    if (!(extra == null || extra is Array<*>)) (extra as TargetCoupler).targetStateUpdated?.invoke(this.state(), this.title())
+    if (!(extra == null || extra is Array<*>))
+      (extra as TargetCoupler).targetStateUpdated?.invoke(this.state(), this.title())
   }
 
   open fun newTargeter(): Targeter {

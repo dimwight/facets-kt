@@ -2,7 +2,7 @@ package fkt.facets
 
 import fkt.facets.core.FacetWorks
 
-interface TTarget{}
+interface TTarget
 typealias FacetUpdater=(state:Any)->Unit
 abstract class TargetCoupler {
   open val targetStateUpdated: ((Any, String) -> Unit)? = null
@@ -10,7 +10,6 @@ abstract class TargetCoupler {
 abstract class TextualCoupler : TargetCoupler() {
   open val passText: String? = null
   open val getText: ((String) -> String)? = null
-  open val isValidText: ((String, String) -> Boolean)? = null
 }
 abstract class TogglingCoupler : TargetCoupler() {
   abstract val passSet: Boolean

@@ -3,13 +3,16 @@ package fkt.facets.core
 import fkt.facets.IndexingCoupler
 
 class Indexing(title: String, coupler: IndexingCoupler) : TargetCore(title, coupler) {
+  init {
+    setIndex(coupler.passIndex?:0)
+  }
   fun index(): Int {
-    return state_ as Int
+    return state as Int
   }
   fun setIndex(index: Int) {
-    val first = this.state_ === NoState
-    this.state_ = index
-    if (!first) coupler().targetStateUpdated?.invoke(this.state_, this.title())
+    val first = this.state === NoState
+    this.state = index
+    if (!first) coupler().targetStateUpdated?.invoke(this.state, this.title())
   }
   fun indexables(): Array<Any> {
     val indexables: Array<Any> = coupler().getIndexables(this.title())as Array<Any>
@@ -27,8 +30,8 @@ class Indexing(title: String, coupler: IndexingCoupler) : TargetCore(title, coup
     return this.extra as IndexingCoupler
   }
   fun indexed(): Any {
-    if (this.state_ === NoState) throw Error("No index in" + this.title())
-    else return this.indexables()[this.state_ as Int]
+    if (this.state === NoState) throw Error("No index in" + this.title())
+    else return this.indexables()[this.state as Int]
   }
   fun setIndexed(indexable: Any) {
     this.indexables().forEachIndexed({ at, i ->

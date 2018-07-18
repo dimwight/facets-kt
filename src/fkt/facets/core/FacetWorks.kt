@@ -106,7 +106,8 @@ class FacetWorks(override var doTrace: Boolean, override val supplement:()->Unit
   }
   override fun newIndexingTarget(title: String, c: IndexingCoupler): Targety {
     val indexing = Indexing(title, c)
-    trace("Created indexing title=" + title)
+    if(false&&c.passIndex==null)indexing.setIndex(0)
+    trace("Created indexing title=$title")
     return indexing
   }
   override fun getIndexingState(title: String): IndexingState {
