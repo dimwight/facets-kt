@@ -109,7 +109,7 @@ class FacetWorks(override var doTrace: Boolean, override val supplement:()->Unit
   }
   override fun newTargetGroup(title: String, members: Array<out TTarget>): TTarget {
     val grouped = members.map { it as Targety }
-    val group = TargetCore(title, grouped)
+    val group = TargetCore(title, grouped.toTypedArray())
     trace("Created group title=$title members=",if(true)group.elements().size else grouped.size)
     return group
   }
