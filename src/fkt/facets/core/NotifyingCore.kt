@@ -1,5 +1,6 @@
 package fkt.facets.core
 
+import fkt.facets.util.Debug
 import fkt.facets.util.Tracer
 
 abstract class NotifyingCore(val type: String, val title: String)
@@ -18,6 +19,7 @@ abstract class NotifyingCore(val type: String, val title: String)
   }
 
   override fun notifyParent() {
+    if(!this::notifiable_.isInitialized)throw Error("Null notifiable_ in "+Debug.info(this))
     notifiable_.notify(this)
   }
 
