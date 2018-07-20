@@ -26,7 +26,7 @@ class FacetWorks(override var doTrace: Boolean, override val supplement:()->Unit
   init {
     val indexing = Indexing("RootIndexing", object : IndexingCoupler() {
       private var thenTrees: Array<Targety>? = null
-      override val getIndexables = fun(_: String): Array<out Any> {
+      override val getIndexables = fun(_: String): Array<*> {
         val trees = titleTrees.values.toTypedArray()
         if (!Util.arraysEqual(trees, thenTrees)) trace("New trees: size=${trees.size}")
         thenTrees = trees
@@ -43,8 +43,10 @@ class FacetWorks(override var doTrace: Boolean, override val supplement:()->Unit
     trace("Created trees root ", root)
   }
   override val times = object : Times {
+    private var resetWait=1000
+
     override fun setResetWait(millis: Int) {
-      throw Error("Not implemented")
+      resetWait=millis
     }
     override fun elapsed(): Int {
       throw Error("Not implemented")
