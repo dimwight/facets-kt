@@ -1,22 +1,20 @@
 package fkt.facets.core
 import fkt.facets.util.traceThing
 open class IndexingFrame(title: String, private val indexing_: Indexing) : TargetCore(title) {
-  open fun indexedTarget(): Targety {
-    var indexed = this.indexing_.indexed() as TargetCore
-    val type: String? = indexed.type
-    if(false)traceThing("^indexedTarget", indexed.type)
-    return if (type != null && type == TargetCoreType) indexed else this.newIndexedTargets(indexed)
+  fun indexedTarget(): Targety {
+    val indexed = indexing_.indexed()
+    return indexed as? Targety?:this.newIndexedTargets(indexed)
   }
   open fun newIndexedTargets(indexed: Any): Targety {
     throw Error("Not implemented in" + this.title())
   }
-  open fun indexing(): Indexing {
-    return this.indexing_
+  fun indexing(): Indexing {
+    return indexing_
   }
-  override fun newTargeter(): Targeter {
+  final override fun newTargeter(): Targeter {
     return IndexingFrameTargeter()
   }
-  override fun notifiesTargeter(): Boolean {
+  final override fun notifiesTargeter(): Boolean {
     return true
   }
 }
