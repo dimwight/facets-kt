@@ -1,13 +1,13 @@
 package fkt.facets.core
 
-open class TargeterCore() : NotifyingCore("Targeter", "Untargeted"), Targeter {
+open class TargeterCore : NotifyingCore("Targeter", "Untargeted"), Targeter {
   private lateinit var elements: Array<Targeter>
   private lateinit var target: TargetCore
   var facets: MutableList<Facet> = mutableListOf()
   override fun retarget(target: Targety) {
     this.target = target as TargetCore
-    val targets: Array<Targety> = target.elements()
-    trace(".retarget: target=", target)
+    val targets = target.elements()
+    if(false)trace(".retarget: target=", target)
     elements = targets.map {
       val element = (it as TargetCore).newTargeter()
       element.setNotifiable(this)
