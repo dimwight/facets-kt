@@ -1,5 +1,4 @@
 package fkt.facets.core
-import fkt.facets.util.traceThing
 open class IndexingFrame(title: String, private val indexing_: Indexing) : TargetCore(title) {
   fun indexedTarget(): Targety {
     val indexed = indexing_.indexed()
