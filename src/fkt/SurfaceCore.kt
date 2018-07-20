@@ -46,14 +46,14 @@ fun main(args: Array<String>) {
   val trace = true
   val tested= arrayListOf<FacetsApp>()
   arrayOf(
-    SelectingSurface(TargetTest.Selecting, trace)
+    ContentingSurface(trace)
     /*
+    SelectingSurface(TargetTest.Selecting, trace)
     SimpleSurface(TargetTest.TogglingLive, trace)
     SimpleSurface(TargetTest.Numeric, trace)
     SimpleSurface(TargetTest.Textual, trace)
     SimpleSurface(TargetTest.Trigger, trace)
     SimpleSurface(TargetTest.Indexing, trace)
-    ,ContentingSurface(trace)
     */
   ).forEach{ it ->
     it.buildSurface()
