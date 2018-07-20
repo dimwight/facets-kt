@@ -128,8 +128,10 @@ class FacetWorks(override var doTrace: Boolean, override val supplement:()->Unit
     })
     trace("Created indexing$indexingTitle")
     val frame = object : IndexingFrame(frameTitle, indexing) {
-      override fun lazyElements(): Array<Targety> =
-        (p.newFrameTargets?.invoke() ?: arrayOf()) as Array<Targety>
+      override fun lazyElements(): Array<Targety> {
+        val targets = p.newFrameTargets?.invoke()?:return arrayOf()
+        return listOf(targets).map { it as Targety }.toTypedArray()
+      }
       override fun newIndexedTargets(indexed: Any): Targety {
         val title = p.newIndexedTreeTitle?.invoke(indexed) ?: title()+"|indexed"
         return (p.newIndexedTree?.invoke(indexed, title) ?: TargetCore(title)) as Targety

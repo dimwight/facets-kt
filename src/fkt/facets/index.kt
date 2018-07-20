@@ -33,7 +33,7 @@ abstract class IndexingFramePolicy {
   abstract val getIndexables: () -> (Array<out Any>)
   open val frameTitle: String? = null
   open val newUiSelectable: ((Any) -> String)? = null
-  open val newFrameTargets: (() -> (Array<out TTarget>))? = null
+  open val newFrameTargets: (() -> (Array<TTarget>))? = null
   open val newIndexedTreeTitle: ((Any) -> String)? = null
   open val newIndexedTree: ((Any, String) -> TTarget)? = null
 }
