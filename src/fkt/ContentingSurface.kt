@@ -39,6 +39,7 @@ open class ContentingSurface(trace:Boolean)
     val members = ArrayList<TTarget>()
     members.add(newEditTarget(content, tail))
     if (type == SelectableType.ShowChars) members.add(newCharsTarget(tail))
+    val activateChooser = {facets.activateContentTree(Titles.Chooser)}
     members.add(facets.newTriggerTarget(Titles.Save + tail, object: TargetCoupler() {
       override val targetStateUpdated = { _:Any, _:String->
 	      active.copyClone(edit)
@@ -52,8 +53,6 @@ open class ContentingSurface(trace:Boolean)
     }))
     return facets.newTargetGroup(type.title(), members.toTypedArray())
   }
-  private fun activateChooser() =
-    facets.activateContentTree(Titles.Chooser)
 
 	override fun onRetargeted(activeTitle:String) {}
   override fun buildLayout() {
