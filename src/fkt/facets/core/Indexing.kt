@@ -12,7 +12,7 @@ class Indexing(title: String, coupler: IndexingCoupler) : TargetCore(title, coup
   }
 
   fun setIndex(index: Int) {
-    val first = this.state === NoState
+    val first = this.state == NoState
     this.state = index
     if (!first) coupler().targetStateUpdated?.invoke(this.state, this.title())
   }
@@ -36,7 +36,7 @@ class Indexing(title: String, coupler: IndexingCoupler) : TargetCore(title, coup
   }
 
   fun indexed(): Any {
-    if (this.state === NoState) throw Error("No index in" + this.title())
+    if (this.state == NoState) throw Error("No index in" + this.title())
     else return this.indexables()[this.state as Int]as Any
   }
 

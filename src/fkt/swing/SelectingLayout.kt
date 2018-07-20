@@ -28,7 +28,7 @@ open class SelectingLayout(pane:Container, test:TargetTest, surface:SelectingSur
       cards.addLayoutComponent(card, activeTitle)
       val tail = type.titleTail()
       card.add(newTextFieldFacet(Titles.EditText + tail, 20, false).mount)
-      if (type === SelectableType.ShowChars)
+      if (type == SelectableType.ShowChars)
       card.add(newLabelFacet(Titles.CharsCount + tail).mount)
       card.add(newCheckBoxFacet(Titles.Live).mount)
     }

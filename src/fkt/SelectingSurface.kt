@@ -55,7 +55,7 @@ open class SelectingSurface(test: TargetTest,trace:Boolean)
 				val type = SelectableType.getContentType(content)
 				val tail = type.titleTail()
 				facets.newTargetGroup(indexedTreeTitle,
-								if (type === SelectableType.Standard)
+								if (type == SelectableType.Standard)
 									arrayOf(newEditTarget(content, tail))
 								else arrayOf(newEditTarget(content, tail), newCharsTarget(tail))
 				)
@@ -103,7 +103,7 @@ open class SelectingSurface(test: TargetTest,trace:Boolean)
 		facets.setTargetLive(
 						Titles.EditText + tail,
 						live)
-		if (type === SelectableType.ShowChars)
+		if (type == SelectableType.ShowChars)
 			 facets.setTargetLive(
 							 Titles.CharsCount + tail,
 							 live)

@@ -20,7 +20,7 @@ internal class ContentingLayout(pane:Container, test:TargetTest, surface:Content
       val type = SelectableType.values[at]
       val typeTitle = type.title()
       cards.addLayoutComponent(card, typeTitle)
-      if (type === SelectableType.Chooser){
+      if (type == SelectableType.Chooser){
         card.add(newListFacet(Titles.Select).mount)
         card.add(newButtonFacet(Titles.OpenEdit).mount)
       }
@@ -32,7 +32,7 @@ internal class ContentingLayout(pane:Container, test:TargetTest, surface:Content
                   else
                   newLabelFacet(facets.activeContentTitle)).mount)
         card.add(newTextFieldFacet(Titles.EditText + tail, 20, false).mount)
-        if (type === SelectableType.ShowChars)
+        if (type == SelectableType.ShowChars)
         card.add(newLabelFacet(Titles.CharsCount + tail).mount)
         card.add(newButtonFacet(Titles.Save + tail).mount)
         card.add(newButtonFacet(Titles.Cancel + tail).mount)
