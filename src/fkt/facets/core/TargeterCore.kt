@@ -1,25 +1,24 @@
 package fkt.facets.core
 
-open class TargeterCore(type:String="Targeter") : NotifyingCore(type, "Untargeted"), Targeter {
+open class TargeterCore(type: String = "Targeter") : NotifyingCore(type, "Untargeted"), Targeter {
+  private val facets = mutableListOf<Facet>()
   private lateinit var _elements: Array<Targeter>
   private lateinit var _target: TargetCore
-  var facets: MutableList<Facet> = mutableListOf()
   override fun retarget(target: Targety) {
     _target = target as TargetCore
     val targets = _target.elements()
-    if(!this::_elements.isInitialized)_elements = targets.map {
+    if (!this::_elements.isInitialized) _elements = targets.map {
       val element = (it as TargetCore).newTargeter()
       element.setNotifiable(this)
       element
     }.toTypedArray()
-    if (targets.size == _elements.size) _elements.forEachIndexed { at, e ->
-      e.retarget(targets[at])
-    }
+    if (targets.size == _elements.size)
+      _elements.forEachIndexed { at, e -> e.retarget(targets[at]) }
     if (_target.notifiesTargeter()) _target.setNotifiable(this)
   }
 
   override fun title(): String =
-    if(!this::_target.isInitialized)"Untargeted" else _target.title()
+    if (!this::_target.isInitialized) super.title else _target.title()
 
   override fun target() = _target
 
@@ -33,8 +32,8 @@ open class TargeterCore(type:String="Targeter") : NotifyingCore(type, "Untargete
   }
 
   override fun retargetFacets() {
-    this._elements.forEach { it.retargetFacets() }
-    this.facets.forEach { it.retarget(_target) }
+    _elements.forEach { it.retargetFacets() }
+    facets.forEach { it.retarget(_target) }
   }
 }
 

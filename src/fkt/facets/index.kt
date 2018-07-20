@@ -20,7 +20,7 @@ abstract class NumericCoupler : TargetCoupler() {
   open val max: Double? = null
 }
 abstract class IndexingCoupler : TargetCoupler() {
-  abstract val getIndexables: (String) -> Array<out Any>
+  abstract val getIndexables: (String) -> Array<Any>
   open val passIndex: Int? = null
   open val newUiSelectable: ((Any) -> String)? = null
 }

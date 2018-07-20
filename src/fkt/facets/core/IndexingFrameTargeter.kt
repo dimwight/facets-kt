@@ -1,7 +1,7 @@
 package fkt.facets.core
 
 class IndexingFrameTargeter : TargeterCore("IndexingFrameTargeter") {
-  private var titleTargeters = HashMap<String, Targeter>()
+  private val titleTargeters = HashMap<String, Targeter>()
   private lateinit var indexing: Targeter
   private lateinit var indexed: Targeter
   private lateinit var indexingTarget: Indexing

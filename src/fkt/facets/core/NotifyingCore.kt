@@ -5,27 +5,27 @@ import fkt.facets.util.Tracer
 
 abstract class NotifyingCore(val type: String, val title: String)
   :Tracer(type),Notifying {
-  lateinit var notifiable_: Notifiable
+  private lateinit var _notifiable: Notifiable
   override fun title(): String {
     return this.title
   }
 
   override fun setNotifiable(n: Notifiable) {
-    notifiable_ = n
+    _notifiable = n
   }
 
   override fun notifiable(): Notifiable {
-    return notifiable_
+    return _notifiable
   }
 
   override fun notifyParent() {
-    if(!this::notifiable_.isInitialized)throw Error("Null notifiable_ in "+Debug.info(this))
-    notifiable_.notify(this)
+    if(!this::_notifiable.isInitialized)throw Error("Null _notifiable in "+Debug.info(this))
+    _notifiable.notify(this)
   }
 
   abstract override fun elements(): Array<out Notifying>
   override fun notify(notice: Any) {
-    notifiable_.notify(this.title())
+    _notifiable.notify(this.title())
   }
 }
 
