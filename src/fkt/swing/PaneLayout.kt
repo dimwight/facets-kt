@@ -1,4 +1,5 @@
 package fkt.swing
+
 import fkt.SurfaceCore
 import fkt.TargetTest
 import fkt.facets.Facets
@@ -24,8 +25,8 @@ import javax.swing.event.ListSelectionListener
 
 abstract class PaneLayout(protected val pane: Container,
                           protected val test: TargetTest,
-                          protected val surface: SurfaceCore,
-                          protected val facets: Facets =surface.facets)
+                          private val surface: SurfaceCore,
+                          protected val facets: Facets = surface.facets)
   : Tracer("PaneLayout") {
   abstract fun build()
   protected fun newButtonFacet(title: String): SwingFacet<JButton> {

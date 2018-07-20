@@ -7,11 +7,6 @@ import fkt.facets.util.Tracer
 import fkt.SelectingTitles as Selectings
 enum class TargetTest {
 	Textual, TogglingLive, Indexing, Numeric, Trigger, Selecting, Contenting;
-	fun indexingTitle_():String {
-		if (this.ordinal < Selecting.ordinal)
-			throw RuntimeException("Not implemented in " + this)
-		return if (this == Selecting) Selectings.Select else Selectings.Switch
-	}
 	val isSimple:Boolean get()=this.ordinal<Selecting.ordinal
 	companion object {
 		fun simpleValues():Array<TargetTest> {
