@@ -9,7 +9,7 @@ open class ContentingSurface(trace:Boolean)
 		:SelectingSurface(TargetTest.Contenting,trace) {
   private lateinit var active:TextContent
   private lateinit var edit:TextContent
-	override fun getContentTrees(): Any {
+	override fun getContentTrees(): Array<TTarget> {
     return arrayOf(
     		newContentTree(list[0]),
     		newContentTree(list[2]),

@@ -27,9 +27,9 @@ open class SelectingSurface(test: TargetTest,trace:Boolean)
 					TextContent("Hello Dolly!"),
 					TextContent("Hello, good evening and welcome!"))
 
-	override fun getContentTrees(): Any {
+	override fun getContentTrees(): Array<TTarget> {
 		val appTitle = TargetTest.Selecting.toString()
-		return facets.newIndexingFrame(object : IndexingFramePolicy() {
+		return arrayOf(facets.newIndexingFrame(object : IndexingFramePolicy() {
 			override val frameTitle = appTitle
 			override val indexingTitle = Titles.Select
 			override val getIndexables = { list.toTypedArray() }
@@ -60,7 +60,7 @@ open class SelectingSurface(test: TargetTest,trace:Boolean)
 								else arrayOf(newEditTarget(content, tail), newCharsTarget(tail))
 				)
 			}
-		})
+		}))
 	}
 
 	private fun getIndexedType(): SelectableType {
