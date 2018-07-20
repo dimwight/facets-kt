@@ -59,5 +59,5 @@ fun main(args: Array<String>) {
     it.buildSurface()
     tested.add(it)
   }
-  Tracer.TracerTopped(SurfaceCore::class.simpleName!!).trace("Tested apps:",tested.toArray())
+  Tracer.newTopped(SurfaceCore::class.simpleName!!).trace("Tested apps:",tested.toArray())
 }

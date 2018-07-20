@@ -1,57 +1,40 @@
 package fkt.facets.core
 
-import fkt.facets.util.traceThing
-
 open class TargeterCore() : NotifyingCore("Targeter", "Untargeted"), Targeter {
-  lateinit var elements_: Array<Targeter>
-  lateinit var target_: Targety
-  var facets_: MutableList<Facet> = mutableListOf()
+  private lateinit var elements: Array<Targeter>
+  private lateinit var target: TargetCore
+  var facets: MutableList<Facet> = mutableListOf()
   override fun retarget(target: Targety) {
-// if(target==null)throw new Error('Missing target');
-    this.target_ = target
+    this.target = target as TargetCore
     val targets: Array<Targety> = target.elements()
-    if(false)traceThing("^retarget", targets)
-// if(this.elements_==null)
-    this.elements_ = targets.map({ targety ->
-      var element = (targety as TargetCore).newTargeter()
+    trace(".retarget: target=", target)
+    elements = targets.map {
+      val element = (it as TargetCore).newTargeter()
       element.setNotifiable(this)
       element
-    }).toTypedArray()
-    if (targets.size == this.elements_.size) this.elements_.forEachIndexed({ at, e ->
+    }.toTypedArray()
+    if (targets.size == elements.size) elements.forEachIndexed { at, e ->
       e.retarget(targets[at])
-    })
-    if ((target as TargetCore).notifiesTargeter()) target.setNotifiable(this)
+    }
+    if (this.target.notifiesTargeter()) target.setNotifiable(this)
   }
 
-  override fun title(): String {
-    return if (this.target_ != null) this.target_.title() else this.title
-  }
+  override fun title() = target.title()
 
-  override fun target(): Targety {
-    if (this.target_ == null) throw Error(this.title)
-    else return this.target_
-  }
+  override fun target() = target
 
-  override fun elements(): Array<Targeter> {
-    return this.elements_
-  }
+  override fun elements() = this.elements
 
-  open fun titleElements(): Array<Targeter> {
-    return this.elements()
-  }
+  open fun titleElements() = elements()
 
   override fun attachFacet(f: Facet) {
-    if (!this.facets_.contains(f)) this.facets_.add(f)
-    f.retarget(this.target_)
+    if (!facets.contains(f)) facets.add(f)
+    f.retarget(target)
   }
 
   override fun retargetFacets() {
-    this.elements_.forEach({ e ->
-      e.retargetFacets()
-    })
-    this.facets_.forEach({ f ->
-      f.retarget(this.target_)
-    })
+    this.elements.forEach { it.retargetFacets() }
+    this.facets.forEach { it.retarget(target) }
   }
 }
 

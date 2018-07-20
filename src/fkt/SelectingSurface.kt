@@ -70,7 +70,7 @@ open class SelectingSurface(test: TargetTest,trace:Boolean)
 	}
 
 	override fun doTraceMsg(msg: String) {
-		if (true || facets.doTrace) super.doTraceMsg(msg)
+		if (false || facets.doTrace) super.doTraceMsg(msg)
 	}
 
 	override fun buildSurface() {
