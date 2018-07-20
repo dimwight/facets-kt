@@ -31,6 +31,44 @@ abstract class PaneLayout(protected val pane: Container,
                           protected val facets: Facets = surface.facets)
   : Tracer("PaneLayout") {
   abstract fun build()
+  protected fun newListFacet(title: String,click2:()->Unit={trace(".newListFacet: doubleClick!")
+  }): SwingFacet<JList<String>> {
+    return object : SwingFacet<JList<String>>(JList(), title, facets) {
+      init {
+        field.border = BorderFactory.createLoweredBevelBorder()
+        field.addMouseListener(object:MouseAdapter(){
+          override fun mouseClicked(e: MouseEvent) {
+            if (e.clickCount == 2)click2.invoke()
+          }
+        })
+      }
+      override val fieldState
+        get() = field.selectedIndex
+
+      override fun actionPerformed(e: ActionEvent) {
+        if (field.selectedIndex < 0) return
+        if (this@PaneLayout.facets.getTargetState(title) != (field.selectedIndex))
+          super.actionPerformed(e)
+      }
+
+      override fun updateField(update: Any) {
+        val selectables = this@PaneLayout.facets.getIndexingState(title).uiSelectables
+        field.model = object : AbstractListModel<String>() {
+          override fun getSize() = selectables.size
+          override fun getElementAt(index: Int): String {
+            return selectables[index]
+          }
+        }
+        field.selectedIndex = update as Int
+        field.repaint()
+      }
+
+      override fun addFieldListener() = field.addListSelectionListener {
+        it -> actionPerformed(ActionEvent(it.source, it.hashCode(), it.toString()))
+      }
+    }
+  }
+
   protected fun newButtonFacet(title: String): SwingFacet<JButton> {
     val button = JButton(SwingFacet.stripTitleTail(title))
     return object : SwingFacet<JButton>(button, title, facets) {
@@ -109,46 +147,6 @@ abstract class PaneLayout(protected val pane: Container,
       }
 
       override fun addFieldListener() = field.addActionListener(this)
-    }
-  }
-  val click2 = "click2"
-
-  protected fun newListFacet(title: String): SwingFacet<JList<String>> {
-    return object : SwingFacet<JList<String>>(JList(), title, facets) {
-      init {
-        field.border = BorderFactory.createLoweredBevelBorder()
-        field.addMouseListener(object:MouseAdapter(){
-          override fun mouseClicked(e: MouseEvent) {
-            if (e.clickCount == 2) actionPerformed(ActionEvent("",0,click2))
-          }
-        })
-      }
-      override val fieldState
-        get() = field.selectedIndex
-
-      override fun actionPerformed(e: ActionEvent) {
-        if (field.selectedIndex < 0) return
-        if ((this@PaneLayout.facets.getTargetState(title) == (field.selectedIndex))
-          &&e.actionCommand!=click2)return
-        trace(".actionPerformed: e=",e)
-        super.actionPerformed(e)
-      }
-
-      override fun updateField(update: Any) {
-        val selectables = this@PaneLayout.facets.getIndexingState(title).uiSelectables
-        field.model = object : AbstractListModel<String>() {
-          override fun getSize() = selectables.size
-          override fun getElementAt(index: Int): String {
-            return selectables[index]
-          }
-        }
-        field.selectedIndex = update as Int
-        field.repaint()
-      }
-
-      override fun addFieldListener() = field.addListSelectionListener {
-        it -> actionPerformed(ActionEvent(it.source, it.hashCode(), it.toString()))
-      }
     }
   }
 
