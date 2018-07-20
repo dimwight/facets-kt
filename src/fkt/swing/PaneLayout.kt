@@ -7,6 +7,9 @@ import fkt.facets.util.Tracer
 import java.awt.Container
 import java.awt.Font
 import java.awt.event.ActionEvent
+import java.awt.event.MouseAdapter
+import java.awt.event.MouseEvent
+import java.awt.event.MouseListener
 import java.text.DecimalFormat
 import javax.swing.AbstractListModel
 import javax.swing.BorderFactory
@@ -20,8 +23,7 @@ import javax.swing.JTextField
 import javax.swing.SwingUtilities
 import javax.swing.event.DocumentEvent
 import javax.swing.event.DocumentListener
-import javax.swing.event.ListSelectionEvent
-import javax.swing.event.ListSelectionListener
+
 
 abstract class PaneLayout(protected val pane: Container,
                           protected val test: TargetTest,
@@ -33,13 +35,9 @@ abstract class PaneLayout(protected val pane: Container,
     val button = JButton(SwingFacet.stripTitleTail(title))
     return object : SwingFacet<JButton>(button, title, facets) {
       override val fieldState: Any
-        get() {
-          return "Fired"
-        }
+        get() = "Fired"
 
-      override fun addFieldListener() {
-        button.addActionListener(this)
-      }
+      override fun addFieldListener() = button.addActionListener(this)
 
       override fun updateField(update: Any) {}
     }
@@ -51,12 +49,10 @@ abstract class PaneLayout(protected val pane: Container,
     }
     return object : SwingFacet<JLabel>(label, title, facets) {
       override val fieldState: String
-        get() {
-          return this.field.getText()
-        }
+        get() = this.field.text
 
       override fun updateField(update: Any) {
-        field.setText(update as String)
+        field.text = update as String
       }
 
       override fun addFieldListener() {}
@@ -66,40 +62,32 @@ abstract class PaneLayout(protected val pane: Container,
   protected fun newCheckBoxFacet(title: String): SwingFacet<JCheckBox> {
     return object : SwingFacet<JCheckBox>(JCheckBox(), title, facets) {
       override val fieldState: Boolean
-        get() {
-          return this.field.isSelected()
-        }
+        get() = this.field.isSelected
 
       override fun updateField(update: Any) {
-        field.setSelected(update as Boolean)
+        field.isSelected = update as Boolean
       }
 
-      override fun addFieldListener() {
-        field.addActionListener(this)
-      }
+      override fun addFieldListener() = field.addActionListener(this)
     }
   }
 
   protected fun newNumberFieldFacet(title: String, cols: Int): SwingFacet<JFormattedTextField> {
     val field = JFormattedTextField()
-    field.setHorizontalAlignment(JFormattedTextField.RIGHT)
-    field.setColumns(cols)
+    field.horizontalAlignment = JFormattedTextField.RIGHT
+    field.columns = cols
     val formatter = DecimalFormat.getInstance()
-    formatter.setMaximumFractionDigits(0)
-    formatter.setMinimumFractionDigits(0)
+    formatter.maximumFractionDigits = 0
+    formatter.minimumFractionDigits = 0
     return object : SwingFacet<JFormattedTextField>(field, title, facets) {
       override val fieldState: Double
-        get() {
-          return java.lang.Double.valueOf(this.field.getText())
-        }
+        get() = java.lang.Double.valueOf(this.field.text)
 
       override fun updateField(update: Any) {
-        field.setText(formatter.format(update as Double))
+        field.text = formatter.format(update as Double)
       }
 
-      override fun addFieldListener() {
-        field.addActionListener(this)
-      }
+      override fun addFieldListener() = field.addActionListener(this)
     }
   }
 
@@ -109,89 +97,81 @@ abstract class PaneLayout(protected val pane: Container,
       field,
       title, facets) {
       override val fieldState: Int
-        get() {
-          return this.field.getSelectedIndex()
-        }
+        get() = this.field.selectedIndex
 
       override fun actionPerformed(e: ActionEvent) {
-        if (facets.getTargetState(title) != field.getSelectedIndex())
+        if (facets.getTargetState(title) != field.selectedIndex)
           super.actionPerformed(e)
       }
 
       override fun updateField(update: Any) {
-        field.setSelectedIndex(update as Int)
+        field.selectedIndex = update as Int
       }
 
-      override fun addFieldListener() {
-        field.addActionListener(this)
-      }
+      override fun addFieldListener() = field.addActionListener(this)
     }
   }
+  val click2 = "click2"
 
   protected fun newListFacet(title: String): SwingFacet<JList<String>> {
-    val facet = object : SwingFacet<JList<String>>(
-      JList<String>(), title, facets) {
-      override val fieldState: Int
-        get() {
-          return this.field.getSelectedIndex()
-        }
+    return object : SwingFacet<JList<String>>(JList(), title, facets) {
+      init {
+        field.border = BorderFactory.createLoweredBevelBorder()
+        field.addMouseListener(object:MouseAdapter(){
+          override fun mouseClicked(e: MouseEvent) {
+            if (e.clickCount == 2) actionPerformed(ActionEvent("",0,click2))
+          }
+        })
+      }
+      override val fieldState
+        get() = field.selectedIndex
 
       override fun actionPerformed(e: ActionEvent) {
-        if (field.getSelectedIndex() < 0) return
-        if (facets.getTargetState(title) != (field.getSelectedIndex()))
-          super.actionPerformed(e)
+        if (field.selectedIndex < 0) return
+        if ((this@PaneLayout.facets.getTargetState(title) == (field.selectedIndex))
+          &&e.actionCommand!=click2)return
+        trace(".actionPerformed: e=",e)
+        super.actionPerformed(e)
       }
 
       override fun updateField(update: Any) {
-        val selectables = facets.getIndexingState(title).uiSelectables
-        field.setModel(object : AbstractListModel<String>() {
+        val selectables = this@PaneLayout.facets.getIndexingState(title).uiSelectables
+        field.model = object : AbstractListModel<String>() {
           override fun getSize() = selectables.size
           override fun getElementAt(index: Int): String {
             return selectables[index]
           }
-        })
-        field.setSelectedIndex(update as Int)
+        }
+        field.selectedIndex = update as Int
         field.repaint()
       }
 
-      override fun addFieldListener() {
-        field.addListSelectionListener(object : ListSelectionListener {
-          override fun valueChanged(e: ListSelectionEvent) {
-            actionPerformed(ActionEvent(e.getSource(), e.hashCode(), e.toString()))
-          }
-        })
+      override fun addFieldListener() = field.addListSelectionListener {
+        it -> actionPerformed(ActionEvent(it.source, it.hashCode(), it.toString()))
       }
     }
-    facet.field.setBorder(BorderFactory.createLoweredBevelBorder())
-    return facet
   }
 
   protected fun newTextFieldFacet(title: String, cols: Int, interim: Boolean): SwingFacet<JTextField> {
     val field = JTextField()
     val facet = object : SwingFacet<JTextField>(field, title, facets) {
-      override val fieldState: Any get() = this.field.getText()
+      override val fieldState: Any get() = this.field.text
       override fun updateField(update: Any) {
-        field.setText(update as String)
+        field.text = update as String
       }
 
-      override fun addFieldListener() {
-        field.addActionListener(this)
-      }
+      override fun addFieldListener() = field.addActionListener(this)
     }
-    field.setColumns(cols)
+    field.columns = cols
     if (interim)
-      field.getDocument().addDocumentListener(object : DocumentListener {
+      field.document.addDocumentListener(object : DocumentListener {
         private lateinit var then: String
-        override fun removeUpdate(e: DocumentEvent) {
-          changedUpdate(e)
-        }
+        override fun removeUpdate(e: DocumentEvent) = changedUpdate(e)
 
-        override fun insertUpdate(e: DocumentEvent) {
-          changedUpdate(e)
-        }
+        override fun insertUpdate(e: DocumentEvent) = changedUpdate(e)
 
         override fun changedUpdate(doc: DocumentEvent) {
-          val now = field.getText()
+          val now = field.text
           val action = ActionEvent(field, now.length, "changedUpdate")
           if (field.hasFocus() && !now.isEmpty() && now !== then)
             SwingUtilities.invokeLater {
