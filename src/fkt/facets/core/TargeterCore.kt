@@ -1,6 +1,6 @@
 package fkt.facets.core
 
-open class TargeterCore : NotifyingCore("Targeter", "Untargeted"), Targeter {
+open class TargeterCore(type:String="Targeter") : NotifyingCore(type, "Untargeted"), Targeter {
   private lateinit var elements: Array<Targeter>
   private lateinit var target: TargetCore
   var facets: MutableList<Facet> = mutableListOf()

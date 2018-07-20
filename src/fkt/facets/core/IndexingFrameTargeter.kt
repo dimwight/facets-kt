@@ -1,55 +1,58 @@
 package fkt.facets.core
-open class IndexingFrameTargeter : TargeterCore(){
-var titleTargeters=HashMap<String,Targeter>()
-var indexing:Targeter?=null
-var indexed:Targeter?=null
-lateinit var indexingTarget:Indexing
-lateinit var indexedTarget:Targety
-lateinit var indexedTitle:String
-override fun retarget(target:Targety){
-super.retarget(target)
-this.updateToTarget()
-if(this.indexing==null){
-this.indexing=this.indexingTarget.newTargeter()
-this.indexing!!.setNotifiable(this)
-}
-if(this.titleTargeters.size==0){
-var atThen=this.indexingTarget.index()
-for(at in this.indexingTarget.indexables().indices){
-this.indexingTarget.setIndex(at)
-this.updateToTarget()
-this.indexed=(this.indexedTarget as TargetCore).newTargeter()
-val indexed=this.indexed!!
-indexed.setNotifiable(this)
-indexed.retarget(this.indexedTarget)
-this.titleTargeters.put(this.indexedTitle,indexed)
-}
-this.indexingTarget.setIndex(atThen)
-this.updateToTarget()
-}
-this.indexing!!.retarget(this.indexingTarget)
-this.indexed=this.titleTargeters.get(this.indexedTitle) as Targeter
-if(this.indexed==null)throw Error("No indexed for"+this.indexedTitle)
-this.indexed!!.retarget(this.indexedTarget)
-}
-override fun retargetFacets(){
-super.retargetFacets()
-this.indexing!!.retargetFacets()
-this.titleTargeters.values.forEach({t->
-t.retargetFacets()})
-}
-override fun titleElements():Array<Targeter> {
-var list=this.elements().toMutableList()
-list.add(this.indexing!!)
-this.titleTargeters.values.forEach({it->
-list.add(it)})
-return list.toTypedArray()
-}
-private fun updateToTarget(){
-var frame=this.target() as IndexingFrame
-this.indexingTarget=frame.indexing()
-this.indexedTarget=frame.indexedTarget()
-this.indexedTitle=this.indexedTarget.title()
-}
+
+open class IndexingFrameTargeter : TargeterCore("IndexingFrameTargeter") {
+  private var titleTargeters = HashMap<String, Targeter>()
+  private var indexing: Targeter? = null
+  var indexed: Targeter? = null
+  private lateinit var indexingTarget: Indexing
+  private lateinit var indexedTarget: Targety
+  private lateinit var indexedTitle: String
+  override fun retarget(target: Targety) {
+    super.retarget(target)
+    updateToTarget()
+    if (indexing == null) {
+      indexing = indexingTarget.newTargeter()
+      indexing!!.setNotifiable(this)
+    }
+    if (titleTargeters.size == 0) {
+      val atThen = indexingTarget.index()
+      for (at in indexingTarget.indexables().indices) {
+        indexingTarget.setIndex(at)
+        updateToTarget()
+        indexed = (indexedTarget as TargetCore).newTargeter()
+        val indexed = indexed!!
+        indexed.setNotifiable(this)
+        indexed.retarget(indexedTarget)
+        titleTargeters[indexedTitle] = indexed
+      }
+      indexingTarget.setIndex(atThen)
+      updateToTarget()
+    }
+    indexing!!.retarget(indexingTarget)
+    indexed = titleTargeters[indexedTitle] as Targeter
+    if (indexed == null) throw Error("No indexed for$indexedTitle")
+    indexed!!.retarget(indexedTarget)
+  }
+
+  override fun retargetFacets() {
+    super.retargetFacets()
+    indexing!!.retargetFacets()
+    titleTargeters.values.forEach { it.retargetFacets()}
+  }
+
+  override fun titleElements(): Array<Targeter> {
+    val list = elements().toMutableList()
+    list.add(indexing!!)
+    titleTargeters.values.forEach{ it ->list.add(it)}
+    return list.toTypedArray()
+  }
+
+  private fun updateToTarget() {
+    trace(".updateToTarget:")
+    val frame = target() as IndexingFrame
+    indexingTarget = frame.indexing()
+    indexedTarget = frame.indexedTarget()
+    indexedTitle = indexedTarget.title()
+  }
 }
 
