@@ -5,14 +5,14 @@ import java.awt.GridLayout
 import javax.swing.JPanel
 import fkt.ContentingSurface
 import fkt.SelectableType
-import fkt.TargetTest
 import java.awt.event.ActionEvent
 import fkt.SelectingTitles as Titles
 
-internal class ContentingLayout(pane: Container, test: TargetTest, surface: ContentingSurface) : SelectingLayout(pane, test, surface) {
+internal class ContentingLayout(pane: Container, surface: ContentingSurface)
+  : SelectingLayout(pane, surface) {
   override fun build() {
     buildFacet()
-    pane.setLayout(GridLayout(1, 1))
+    pane.layout = GridLayout(1, 1)
     pane.add(cardsParent)
     for ((at, card) in arrayOf(
       JPanel(GridLayout(8, 1)),
@@ -25,7 +25,7 @@ internal class ContentingLayout(pane: Container, test: TargetTest, surface: Cont
       cards.addLayoutComponent(card, typeTitle)
       if (type == SelectableType.Chooser) {
         val button = newButtonFacet(Titles.OpenEdit)
-        val click2 = { button.actionPerformed(ActionEvent("", 2, "")) }
+        val click2 = { button.actionPerformed(ActionEvent("", 0, "")) }
         card.add(newListFacet(Titles.Select, click2).mount)
         card.add(button.mount)
       } else {

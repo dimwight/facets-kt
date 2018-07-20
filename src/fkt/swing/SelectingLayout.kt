@@ -8,11 +8,11 @@ import java.awt.GridLayout
 import javax.swing.JComponent
 import javax.swing.JPanel
 import fkt.SelectingTitles as Titles
-open class SelectingLayout(pane:Container, test:TargetTest, surface:SelectingSurface):PaneLayout(pane, test, surface){
+open class SelectingLayout(pane:Container, surface:SelectingSurface):PaneLayout(pane, surface){
   val cards = CardLayout()
   val cardsParent:JComponent = JPanel(cards)
   init{
-    pane.setLayout(GridLayout(2, 1))
+    pane.layout = GridLayout(2, 1)
   }
   override fun build() {
     buildFacet()
@@ -36,13 +36,9 @@ open class SelectingLayout(pane:Container, test:TargetTest, surface:SelectingSur
   protected fun buildFacet() {
     object:SwingFacet<JComponent>(cardsParent, facets.activeContentTitle, facets) {
       override val fieldState:String
-      get() {
-        return "getFieldState"
-      }
+      get() = "getFieldState"
       override fun addFieldListener() {}
-      override fun updateField(update:Any) {
-        cards.show(cardsParent, update as String)
-      }
+      override fun updateField(update:Any) = cards.show(cardsParent, update as String)
     }
   }
 }

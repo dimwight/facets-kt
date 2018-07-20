@@ -1,6 +1,7 @@
 package fkt
 
 import fkt.TargetTest.*
+import fkt.facets.util.Tracer
 import fkt.swing.ContentingLayout
 import fkt.swing.SelectingLayout
 import fkt.swing.SimpleLayout
@@ -14,7 +15,9 @@ import javax.swing.JPanel
 import javax.swing.border.EtchedBorder
 import fkt.SimpleTitles as Titles
 
-class FacetsApplet : JApplet() {
+class FacetsApplet(private val args: Array<String>) : JApplet() {
+  val t= Tracer.newTopped("FacetsApplet")
+  private val style=args.firstOrNull { !it.startsWith("_") }?:""
   override fun init() {
     val content = contentPane as JPanel
     content.addComponentListener(object : ComponentListener {
@@ -27,9 +30,10 @@ class FacetsApplet : JApplet() {
       override fun componentHidden(e: ComponentEvent) {}
     })
     val simples = TargetTest.simpleValues()
-    val tests = when {
-        false -> if (false) arrayOf(TargetTest.TogglingLive) else simples
-        else -> arrayOf(if (false) Selecting else Contenting)
+    val tests = when (style) {
+        "contenting" -> arrayOf(Contenting)
+        "selecting" -> arrayOf(Selecting )
+        else -> if (false) arrayOf(TargetTest.TogglingLive) else simples
       }
     content.layout = GridLayout(if (tests.contentEquals(simples)) 3 else 2, 1)
     for (test in tests) {
@@ -49,15 +53,15 @@ class FacetsApplet : JApplet() {
               val live = facets.getTargetState(Titles.Toggling) as Boolean
               facets.setTargetLive(Titles.Toggled, live)
             }
-            SimpleLayout(pane, test, this).build()
+            SimpleLayout(pane, this).build()
           }
         }
         test == Contenting -> object : ContentingSurface(trace) {
-          private val layout = ContentingLayout(pane, test, this)
+          private val layout = ContentingLayout(pane, this)
           override fun buildLayout() = layout.build()
         }
         else -> object : SelectingSurface(Selecting, trace) {
-          private val layout = SelectingLayout(pane, test, this)
+          private val layout = SelectingLayout(pane, this)
           override fun buildLayout() = layout.build()
         }
       }.buildSurface()
@@ -68,7 +72,7 @@ class FacetsApplet : JApplet() {
 fun main(args: Array<String>) {
   val frame = JFrame("FacetsApplet")
   frame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
-  val applet = FacetsApplet()
+  val applet = FacetsApplet(args)
   frame.contentPane.add(applet)
   applet.init()
   frame.size = applet.minimumSize

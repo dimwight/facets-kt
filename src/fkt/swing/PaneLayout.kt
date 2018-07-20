@@ -3,13 +3,13 @@ package fkt.swing
 import fkt.SurfaceCore
 import fkt.TargetTest
 import fkt.facets.Facets
+import fkt.facets.FacetsApp
 import fkt.facets.util.Tracer
 import java.awt.Container
 import java.awt.Font
 import java.awt.event.ActionEvent
 import java.awt.event.MouseAdapter
 import java.awt.event.MouseEvent
-import java.awt.event.MouseListener
 import java.text.DecimalFormat
 import javax.swing.AbstractListModel
 import javax.swing.BorderFactory
@@ -24,24 +24,30 @@ import javax.swing.SwingUtilities
 import javax.swing.event.DocumentEvent
 import javax.swing.event.DocumentListener
 
+/**
+Implements the Layout concept.
 
+@property [pane] container for layout elements
+
+@property [surface] generated the targets the layout will expose
+ */
 abstract class PaneLayout(protected val pane: Container,
-                          protected val test: TargetTest,
-                          private val surface: SurfaceCore,
-                          protected val facets: Facets = surface.facets)
-  : Tracer("PaneLayout") {
+                          protected val surface: SurfaceCore) : Tracer("PaneLayout") {
+  protected val facets = surface.facets
   abstract fun build()
-  protected fun newListFacet(title: String,click2:()->Unit={trace(".newListFacet: doubleClick!")
+  protected fun newListFacet(title: String, click2: () -> Unit = {
+    trace(".newListFacet: doubleClick!")
   }): SwingFacet<JList<String>> {
     return object : SwingFacet<JList<String>>(JList(), title, facets) {
       init {
         field.border = BorderFactory.createLoweredBevelBorder()
-        field.addMouseListener(object:MouseAdapter(){
+        field.addMouseListener(object : MouseAdapter() {
           override fun mouseClicked(e: MouseEvent) {
-            if (e.clickCount == 2)click2.invoke()
+            if (e.clickCount == 2) click2.invoke()
           }
         })
       }
+
       override val fieldState
         get() = field.selectedIndex
 
@@ -63,8 +69,8 @@ abstract class PaneLayout(protected val pane: Container,
         field.repaint()
       }
 
-      override fun addFieldListener() = field.addListSelectionListener {
-        it -> actionPerformed(ActionEvent(it.source, it.hashCode(), it.toString()))
+      override fun addFieldListener() = field.addListSelectionListener { it ->
+        actionPerformed(ActionEvent(it.source, it.hashCode(), it.toString()))
       }
     }
   }

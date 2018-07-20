@@ -17,7 +17,7 @@ enum class TargetTest {
 abstract class SurfaceCore(trace:Boolean, test:TargetTest)
 		:Tracer(test.name), Titled, FacetsApp {
   val facets: Facets = newFacets(trace)
-  protected val test:TargetTest = if (true || test == TargetTest.Selecting) test else TargetTest.Indexing
+  val test:TargetTest = if (true || test == TargetTest.Selecting) test else TargetTest.Indexing
 
   init{
     facets.times.doTime = false || facets.doTrace
