@@ -43,17 +43,17 @@ abstract class SurfaceCore(trace:Boolean, test:TargetTest)
   }
 }
 fun main(args: Array<String>) {
-  val trace = true
+  val trace = false
   val tested= arrayListOf<FacetsApp>()
   arrayOf(
     ContentingSurface(trace)
+    ,SelectingSurface(TargetTest.Selecting, trace)
+    ,SimpleSurface(TargetTest.TogglingLive, trace)
+    ,SimpleSurface(TargetTest.Numeric, trace)
+    ,SimpleSurface(TargetTest.Textual, trace)
+    ,SimpleSurface(TargetTest.Trigger, trace)
+    ,SimpleSurface(TargetTest.Indexing, trace)
     /*
-    SelectingSurface(TargetTest.Selecting, trace)
-    SimpleSurface(TargetTest.TogglingLive, trace)
-    SimpleSurface(TargetTest.Numeric, trace)
-    SimpleSurface(TargetTest.Textual, trace)
-    SimpleSurface(TargetTest.Trigger, trace)
-    SimpleSurface(TargetTest.Indexing, trace)
     */
   ).forEach{ it ->
     it.buildSurface()

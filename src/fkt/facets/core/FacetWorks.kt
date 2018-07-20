@@ -19,7 +19,7 @@ class FacetWorks(override var doTrace: Boolean, override val supplement:()->Unit
       rt.retargetFacets()
     }
   }
-  override fun trace(msg: String) {
+  override fun doTraceMsg(msg: String) {
     if (doTrace) println(">$msg")
   }
   override var activeContentTitle:String = Debug.info(this)+":Active Content"
@@ -40,7 +40,7 @@ class FacetWorks(override var doTrace: Boolean, override val supplement:()->Unit
         )
       }
     }
-    trace(" > Created trees root ", root)
+    trace("Created trees root ", root)
   }
   override val times = object : Times {
     override fun setResetWait(millis: Int) {

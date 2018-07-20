@@ -12,7 +12,7 @@ abstract class Tracer(private val top:String?): Identified {
   override fun identity():Any {
     return id
   }
-  open fun trace(msg:String) {
+  fun trace(msg:String) {
     doTraceMsg(msg)
   }
   fun trace(msg:String, o:Any) {
