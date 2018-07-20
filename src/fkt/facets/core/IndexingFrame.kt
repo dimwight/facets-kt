@@ -1,5 +1,8 @@
 package fkt.facets.core
 open class IndexingFrame(title: String, private val indexing_: Indexing) : TargetCore(title) {
+  init {
+    indexing_.setNotifiable(this);
+  }
   fun indexedTarget(): Targety {
     val indexed = indexing_.indexed()
     return indexed as? Targety?:this.newIndexedTargets(indexed)

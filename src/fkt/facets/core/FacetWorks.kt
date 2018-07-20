@@ -156,7 +156,7 @@ class FacetWorks(override var doTrace: Boolean, override val supplement:()->Unit
     notifiable.notify(title)
   }
   override fun updateTargetWithNotify(title: String, update: Any) {
-    throw Error("Not implemented")
+    updateTargetState(title,update)
   }
   override fun notifyTargetUpdated(title: String) {
     val target = titleTarget(title)
