@@ -12,7 +12,7 @@ class IndexingFrameTargeter : TargeterCore("IndexingFrameTargeter") {
     updateToTarget()
     if(!this::indexing.isInitialized){
       indexing = indexingTarget.newTargeter()
-      trace(".retarget: indexing=",indexing)
+      if(false)trace(".retarget: indexing=",indexing)
     }
     indexing.setNotifiable(this)
     if (titleTargeters.size == 0) {
