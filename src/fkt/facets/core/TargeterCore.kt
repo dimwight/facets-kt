@@ -7,7 +7,7 @@ open class TargeterCore(type: String = "Targeter") : NotifyingCore(type, "Untarg
   override fun retarget(target: Targety) {
     _target = target as TargetCore
     val targets = _target.elements()
-    if (!this::_elements.isInitialized) _elements = targets.map {
+    if (!::_elements.isInitialized) _elements = targets.map {
       val element = (it as TargetCore).newTargeter()
       element.setNotifiable(this)
       element

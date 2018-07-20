@@ -10,7 +10,7 @@ class IndexingFrameTargeter : TargeterCore("IndexingFrameTargeter") {
   override fun retarget(target: Targety) {
     super.retarget(target)
     updateToTarget()
-    if(!this::indexing.isInitialized){
+    if(!::indexing.isInitialized){
       indexing = indexingTarget.newTargeter()
       if(false)trace(".retarget: indexing=",indexing)
     }
