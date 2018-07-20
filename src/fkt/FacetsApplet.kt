@@ -1,9 +1,9 @@
-package fkt.swing
-import fkt.ContentingSurface
-import fkt.SelectingSurface
-import fkt.SimpleSurface
-import fkt.TargetTest
+package fkt
+
 import fkt.TargetTest.*
+import fkt.swing.ContentingLayout
+import fkt.swing.SelectingLayout
+import fkt.swing.SimpleLayout
 import java.awt.GridLayout
 import java.awt.event.ComponentEvent
 import java.awt.event.ComponentListener
@@ -13,6 +13,7 @@ import javax.swing.JFrame
 import javax.swing.JPanel
 import javax.swing.border.EtchedBorder
 import fkt.SimpleTitles as Titles
+
 class FacetsApplet : JApplet() {
   override fun init() {
     val content = contentPane as JPanel
@@ -20,6 +21,7 @@ class FacetsApplet : JApplet() {
       override fun componentResized(e: ComponentEvent) {
         if (false) println("componentResized: " + content.size)
       }
+
       override fun componentShown(e: ComponentEvent) {}
       override fun componentMoved(e: ComponentEvent) {}
       override fun componentHidden(e: ComponentEvent) {}
@@ -62,6 +64,7 @@ class FacetsApplet : JApplet() {
     }
   }
 }
+
 fun main(args: Array<String>) {
   val frame = JFrame("FacetsApplet")
   frame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
