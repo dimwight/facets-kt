@@ -17,6 +17,10 @@ import fkt.SimpleTitles as Titles
 
 /**
  Superficial Host for [SurfaceCore]s
+
+ @constructor
+
+ @param [args]
  */
 class FacetsApplet(private val args: Array<String>) : JApplet() {
   companion object {

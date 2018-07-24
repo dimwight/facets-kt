@@ -16,12 +16,19 @@ enum class TargetTest {
 }
 abstract class SurfaceCore(trace:Boolean, test:TargetTest)
 		:Tracer(test.name), Titled, FacetsApp {
+  /**
+   Internal instance
+   */
   val facets: Facets = newFacets(trace)
   val test:TargetTest = if (true || test == TargetTest.Selecting) test else TargetTest.Indexing
 
   init{
     facets.times.doTime = false || facets.doTrace
   }
+
+  /**
+   Calls [Facets.buildApp] on the private instance
+   */
   open fun buildSurface() {
     facets.buildApp(this)
   }
