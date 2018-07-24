@@ -1,9 +1,6 @@
 package fkt.swing
 
 import fkt.SurfaceCore
-import fkt.TargetTest
-import fkt.facets.Facets
-import fkt.facets.FacetsApp
 import fkt.facets.util.Tracer
 import java.awt.Container
 import java.awt.Font
@@ -25,7 +22,7 @@ import javax.swing.event.DocumentEvent
 import javax.swing.event.DocumentListener
 
 /**
-Implements the Layout concept.
+Implements the Superficial layout concept for [SurfaceCore] in [FacetsApplet].
 
 @property [pane] container for layout elements
 
@@ -34,6 +31,11 @@ Implements the Layout concept.
 abstract class PaneLayout(protected val pane: Container,
                           protected val surface: SurfaceCore) : Tracer("PaneLayout") {
   protected val facets = surface.facets
+  /**
+   Called from [fkt.facets.FacetsApp.buildLayout] in [SurfaceCore].
+
+   Expected to use [facets]
+   */
   abstract fun build()
   protected fun newListFacet(title: String, click2: () -> Unit = {
     trace(".newListFacet: doubleClick!")

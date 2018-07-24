@@ -1,10 +1,11 @@
-package fkt
+package fkt.swing
 
+import fkt.ContentingSurface
+import fkt.SelectingSurface
+import fkt.SimpleSurface
+import fkt.TargetTest
 import fkt.TargetTest.*
 import fkt.facets.util.Tracer
-import fkt.swing.ContentingLayout
-import fkt.swing.SelectingLayout
-import fkt.swing.SimpleLayout
 import java.awt.GridLayout
 import java.awt.event.ComponentEvent
 import java.awt.event.ComponentListener

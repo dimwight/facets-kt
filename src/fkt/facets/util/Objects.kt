@@ -4,8 +4,7 @@ import java.util.ArrayList
  * Utility methods for arrays.
  */
 object Objects {
-  private val debug = false
-  fun toString(items: Array<Any>?, spacer: String): String {
+  private fun toString(items: Array<Any?>?, spacer: String): String {
     if (items == null)
       return "null"
     else if (items.isEmpty()) return ""
@@ -19,7 +18,7 @@ object Objects {
     return list.toString()
   }
 
-  fun toString(array: Array<Any>): String {
+  fun toString(array: Array<Any?>): String {
     return toString(array, ",")
   }
 
