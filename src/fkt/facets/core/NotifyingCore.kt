@@ -23,7 +23,7 @@ abstract class NotifyingCore(val type: String, val title: String)
     _notifiable.notify(this)
   }
 
-  abstract override fun elements(): Array<out Notifying>
+  abstract override fun elements(): List<Notifying>
   override fun notify(notice: Any) {
     _notifiable.notify(this.title())
   }

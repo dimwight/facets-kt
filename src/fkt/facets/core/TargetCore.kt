@@ -6,14 +6,13 @@ import fkt.facets.util.Debug
 const val TargetCoreType = "Targety"
 
 open class TargetCore(title: String, var extra: Any? = null)
-  : NotifyingCore(TargetCoreType, title), Targety// any=Targety[]|TargetCoupler
-{
+  : NotifyingCore(TargetCoreType, title), Targety{
   private var live = true
   val NoState = "No state set"
   var state: Any = NoState
 
   init {
-    if(false||extra!=null&&!(extra is TargetCoupler ||extra is Array<*>))
+    if(false||extra!=null&&!(extra is TargetCoupler ||extra is List<*>))
       throw Error("Bad extra ${Debug.info(extra)} in "+Debug.info(this))
   }
 
@@ -25,19 +24,19 @@ open class TargetCore(title: String, var extra: Any? = null)
     return if (extra == null) false else extra is Array<*>
   }
 
-  override fun elements(): Array<Targety> {
+  override fun elements(): List<Targety> {
     if(extra==null)extra=lazyElements()
-    val isArray = extra is Array<*>
-    if(false)trace(".elements: extra=",isArray)
-    return if(isArray){
+    val isList= extra is List<*>
+    if(false)trace(".elements: extra=",isList)
+    return if(isList){
       if(false)trace(".elements: extra=",extra!!)
-      val elements=extra!! as Array<Targety>
+      val elements=extra as List<Targety>
       elements.forEach{it.setNotifiable(this)}
       elements
-    } else arrayOf()
+    } else listOf()
   }
 
-  open fun lazyElements(): List<out Targety> {
+  open fun lazyElements(): List<Targety> {
     return listOf()
   }
 

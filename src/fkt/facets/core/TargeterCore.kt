@@ -2,7 +2,7 @@ package fkt.facets.core
 
 open class TargeterCore(type: String = "Targeter") : NotifyingCore(type, "Untargeted"), Targeter {
   private val facets = mutableListOf<Facet>()
-  private lateinit var _elements: Array<Targeter>
+  private lateinit var _elements: List<Targeter>
   private lateinit var _target: TargetCore
   override fun retarget(target: Targety) {
     _target = target as TargetCore
@@ -11,7 +11,7 @@ open class TargeterCore(type: String = "Targeter") : NotifyingCore(type, "Untarg
       val element = (it as TargetCore).newTargeter()
       element.setNotifiable(this)
       element
-    }.toTypedArray()
+    }
     if (targets.size == _elements.size)
       _elements.forEachIndexed { at, e -> e.retarget(targets[at]) }
     if (_target.notifiesTargeter()) _target.setNotifiable(this)
@@ -22,7 +22,7 @@ open class TargeterCore(type: String = "Targeter") : NotifyingCore(type, "Untarg
 
   override fun target() = _target
 
-  override fun elements() = this._elements
+  override fun elements(): List<Targeter> = this._elements
 
   open fun titleElements() = elements()
 

@@ -40,11 +40,11 @@ class IndexingFrameTargeter : TargeterCore("IndexingFrameTargeter") {
     titleTargeters.values.forEach { it.retargetFacets()}
   }
 
-  override fun titleElements(): Array<Targeter> {
+  override fun titleElements(): List<Targeter> {
     val list = elements().toMutableList()
     list.add(indexing)
     titleTargeters.values.forEach{ it ->list.add(it)}
-    return list.toTypedArray()
+    return list
   }
 
   private fun updateToTarget() {

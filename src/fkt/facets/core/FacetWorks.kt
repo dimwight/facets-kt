@@ -26,7 +26,7 @@ class FacetWorks(override var doTrace: Boolean, override val supplement: () -> U
     if (doTrace) println(">$msg")
   }
 
-  override var activeContentTitle: String = Debug.info(this) + ":Active Content"
+  override var activeContentTitle = Debug.info(this) + ":Active Content"
 
   init {
     val indexing = Indexing("RootIndexing", object : IndexingCoupler() {
@@ -122,7 +122,7 @@ class FacetWorks(override var doTrace: Boolean, override val supplement: () -> U
 
   override fun newTargetGroup(title: String, members: List<TTarget>): TTarget {
     val grouped = members.map { it as Targety }
-    val group = TargetCore(title, grouped.toTypedArray())
+    val group = TargetCore(title, grouped)
     trace("Created group title=$title members=${grouped.size}")
     return group
   }
@@ -217,7 +217,7 @@ class FacetWorks(override var doTrace: Boolean, override val supplement: () -> U
 
   private fun addTitleTargeters(t: Targeter) {
     val title = t.title()
-    val elements: Array<Targeter> = (t as TargeterCore).titleElements()
+    val elements = (t as TargeterCore).titleElements()
     titleTargeters[title] = t
     if (false) trace("Added targeter: title=$title: elements=${elements.size}")
     elements.forEach { e -> addTitleTargeters(e) }

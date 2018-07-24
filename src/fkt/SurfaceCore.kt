@@ -46,20 +46,20 @@ abstract class SurfaceCore(trace:Boolean, test:TargetTest)
 }
 fun main(args: Array<String>) {
   val trace = false
-  val tested= arrayListOf<FacetsApp>()
-  arrayOf(
-    ContentingSurface(trace)
-    ,SelectingSurface(TargetTest.Selecting, trace)
+  val tested= mutableListOf<FacetsApp>()
+  listOf(
+    SimpleSurface(TargetTest.Textual, trace)
     ,SimpleSurface(TargetTest.TogglingLive, trace)
     ,SimpleSurface(TargetTest.Numeric, trace)
-    ,SimpleSurface(TargetTest.Textual, trace)
     ,SimpleSurface(TargetTest.Trigger, trace)
     ,SimpleSurface(TargetTest.Indexing, trace)
+    ,SelectingSurface(TargetTest.Selecting, trace)
+    ,ContentingSurface(trace)
     /*
     */
   ).forEach{ it ->
     it.buildSurface()
     tested.add(it)
   }
-  Tracer.newTopped(SurfaceCore::class.simpleName!!).trace("Tested apps:",tested.toArray())
+  Tracer.newTopped(SurfaceCore::class.simpleName!!).trace("Tested apps:",tested)
 }

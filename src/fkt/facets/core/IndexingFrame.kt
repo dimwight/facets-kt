@@ -1,17 +1,17 @@
 package fkt.facets.core
-open class IndexingFrame(title: String, private val indexing_: Indexing) : TargetCore(title) {
+open class IndexingFrame(title: String, private val indexing: Indexing) : TargetCore(title) {
   init {
-    indexing_.setNotifiable(this);
+    indexing.setNotifiable(this);
   }
   fun indexedTarget(): Targety {
-    val indexed = indexing_.indexed()
+    val indexed = indexing.indexed()
     return indexed as? Targety?:this.newIndexedTargets(indexed)
   }
   open fun newIndexedTargets(indexed: Any): Targety {
     throw Error("Not implemented in" + this.title())
   }
   fun indexing(): Indexing {
-    return indexing_
+    return indexing
   }
   final override fun newTargeter(): Targeter {
     return IndexingFrameTargeter()
