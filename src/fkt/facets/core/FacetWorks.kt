@@ -30,17 +30,17 @@ class FacetWorks(override var doTrace: Boolean, override val supplement: () -> U
 
   init {
     val indexing = Indexing("RootIndexing", object : IndexingCoupler() {
-      private var thenTrees: Array<Targety>? = null
-      override val getIndexables = fun(_: String): Array<*> {
-        val trees = titleTrees.values.toTypedArray()
-        if (!Util.arraysEqual(trees, thenTrees)) trace("New trees: size=${trees.size}")
+      private var thenTrees: Collection<Targety>? = null
+      override val getIndexables = fun(_: String): List<*> {
+        val trees = titleTrees.values
+        if (!Util.arraysEqual(trees.toTypedArray(), thenTrees!!.toTypedArray())) trace("New trees: size=${trees.size}")
         thenTrees = trees
-        return trees
+        return trees.toList()
       }
     })
     root = object : IndexingFrame("RootFrame", indexing) {
-      override fun lazyElements(): Array<out Targety> {
-        return arrayOf(
+      override fun lazyElements(): List<out Targety> {
+        return listOf(
           Textual(activeContentTitle, object : TextualCoupler() {
             override val getText: ((String) -> String)?
               get() = { indexedTargetTitle() }
@@ -120,7 +120,7 @@ class FacetWorks(override var doTrace: Boolean, override val supplement: () -> U
     return Numeric(title, c)
   }
 
-  override fun newTargetGroup(title: String, members: Array<TTarget>): TTarget {
+  override fun newTargetGroup(title: String, members: List<TTarget>): TTarget {
     val grouped = members.map { it as Targety }
     val group = TargetCore(title, grouped.toTypedArray())
     trace("Created group title=$title members=${grouped.size}")
@@ -153,9 +153,9 @@ class FacetWorks(override var doTrace: Boolean, override val supplement: () -> U
     })
     trace("Created indexing$indexingTitle")
     val frame = object : IndexingFrame(frameTitle, indexing) {
-      override fun lazyElements(): Array<Targety> {
-        val targets = p.newFrameTargets?.invoke() ?: return arrayOf()
-        return listOf(*targets).map { it as Targety }.toTypedArray()
+      override fun lazyElements(): List<out Targety> {
+        val targets = p.newFrameTargets?.invoke() ?: return listOf()
+        return targets.map { it as Targety }
       }
 
       override fun newIndexedTargets(indexed: Any): Targety {

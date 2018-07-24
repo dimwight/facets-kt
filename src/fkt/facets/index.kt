@@ -20,7 +20,7 @@ abstract class NumericCoupler : TargetCoupler() {
   open val max: Double? = null
 }
 abstract class IndexingCoupler : TargetCoupler() {
-  abstract val getIndexables: (String) -> Array<*>
+  abstract val getIndexables: (String) -> List<*>
   open val passIndex: Int? = null
   open val newUiSelectable: ((Any) -> String)? = null
 }
@@ -30,10 +30,10 @@ abstract class IndexingState {
 }
 abstract class IndexingFramePolicy {
   open val indexingTitle: String? = null
-  abstract val getIndexables: () -> (Array<out Any>)
+  abstract val getIndexables: () -> (List<out Any>)
   open val frameTitle: String? = null
   open val newUiSelectable: ((Any) -> String)? = null
-  open val newFrameTargets: (() -> (Array<TTarget>))? = null
+  open val newFrameTargets: (() -> (List<TTarget>))? = null
   open val newIndexedTreeTitle: ((Any) -> String)? = null
   open val newIndexedTree: ((Any, String) -> TTarget)? = null
 }
@@ -55,7 +55,7 @@ fun newTextualTarget(title:String,c: TextualCoupler): TTarget
 fun newTogglingTarget(title:String,c: TogglingCoupler): TTarget
 fun newTriggerTarget(title:String,c: TargetCoupler): TTarget
 fun newNumericTarget(title:String,c: NumericCoupler): TTarget
-fun newTargetGroup(title:String, members: Array<TTarget>): TTarget
+fun newTargetGroup(title:String, members: List<TTarget>): TTarget
 fun newIndexingTarget(title:String,c: IndexingCoupler): TTarget
 fun getIndexingState(title:String): IndexingState
 fun newIndexingFrame(p: IndexingFramePolicy): TTarget
@@ -69,7 +69,7 @@ fun isTargetLive(title:String):Boolean
 val supplement:()->Unit
 }
 interface FacetsApp{
-fun getContentTrees(): Array<TTarget>
+fun getContentTrees(): List<TTarget>
 fun onRetargeted(activeTitle:String)
 fun buildLayout()
 }

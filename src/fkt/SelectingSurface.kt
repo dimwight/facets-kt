@@ -27,15 +27,15 @@ open class SelectingSurface(test: TargetTest,trace:Boolean)
 					TextContent("Hello Dolly!"),
 					TextContent("Hello, good evening and welcome!"))
 
-	override fun getContentTrees(): Array<TTarget> {
+	override fun getContentTrees(): List<TTarget> {
 		val appTitle = TargetTest.Selecting.toString()
-		return arrayOf(facets.newIndexingFrame(object : IndexingFramePolicy() {
+		return listOf(facets.newIndexingFrame(object : IndexingFramePolicy() {
 			override val frameTitle = appTitle
 			override val indexingTitle = Titles.Select
-			override val getIndexables = { list.toTypedArray() }
+			override val getIndexables = { list }
 			override val newUiSelectable = { indexable: Any -> (indexable as TextContent).text }
 			override val newFrameTargets = {
-				arrayOf(
+				listOf(
 								facets.newTextualTarget(Simples.Indexed, object : TextualCoupler() {
 									override val getText = { _: String ->
 										val indexed = facets.getIndexingState(Titles.Select).indexed as TextContent
@@ -56,8 +56,8 @@ open class SelectingSurface(test: TargetTest,trace:Boolean)
 				val tail = type.titleTail()
 				facets.newTargetGroup(indexedTreeTitle,
 								if (type == SelectableType.Standard)
-									arrayOf(newEditTarget(content, tail))
-								else arrayOf(newEditTarget(content, tail), newCharsTarget(tail))
+									listOf(newEditTarget(content, tail))
+								else listOf(newEditTarget(content, tail), newCharsTarget(tail))
 				)
 			}
 		}))
@@ -93,7 +93,7 @@ open class SelectingSurface(test: TargetTest,trace:Boolean)
 			val title = Titles.Select
 			facets.updateTargetWithNotify(title, update)
 		}
-		for (update in arrayOf(add, edit, select)) update()
+		for (update in listOf(add, edit, select)) update()
 	}
 
 	override fun onRetargeted(activeTitle: String) {

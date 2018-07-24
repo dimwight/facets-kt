@@ -9,19 +9,19 @@ open class ContentingSurface(trace:Boolean)
 		:SelectingSurface(TargetTest.Contenting,trace) {
   private lateinit var active:TextContent
   private lateinit var edit:TextContent
-	override fun getContentTrees(): Array<TTarget> {
-    return arrayOf(
+	override fun getContentTrees(): List<TTarget> {
+    return listOf(
     		newContentTree(list[0]),
     		newContentTree(list[2]),
     		facets.newIndexingFrame(object: IndexingFramePolicy() {
     			override val frameTitle = Titles.Chooser
 					override val indexingTitle = Titles.Select
-					override val getIndexables = { list.toTypedArray() }
+					override val getIndexables = { list }
     			override val newUiSelectable = { indexable:Any-> 
     				(indexable as TextContent).text 
     			}
     			override val newFrameTargets = {
-  					arrayOf(facets.newTriggerTarget(Titles.OpenEdit, 
+  					listOf(facets.newTriggerTarget(Titles.OpenEdit, 
     							object: TextualCoupler() {
 						override val targetStateUpdated = {_:Any, _:String->
               active = facets.getIndexingState(Titles.Select).indexed as TextContent
@@ -51,7 +51,7 @@ open class ContentingSurface(trace:Boolean)
     		activateChooser()
     	}
     }))
-    return facets.newTargetGroup(type.title(), members.toTypedArray())
+    return facets.newTargetGroup(type.title(), members.toList())
   }
 
 	override fun onRetargeted(activeTitle:String) {}

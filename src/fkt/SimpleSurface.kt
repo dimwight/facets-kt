@@ -9,19 +9,19 @@ import fkt.facets.TogglingCoupler
 import fkt.SimpleTitles as Simples
 
 open class SimpleSurface(test: TargetTest, trace: Boolean) : SurfaceCore(trace, test) {
-  override fun getContentTrees(): Array<TTarget> {
+  override fun getContentTrees(): List<TTarget> {
     trace(" > Generating targets")
-    return arrayOf(facets.newTargetGroup(title ="${test.toString()} Test", members = when (test) {
-      TargetTest.Textual -> arrayOf(
+    return listOf(facets.newTargetGroup(title ="${test.toString()} Test", members = when (test) {
+      TargetTest.Textual -> listOf(
         newTextual(Simples.MasterTextual),
         newTextual(Simples.SlaveTextual)
       )
-      TargetTest.TogglingLive -> arrayOf(
+      TargetTest.TogglingLive -> listOf(
         newToggling(Simples.Toggling, Simples.StartToggled),
         newTextual(Simples.Toggled)
       )
-      TargetTest.Indexing -> arrayOf(
-        newIndexing(Simples.Indexing, arrayOf(
+      TargetTest.Indexing -> listOf(
+        newIndexing(Simples.Indexing, listOf(
           Simples.MasterTextual,
           Simples.SlaveTextual
         ),
@@ -29,11 +29,11 @@ open class SimpleSurface(test: TargetTest, trace: Boolean) : SurfaceCore(trace, 
         newTextual(Simples.Index),
         newTextual(Simples.Indexed)
       )
-      TargetTest.Numeric -> arrayOf(
+      TargetTest.Numeric -> listOf(
         newNumeric(Simples.NumericField),
         newTextual(Simples.NumericValue)
       )
-      else -> arrayOf(
+      else -> listOf(
         newTrigger(Simples.Trigger),
         newTextual(Simples.Triggerings)
       )
@@ -87,7 +87,7 @@ open class SimpleSurface(test: TargetTest, trace: Boolean) : SurfaceCore(trace, 
     return facets.newTogglingTarget(title, coupler)
   }
 
-  private fun newIndexing(title: String, indexables: Array<out String>, indexStart: Int): TTarget {
+  private fun newIndexing(title: String, indexables: List<String>, indexStart: Int): TTarget {
     trace(" > Generating indexing target state=", indexStart)
     val coupler = object : IndexingCoupler() {
       override val getIndexables = { _: String -> indexables }

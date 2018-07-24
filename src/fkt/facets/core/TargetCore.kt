@@ -37,8 +37,8 @@ open class TargetCore(title: String, var extra: Any? = null)
     } else arrayOf()
   }
 
-  open fun lazyElements(): Array<out Targety> {
-    return arrayOf()
+  open fun lazyElements(): List<out Targety> {
+    return listOf()
   }
 
   override fun updateState(update: Any) {

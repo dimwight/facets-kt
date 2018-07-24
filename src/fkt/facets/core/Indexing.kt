@@ -17,8 +17,8 @@ class Indexing(title: String, coupler: IndexingCoupler) : TargetCore(title, coup
     if (!first) coupler().targetStateUpdated?.invoke(this.state, this.title())
   }
 
-  fun indexables(): Array<*> {
-    val indexables: Array<*> = coupler().getIndexables(this.title())
+  fun indexables(): List<*> {
+    val indexables: List<*> = coupler().getIndexables(this.title())
     if (indexables.isEmpty()) throw Error("Empty indexables in" + this)
     else return indexables
   }
