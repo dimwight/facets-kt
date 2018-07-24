@@ -24,7 +24,7 @@ open class TargetCore(title: String, var extra: Any? = null)
     return if (extra == null) false else extra is Array<*>
   }
 
-  override fun elements(): List<Targety> {
+  final override fun elements(): List<Targety> {
     if(extra==null)extra=lazyElements()
     val isList= extra is List<*>
     if(false)trace(".elements: extra=",isList)
@@ -51,11 +51,11 @@ open class TargetCore(title: String, var extra: Any? = null)
     return TargeterCore()
   }
 
-  override fun isLive(): Boolean {
+  final override fun isLive(): Boolean {
     return this.live
   }
 
-  override fun setLive(live: Boolean) {
+  final override fun setLive(live: Boolean) {
     this.live = live
   }
 }
