@@ -18,16 +18,16 @@ import fkt.SimpleTitles as Titles
 /**
  Superficial Host for [SurfaceCore]s
 
- @constructor
+ @param constructor
 
- @param [args]
+ @param [args] passed from [main], specify flavour of surface
  */
 class FacetsApplet(private val args: Array<String>) : JApplet() {
   companion object {
     val t= Tracer.newTopped("FacetsApplet")
   }
   /**
-  Calls [SurfaceCore.buildSurface]] on a receiver specified by [args] passed from [main]
+  Calls [SurfaceCore.buildSurface]] on an instance specified by [args]
    */
   override fun init() {
     val style=args.firstOrNull { !it.startsWith("_") }?:""
