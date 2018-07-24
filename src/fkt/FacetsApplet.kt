@@ -15,10 +15,18 @@ import javax.swing.JPanel
 import javax.swing.border.EtchedBorder
 import fkt.SimpleTitles as Titles
 
+/**
+ Superficial Host for [SurfaceCore]s
+ */
 class FacetsApplet(private val args: Array<String>) : JApplet() {
-  val t= Tracer.newTopped("FacetsApplet")
-  private val style=args.firstOrNull { !it.startsWith("_") }?:""
+  companion object {
+    val t= Tracer.newTopped("FacetsApplet")
+  }
+  /**
+  Calls [SurfaceCore.buildSurface]] on a receiver specified by [args] passed from [main]
+   */
   override fun init() {
+    val style=args.firstOrNull { !it.startsWith("_") }?:""
     val content = contentPane as JPanel
     content.addComponentListener(object : ComponentListener {
       override fun componentResized(e: ComponentEvent) {
@@ -35,7 +43,7 @@ class FacetsApplet(private val args: Array<String>) : JApplet() {
         "selecting" -> arrayOf(Selecting )
         else -> if (false) arrayOf(TargetTest.TogglingLive) else simples
       }
-    content.layout = GridLayout(if (tests.contentEquals(simples)) 3 else 2, 1)
+    content.layout = GridLayout(if (tests.contentEquals(simples)) 3 else 1, 1)
     for (test in tests) {
       if (false && (!(!tests.contentEquals(simples) || test == TogglingLive)))
         continue
