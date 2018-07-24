@@ -55,7 +55,7 @@ class FacetsApplet(private val args: Array<String>) : JApplet() {
       pane.border = createCompoundBorder(createEmptyBorder(10, 10, 10, 10),
         createEtchedBorder(EtchedBorder.LOWERED))
       content.add(pane)
-      val trace = true
+      val trace = false
       when {
         test.isSimple -> object : SimpleSurface(test, trace) {
           override fun buildLayout() {
