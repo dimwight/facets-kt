@@ -97,7 +97,7 @@ open class SelectingSurface(test: TargetTest,trace:Boolean)
 	}
 
 	override fun onRetargeted(activeTitle: String) {
-		val live = facets.getTargetState(Titles.Live) as Boolean
+		val live = (facets.getTargetState(Titles.Live)?:true) as Boolean
 		val type = getIndexedType()
 		val tail = type.titleTail()
 		facets.setTargetLive(
