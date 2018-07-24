@@ -33,13 +33,13 @@ class FacetWorks(override var doTrace: Boolean, override val supplement: () -> U
       private var thenTrees: Collection<Targety>? = null
       override val getIndexables = fun(_: String): List<*> {
         val trees = titleTrees.values
-        if (!Util.arraysEqual(trees.toTypedArray(), thenTrees!!.toTypedArray())) trace("New trees: size=${trees.size}")
+        if (!Util.arraysEqual(trees.toTypedArray(), thenTrees?.toTypedArray()?: arrayOf())) trace("New trees: size=${trees.size}")
         thenTrees = trees
         return trees.toList()
       }
     })
     root = object : IndexingFrame("RootFrame", indexing) {
-      override fun lazyElements(): List<out Targety> {
+      override fun lazyElements(): List<Targety> {
         return listOf(
           Textual(activeContentTitle, object : TextualCoupler() {
             override val getText: ((String) -> String)?
@@ -75,7 +75,7 @@ class FacetWorks(override var doTrace: Boolean, override val supplement: () -> U
     onRetargeted = { title ->
       app.onRetargeted(title)
     }
-    app.getContentTrees().forEach { addContentTree(it as TTarget) }
+    app.getContentTrees().forEach { addContentTree(it) }
     trace("Building targeter tree for root=${root.title()}")
     if (rootTargeter == null) rootTargeter = (root as TargetCore).newTargeter()
     val rt = rootTargeter!!
@@ -153,7 +153,7 @@ class FacetWorks(override var doTrace: Boolean, override val supplement: () -> U
     })
     trace("Created indexing$indexingTitle")
     val frame = object : IndexingFrame(frameTitle, indexing) {
-      override fun lazyElements(): List<out Targety> {
+      override fun lazyElements(): List<Targety> {
         val targets = p.newFrameTargets?.invoke() ?: return listOf()
         return targets.map { it as Targety }
       }
