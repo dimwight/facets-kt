@@ -14,7 +14,7 @@ object Debug {
       else -> {
         val kc = o::class
         val name = kc.simpleName?:kc.toString()
-        val id = if (o is Identified) " #" + o.identity()else ""
+        val id = if (o is Identified) " #" + o.identity else ""
         val title = if (o is Titled) " " + o.title else ""
         return name + id + title
       }

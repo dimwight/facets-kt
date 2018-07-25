@@ -9,9 +9,7 @@ abstract class Tracer(protected val top:String?): Identified {
       return true
     }
   }
-  override fun identity():Any {
-    return id
-  }
+  override val identity=id
   fun trace(msg:String) {
     doTraceMsg(msg)
   }
