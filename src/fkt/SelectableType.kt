@@ -8,7 +8,7 @@ class SelectableType (override val title:String): Titled {
     val Standard = SelectableType("Standard")
     val ShowChars = SelectableType("ShowChars")
     val Chooser = SelectableType("Chooser")
-    val values = arrayOf<SelectableType>(Standard, ShowChars, Chooser)
+    val values = arrayOf(Standard, ShowChars, Chooser)
     fun getContentType(content:TextContent):SelectableType {
       return if (content.text.length > 20) ShowChars else Standard
     }
