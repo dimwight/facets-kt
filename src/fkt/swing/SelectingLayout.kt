@@ -1,6 +1,7 @@
 package fkt.swing
 import fkt.SelectableType
 import fkt.SelectingSurface
+import fkt.TextContent
 import java.awt.CardLayout
 import java.awt.Container
 import java.awt.GridLayout
@@ -24,18 +25,18 @@ open class SelectingLayout(pane:Container, surface:SelectingSurface):PaneLayout(
       val tail = type.titleTail
       card.add(newTextFieldFacet(Titles.EditText + tail, 20, false).mount)
       if (type == SelectableType.ShowChars)
-      card.add(newLabelFacet(Titles.CharsCount + tail).mount)
+        card.add(newLabelFacet(Titles.CharsCount + tail).mount)
       card.add(newCheckBoxFacet(Titles.Live).mount)
     }
   }
   protected fun buildFacet() {
     pane.layout = GridLayout(2, 1)
     object:SwingFacet<JComponent>(cardsParent, facets.activeContentTitle, facets) {
-      override val fieldState:String
-      get() = "getFieldState"
+      override val fieldState = ""
       override fun addFieldListener() {}
       override fun updateField(update:Any) {
-        cards.show(cardsParent, update as String)
+        val content = facets.getIndexingState(Titles.Select).indexed as TextContent
+        cards.show(cardsParent, SelectableType.getContentType(content).title)
       }
     }
   }

@@ -52,8 +52,7 @@ abstract class PaneLayout(protected val pane: Container,
         })
       }
 
-      override val fieldState
-        get() = field.selectedIndex
+      override val fieldState get() = field.selectedIndex
 
       override fun actionPerformed(e: ActionEvent) {
         if (field.selectedIndex < 0) return
