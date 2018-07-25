@@ -14,25 +14,23 @@ enum class TargetTest {
 		}
 	}
 }
-abstract class SurfaceCore(trace:Boolean, test:TargetTest)
+abstract class SurfaceCore(private val trace:Boolean, test:TargetTest)
 		:Tracer(test.name), Titled, FacetsApp {
   override fun doTraceMsg(msg: String) {
-    if(true)super.doTraceMsg(msg)
+    if(false)super.doTraceMsg(msg)
   }
   /**
    Internal instance
    */
-  val facets: Facets = newFacets(trace)
+  lateinit var facets: Facets
   val test:TargetTest = if (true || test == TargetTest.Selecting) test else TargetTest.Indexing
-
-  init{
-    facets.times.doTime = false || facets.doTrace
-  }
 
   /**
    Calls [Facets.buildApp] on the private instance
    */
   open fun buildSurface() {
+    facets = newFacets(trace)
+    facets.times.doTime = false || facets.doTrace
     facets.buildApp(this)
   }
   protected fun generateFacets(vararg titles:String) {
@@ -49,14 +47,14 @@ fun main(args: Array<String>) {
   val trace = true
   val tested= mutableListOf<FacetsApp>()
   listOf(
-    ContentingSurface(trace)
-    /*
     SimpleSurface(TargetTest.Textual, trace)
     ,SimpleSurface(TargetTest.TogglingLive, trace)
     ,SimpleSurface(TargetTest.Numeric, trace)
     ,SimpleSurface(TargetTest.Trigger, trace)
     ,SimpleSurface(TargetTest.Indexing, trace)
-    SelectingSurface(TargetTest.Selecting, trace)
+    ,SelectingSurface(TargetTest.Selecting, trace)
+    ,ContentingSurface(trace)
+    /*
     */
   ).forEach{ it ->
     it.buildSurface()

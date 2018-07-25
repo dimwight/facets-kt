@@ -83,7 +83,7 @@ class FacetsWorks(override var doTrace: Boolean, override val supplement: () -> 
     rt.setNotifiable(notifiable)
     rt.retarget(root)
     addTitleTargeters(rt)
-    trace("Added targeter titles: ", titleTargeters.values)
+    trace("Added targeter titles: ", titleTargeters.size)
     callOnRetargeted()
     app.buildLayout()
   }
