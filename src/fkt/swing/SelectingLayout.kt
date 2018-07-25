@@ -29,14 +29,15 @@ open class SelectingLayout(pane:Container, surface:SelectingSurface):PaneLayout(
       card.add(newCheckBoxFacet(Titles.Live).mount)
     }
   }
-  protected fun buildFacet() {
+  protected fun buildFacet(checkContent: Boolean=true): Unit {
     pane.layout = GridLayout(2, 1)
     object:SwingFacet<JComponent>(cardsParent, facets.activeContentTitle, facets) {
       override val fieldState = ""
       override fun addFieldListener() {}
       override fun updateField(update:Any) {
         val content = facets.getIndexingState(Titles.Select).indexed as TextContent
-        cards.show(cardsParent, SelectableType.getContentType(content).title)
+        cards.show(cardsParent, if(!checkContent)update as String else
+          SelectableType.getContentType(content).title)
       }
     }
   }

@@ -12,7 +12,7 @@ internal class ContentingLayout(pane: Container, surface: ContentingSurface)
   : SelectingLayout(pane, surface) {
   private val activeContentTitle=surface.facets.activeContentTitle
   override fun build() {
-    buildFacet()
+    buildFacet(checkContent = false)
     pane.layout = GridLayout(1, 1)
     pane.add(cardsParent)
     for ((at, card) in arrayOf(
