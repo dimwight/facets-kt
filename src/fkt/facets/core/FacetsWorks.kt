@@ -49,7 +49,6 @@ class FacetsWorks(override var doTrace: Boolean, override val supplement: () -> 
         )
       }
     }
-    trace("Created trees root ", root)
   }
 
   private val indexedTargetTitle={root.indexedTarget().title}
@@ -76,6 +75,7 @@ class FacetsWorks(override var doTrace: Boolean, override val supplement: () -> 
     onRetargeted = { title ->
       app.onRetargeted(title)
     }
+    trace("Building trees for root ", root)
     app.getContentTrees().forEach { addContentTree(it) }
     trace("Building targeter tree for root=${root.title}")
     if (rootTargeter == null) rootTargeter = (root as TargetCore).newTargeter()

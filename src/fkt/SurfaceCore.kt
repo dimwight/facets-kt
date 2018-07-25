@@ -14,7 +14,7 @@ enum class TargetTest {
 		}
 	}
 }
-abstract class SurfaceCore(private val trace:Boolean, test:TargetTest)
+abstract class SurfaceCore(trace:Boolean, test:TargetTest)
 		:Tracer(test.name), Titled, FacetsApp {
   override fun doTraceMsg(msg: String) {
     if(false)super.doTraceMsg(msg)
@@ -22,15 +22,17 @@ abstract class SurfaceCore(private val trace:Boolean, test:TargetTest)
   /**
    Internal instance
    */
-  lateinit var facets: Facets
+  val facets: Facets = newFacets(trace)
   val test:TargetTest = if (true || test == TargetTest.Selecting) test else TargetTest.Indexing
+
+  init{
+    facets.times.doTime = false || facets.doTrace
+  }
 
   /**
    Calls [Facets.buildApp] on the private instance
    */
   open fun buildSurface() {
-    facets = newFacets(trace)
-    facets.times.doTime = false || facets.doTrace
     facets.buildApp(this)
   }
   protected fun generateFacets(vararg titles:String) {
