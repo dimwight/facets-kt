@@ -10,6 +10,7 @@ import fkt.SelectingTitles as Titles
 
 internal class ContentingLayout(pane: Container, surface: ContentingSurface)
   : SelectingLayout(pane, surface) {
+  private val activeContentTitle=surface.facets.activeContentTitle
   override fun build() {
     buildFacet()
     pane.layout = GridLayout(1, 1)
@@ -32,9 +33,9 @@ internal class ContentingLayout(pane: Container, surface: ContentingSurface)
         val tail = type.titleTail()
         if (false)
           card.add((if (false)
-            newTextFieldFacet(facets.activeContentTitle, 20, false)
+            newTextFieldFacet(activeContentTitle, 20, false)
           else
-            newLabelFacet(facets.activeContentTitle)).mount)
+            newLabelFacet(activeContentTitle)).mount)
         card.add(newTextFieldFacet(Titles.EditText + tail, 20, false).mount)
         if (type == SelectableType.ShowChars)
           card.add(newLabelFacet(Titles.CharsCount + tail).mount)
