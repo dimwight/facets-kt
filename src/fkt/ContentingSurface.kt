@@ -36,6 +36,7 @@ open class ContentingSurface(trace:Boolean)
   private fun newContentTree(content:TextContent): TTarget {
     val type = SelectableType.getContentType(content)
     val tail = type.titleTail
+    trace(".newContentTree: type=$type content=",content.text)
     val members = ArrayList<TTarget>()
     members.add(newEditTarget(content, tail))
     if (type == SelectableType.ShowChars) members.add(newCharsTarget(tail))

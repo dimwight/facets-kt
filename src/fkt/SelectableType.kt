@@ -2,8 +2,8 @@ package fkt
 import fkt.facets.util.Titled
 
 class SelectableType (override val title:String): Titled {
-  val titleTail:String =
-  		if (this == ShowChars) SelectingTitles.CharsTail else ""
+  val titleTail:String
+    get() = if (this == ShowChars) SelectingTitles.CharsTail else ""
   companion object {
     val Standard = SelectableType("Standard")
     val ShowChars = SelectableType("ShowChars")

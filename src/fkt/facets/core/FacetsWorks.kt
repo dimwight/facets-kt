@@ -33,7 +33,8 @@ class FacetsWorks(override var doTrace: Boolean, override val supplement: () -> 
       private var thenTrees: Collection<Targety>? = null
       override val getIndexables = fun(_: String): List<*> {
         val trees = titleTrees.values
-        if (!Util.arraysEqual(trees.toTypedArray(), thenTrees?.toTypedArray()?: arrayOf())) trace("New trees: size=${trees.size}")
+        if (!Util.arraysEqual(trees.toTypedArray(), thenTrees?.toTypedArray()?: arrayOf()))
+          trace("New trees: size=${trees.size}")
         thenTrees = trees
         return trees.toList()
       }

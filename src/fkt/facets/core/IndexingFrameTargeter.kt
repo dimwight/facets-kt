@@ -20,6 +20,7 @@ class IndexingFrameTargeter : TargeterCore("IndexingFrameTargeter") {
       for (at in indexingTarget.indexables().indices) {
         indexingTarget.setIndex(at)
         updateToTarget()
+        trace(".retarget: indexedTarget=",indexedTarget)
         indexed = (indexedTarget as TargetCore).newTargeter()
         val indexed = indexed
         indexed.setNotifiable(this)
