@@ -16,6 +16,9 @@ enum class TargetTest {
 }
 abstract class SurfaceCore(trace:Boolean, test:TargetTest)
 		:Tracer(test.name), Titled, FacetsApp {
+  override fun doTraceMsg(msg: String) {
+    if(false)super.doTraceMsg(msg)
+  }
   /**
    Internal instance
    */

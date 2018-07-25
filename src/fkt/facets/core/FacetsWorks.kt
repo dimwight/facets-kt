@@ -100,7 +100,7 @@ class FacetsWorks(override var doTrace: Boolean, override val supplement: () -> 
 
   override fun newTextualTarget(title: String, c: TextualCoupler): TTarget {
     val textual = Textual(title, c)
-    trace("Created textual title=$title")
+    if(false)trace("Created textual title=$title")
     return textual
   }
 
@@ -123,7 +123,7 @@ class FacetsWorks(override var doTrace: Boolean, override val supplement: () -> 
   override fun newTargetGroup(title: String, members: List<TTarget>): TTarget {
     val grouped = members.map { it as Targety }
     val group = TargetCore(title, grouped)
-    trace("Created group title=$title members=${grouped.size}")
+    trace("Created group title=$title elements=${group.elements().size}")
     return group
   }
 
@@ -219,7 +219,7 @@ class FacetsWorks(override var doTrace: Boolean, override val supplement: () -> 
     val title = t.title
     val elements = (t as TargeterCore).titleElements()
     titleTargeters[title] = t
-    if (false) trace("Added targeter: title=$title: elements=${elements.size}")
+    if (true) trace("Added targeter: title=$title: elements=${elements.size}")
     elements.forEach { e -> addTitleTargeters(e) }
   }
 

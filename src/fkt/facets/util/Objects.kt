@@ -26,9 +26,11 @@ object Objects {
     if (array == null) return "null"
     val list = ArrayList<Any>()
     for (i in array.indices)
-      list.add((if (array[i] == null)
-        "null"
-      else if (true) Debug.info(array[i]) else array[i].toString()) + if (i < array.size - 1) "\n" else "")
+      list.add(when {
+        array[i] == null -> "null"
+        true -> Debug.info(array[i])
+        else -> array[i].toString()
+      } + if (i < array.size - 1) "\n" else "")
     val lines = list.toString()
     return if (false) lines else lines.replace("\n".toRegex(), " ")
   }

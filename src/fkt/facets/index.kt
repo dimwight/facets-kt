@@ -30,7 +30,7 @@ abstract class IndexingState {
 }
 abstract class IndexingFramePolicy {
   open val indexingTitle: String? = null
-  abstract val getIndexables: () -> (List<out Any>)
+  abstract val getIndexables: () -> (List<Any>)
   open val frameTitle: String? = null
   open val newUiSelectable: ((Any) -> String)? = null
   open val newFrameTargets: (() -> (List<TTarget>))? = null
