@@ -44,7 +44,7 @@ open class TargetCore(title: String, var extra: Any? = null)
     state = update
     val extra = this.extra
     if (!(extra == null || extra is Array<*>))
-      (extra as TargetCoupler).targetStateUpdated?.invoke(this.state(), this.title())
+      (extra as TargetCoupler).targetStateUpdated?.invoke(this.state(), this.title)
   }
 
   open fun newTargeter(): Targeter {

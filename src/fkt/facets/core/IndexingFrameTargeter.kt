@@ -51,7 +51,7 @@ class IndexingFrameTargeter : TargeterCore("IndexingFrameTargeter") {
     val frame = target() as IndexingFrame
     indexingTarget = frame.indexing()
     indexedTarget = frame.indexedTarget()
-    indexedTitle = indexedTarget.title()
+    indexedTitle = indexedTarget.title
   }
 }
 

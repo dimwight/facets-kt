@@ -15,18 +15,12 @@ object Debug {
         val kc = o::class
         val name = kc.simpleName?:kc.toString()
         val id = if (o is Identified) " #" + o.identity()else ""
-        val title = if (o is Titled) " " + o.title()else ""
+        val title = if (o is Titled) " " + o.title else ""
         return name + id + title
       }
     }
   }
   fun toStringWithHeader(array: Array<*>): String {
     return info(array) + " [" + array.size + "] " + Objects.toLines(array)
-  }
-  fun arrayInfo_(array: Array<Any>): String {
-    return "arrayInfo:${array.size}"
-  }
-  fun traceEvent_(string: String) {
-    Util.printOut(">>$string")
   }
 }

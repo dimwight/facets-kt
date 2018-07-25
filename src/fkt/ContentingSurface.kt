@@ -35,7 +35,7 @@ open class ContentingSurface(trace:Boolean)
   }
   private fun newContentTree(content:TextContent): TTarget {
     val type = SelectableType.getContentType(content)
-    val tail = type.titleTail()
+    val tail = type.titleTail
     val members = ArrayList<TTarget>()
     members.add(newEditTarget(content, tail))
     if (type == SelectableType.ShowChars) members.add(newCharsTarget(tail))
@@ -51,7 +51,7 @@ open class ContentingSurface(trace:Boolean)
     		activateChooser()
     	}
     }))
-    return facets.newTargetGroup(type.title(), members.toList())
+    return facets.newTargetGroup(type.title, members.toList())
   }
 
 	override fun onRetargeted(activeTitle:String) {}

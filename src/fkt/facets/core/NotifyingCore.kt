@@ -3,12 +3,9 @@ package fkt.facets.core
 import fkt.facets.util.Debug
 import fkt.facets.util.Tracer
 
-abstract class NotifyingCore(val type: String, val title: String)
+abstract class NotifyingCore(type: String, override val title: String)
   :Tracer(type),Notifying {
   private lateinit var _notifiable: Notifiable
-  override fun title(): String {
-    return this.title
-  }
 
   override fun setNotifiable(n: Notifiable) {
     _notifiable = n
@@ -25,7 +22,7 @@ abstract class NotifyingCore(val type: String, val title: String)
 
   abstract override fun elements(): List<Notifying>
   override fun notify(notice: Any) {
-    _notifiable.notify(this.title())
+    _notifiable.notify(title)
   }
 }
 

@@ -5,7 +5,7 @@ import fkt.facets.util.Debug
 import fkt.facets.util.Tracer
 import fkt.facets.util.Util
 
-class FacetWorks(override var doTrace: Boolean, override val supplement: () -> Unit = {})
+class FacetsWorks(override var doTrace: Boolean, override val supplement: () -> Unit = {})
   : Facets, Tracer("Facets") {
   private val titleTargeters = HashMap<String, Targeter?>()
   private val titleTrees = HashMap<String, Targety>()
@@ -15,7 +15,7 @@ class FacetWorks(override var doTrace: Boolean, override val supplement: () -> U
   private val notifiable = object : Notifiable {
     override fun notify(notice: Any) {
       val rt = rootTargeter ?: throw Error("Null rootTargeter")
-      trace("Notified with" + rt.title())
+      trace("Notified with" + rt.title)
       rt.retarget(rt.target())
       callOnRetargeted()
       rt.retargetFacets()
@@ -51,7 +51,7 @@ class FacetWorks(override var doTrace: Boolean, override val supplement: () -> U
     trace("Created trees root ", root)
   }
 
-  private val indexedTargetTitle={root.indexedTarget().title()}
+  private val indexedTargetTitle={root.indexedTarget().title}
 
   override val times = object : Times {
     private var resetWait = 1000
@@ -76,7 +76,7 @@ class FacetWorks(override var doTrace: Boolean, override val supplement: () -> U
       app.onRetargeted(title)
     }
     app.getContentTrees().forEach { addContentTree(it) }
-    trace("Building targeter tree for root=${root.title()}")
+    trace("Building targeter tree for root=${root.title}")
     if (rootTargeter == null) rootTargeter = (root as TargetCore).newTargeter()
     val rt = rootTargeter!!
     rt.setNotifiable(notifiable)
@@ -88,7 +88,7 @@ class FacetWorks(override var doTrace: Boolean, override val supplement: () -> U
   }
 
   override fun addContentTree(tree: TTarget) {
-    titleTrees[(tree as Targety).title()] = tree
+    titleTrees[(tree as Targety).title] = tree
     root.indexing().setIndexed(tree)
   }
 
@@ -159,7 +159,7 @@ class FacetWorks(override var doTrace: Boolean, override val supplement: () -> U
       }
 
       override fun newIndexedTargets(indexed: Any): Targety {
-        val title = p.newIndexedTreeTitle?.invoke(indexed) ?: title()+"|indexed"
+        val title = p.newIndexedTreeTitle?.invoke(indexed) ?: title+"|indexed"
         return (p.newIndexedTree?.invoke(indexed, title) ?: TargetCore(title)) as Targety
       }
     }
@@ -172,7 +172,7 @@ class FacetWorks(override var doTrace: Boolean, override val supplement: () -> U
     trace("Attaching facet: title=$title")
     val facet: Facet = object : Facet {
       override fun retarget(target: Targety) {
-        trace("Facet retargeted title=${target.title()} state=${target.state()}")
+        trace("Facet retargeted title=${target.title} state=${target.state()}")
         updater(target.state())
       }
     }
@@ -210,13 +210,13 @@ class FacetWorks(override var doTrace: Boolean, override val supplement: () -> U
   }
 
   private fun callOnRetargeted() {
-    val title = root.title()
+    val title = root.title
     trace("Calling disableAll with active=$title")
     onRetargeted(title)
   }
 
   private fun addTitleTargeters(t: Targeter) {
-    val title = t.title()
+    val title = t.title
     val elements = (t as TargeterCore).titleElements()
     titleTargeters[title] = t
     if (false) trace("Added targeter: title=$title: elements=${elements.size}")

@@ -98,7 +98,7 @@ open class SimpleSurface(test: TargetTest, trace: Boolean) : SurfaceCore(trace, 
   }
 
   private fun newTextualCouplerCore(title: String): TextualCoupler {
-    val textTextual = title + " text in " + this.title()
+    val textTextual = title + " text in " + this.title
     return when (title) {
       Simples.NumericValue -> object : TextualCoupler() {
         override val getText = { _: String ->

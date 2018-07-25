@@ -39,7 +39,7 @@ open class SelectingSurface(test: TargetTest,trace:Boolean)
 								facets.newTextualTarget(Simples.Indexed, object : TextualCoupler() {
 									override val getText = { _: String ->
 										val indexed = facets.getIndexingState(Titles.Select).indexed as TextContent
-										SelectableType.getContentType(indexed).title()
+										SelectableType.getContentType(indexed).title
 									}
 								}),
 								facets.newTogglingTarget(Titles.Live, object : TogglingCoupler() {
@@ -48,12 +48,12 @@ open class SelectingSurface(test: TargetTest,trace:Boolean)
 				)
 			}
 			override val newIndexedTreeTitle = { indexed: Any ->
-				appTitle + SelectableType.getContentType(indexed as TextContent).titleTail()
+				appTitle + SelectableType.getContentType(indexed as TextContent).titleTail
 			}
 			override val newIndexedTree = { indexed: Any, indexedTreeTitle: String ->
 				val content = indexed as TextContent
 				val type = SelectableType.getContentType(content)
-				val tail = type.titleTail()
+				val tail = type.titleTail
 				facets.newTargetGroup(indexedTreeTitle,
 								if (type == SelectableType.Standard)
 									listOf(newEditTarget(content, tail))
@@ -99,7 +99,7 @@ open class SelectingSurface(test: TargetTest,trace:Boolean)
 	override fun onRetargeted(activeTitle: String) {
 		val live = (facets.getTargetState(Titles.Live)?:true) as Boolean
 		val type = getIndexedType()
-		val tail = type.titleTail()
+		val tail = type.titleTail
 		facets.setTargetLive(
 						Titles.EditText + tail,
 						live)

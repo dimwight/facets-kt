@@ -8,7 +8,7 @@ open class IndexingFrame(title: String, private val indexing: Indexing) : Target
     return indexed as? Targety?:this.newIndexedTargets(indexed)
   }
   open fun newIndexedTargets(indexed: Any): Targety {
-    throw Error("Not implemented in" + this.title())
+    throw Error("Not implemented in" + this.title)
   }
   fun indexing(): Indexing {
     return indexing

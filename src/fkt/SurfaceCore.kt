@@ -40,22 +40,20 @@ abstract class SurfaceCore(trace:Boolean, test:TargetTest)
       }
     }
   }
-  override fun title():String {
-    return test.name
-  }
+  override val title=test.name
 }
 fun main(args: Array<String>) {
-  val trace = false
+  val trace = true
   val tested= mutableListOf<FacetsApp>()
   listOf(
     SimpleSurface(TargetTest.Textual, trace)
+    /*
     ,SimpleSurface(TargetTest.TogglingLive, trace)
     ,SimpleSurface(TargetTest.Numeric, trace)
     ,SimpleSurface(TargetTest.Trigger, trace)
     ,SimpleSurface(TargetTest.Indexing, trace)
     ,SelectingSurface(TargetTest.Selecting, trace)
     ,ContentingSurface(trace)
-    /*
     */
   ).forEach{ it ->
     it.buildSurface()

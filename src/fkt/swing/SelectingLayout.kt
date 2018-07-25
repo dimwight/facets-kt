@@ -20,8 +20,8 @@ open class SelectingLayout(pane:Container, surface:SelectingSurface):PaneLayout(
 		).withIndex()){
       cardsParent.add(card)
       val type = SelectableType.values[at]
-      cards.addLayoutComponent(card, type.title())
-      val tail = type.titleTail()
+      cards.addLayoutComponent(card, type.title)
+      val tail = type.titleTail
       card.add(newTextFieldFacet(Titles.EditText + tail, 20, false).mount)
       if (type == SelectableType.ShowChars)
       card.add(newLabelFacet(Titles.CharsCount + tail).mount)

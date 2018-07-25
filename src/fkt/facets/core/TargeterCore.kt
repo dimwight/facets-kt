@@ -17,8 +17,8 @@ open class TargeterCore(type: String = "Targeter") : NotifyingCore(type, "Untarg
     if (_target.notifiesTargeter()) _target.setNotifiable(this)
   }
 
-  override fun title(): String =
-    if (!this::_target.isInitialized) super.title else _target.title()
+  override val title: String =
+    if (!this::_target.isInitialized) super.title else _target.title
 
   override fun target() = _target
 

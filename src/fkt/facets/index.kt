@@ -1,6 +1,6 @@
 package fkt.facets
 
-import fkt.facets.core.FacetWorks
+import fkt.facets.core.FacetsWorks
 
 interface TTarget
 typealias FacetUpdater=(state:Any)->Unit
@@ -43,7 +43,7 @@ fun setResetWait(millis:Int)
 fun elapsed():Int
 fun traceElapsed(msg:String?)
 }
-fun newFacets(trace: Boolean): Facets = FacetWorks(trace)
+fun newFacets(trace: Boolean): Facets = FacetsWorks(trace)
 interface Facets{
 val activeContentTitle:String
 val times: Times
