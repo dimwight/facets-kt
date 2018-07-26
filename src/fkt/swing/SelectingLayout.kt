@@ -37,7 +37,7 @@ open class SelectingLayout(pane:Container, surface:SelectingSurface):PaneLayout(
       override fun updateField(update:Any) {
         val content = facets.getIndexingState(Titles.Select).indexed as TextContent
         cards.show(cardsParent, if(!checkContent)update as String else
-          content.contentType.toString())
+          content.selectableType.toString())
       }
     }
   }
