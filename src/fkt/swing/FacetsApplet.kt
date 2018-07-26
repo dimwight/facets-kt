@@ -30,16 +30,16 @@ class FacetsApplet(private val args: Array<String>) : JApplet() {
   override fun init() {
     val style=args.firstOrNull { !it.startsWith("_") }?:""
     val content = contentPane as JPanel
-    content.addComponentListener(object : ComponentListener {
+    if(true)content.addComponentListener(object : ComponentListener {
       override fun componentResized(e: ComponentEvent) {
-        if (false) println("componentResized: " + content.size)
+        println("componentResized: " + content.size)
       }
 
       override fun componentShown(e: ComponentEvent) {}
       override fun componentMoved(e: ComponentEvent) {}
       override fun componentHidden(e: ComponentEvent) {}
     })
-    val simples = TargetTest.simpleValues()
+    val simples = TargetTest.simpleValues
     val tests = when (style) {
         "contenting" -> listOf(Contenting)
         "selecting" -> listOf(Selecting )

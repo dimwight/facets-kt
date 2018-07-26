@@ -9,9 +9,7 @@ enum class TargetTest {
 	Textual, TogglingLive, Indexing, Numeric, Trigger, Selecting, Contenting;
 	val isSimple:Boolean get()=this.ordinal<Selecting.ordinal
 	companion object {
-		fun simpleValues():List<TargetTest> {
-			return listOf(Textual, TogglingLive, Indexing, Numeric, Trigger)
-		}
+		val simpleValues = listOf(Textual, TogglingLive, Indexing, Numeric, Trigger)
 	}
 }
 abstract class SurfaceCore(trace:Boolean, test:TargetTest)
