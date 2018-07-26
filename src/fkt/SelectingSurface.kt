@@ -5,9 +5,10 @@ import fkt.facets.TogglingCoupler
 import fkt.facets.TTarget
 import fkt.SelectingTitles as Titles
 import fkt.SimpleTitles as Simples
+import fkt.SelectableType.*
 class TextContent(var text: String) {
   val selectableType:SelectableType get()=
-    if (text.length > 20) SelectableType.ShowChars else SelectableType.Standard
+    if (text.length > 20) ShowChars else Standard
 	override fun toString() = text
 	override fun equals(other: Any?) =
 					other != null && text == (other as TextContent).text
