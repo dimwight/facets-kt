@@ -6,6 +6,8 @@ import fkt.facets.TTarget
 import fkt.SelectingTitles as Titles
 import fkt.SimpleTitles as Simples
 class TextContent(var text: String) {
+  val contentType:SelectableType get()=
+    if (text.length > 20) SelectableType.ShowChars else SelectableType.Standard
 	override fun toString() = text
 	override fun equals(other: Any?) =
 					other != null && text == (other as TextContent).text
@@ -39,7 +41,7 @@ open class SelectingSurface(test: TargetTest,trace:Boolean)
 								facets.newTextualTarget(Simples.Indexed, object : TextualCoupler() {
 									override val getText = { _: String ->
 										val indexed = facets.getIndexingState(Titles.Select).indexed as TextContent
-										SelectableType.getContentType(indexed).toString()
+										indexed.contentType.toString()
 									}
 								}),
 								facets.newTogglingTarget(Titles.Live, object : TogglingCoupler() {
@@ -48,11 +50,11 @@ open class SelectingSurface(test: TargetTest,trace:Boolean)
 				)
 			}
 			override val newIndexedTreeTitle = { indexed: Any ->
-				appTitle + SelectableType.getContentType(indexed as TextContent).titleTail
+				appTitle + (indexed as TextContent).contentType.titleTail
 			}
 			override val newIndexedTree = { indexed: Any, indexedTreeTitle: String ->
 				val content = indexed as TextContent
-				val type = SelectableType.getContentType(content)
+				val type = content.contentType
 				val tail = type.titleTail
 				facets.newTargetGroup(indexedTreeTitle,
 								if (type == SelectableType.Standard)
@@ -66,7 +68,7 @@ open class SelectingSurface(test: TargetTest,trace:Boolean)
 	private fun getIndexedType(): SelectableType {
 		val content = facets.getIndexingState(
 						Titles.Select).indexed as TextContent
-		return SelectableType.getContentType(content)
+		return content.contentType
 	}
 
 	override fun doTraceMsg(msg: String) {

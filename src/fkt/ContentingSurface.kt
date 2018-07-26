@@ -34,7 +34,7 @@ open class ContentingSurface(trace:Boolean)
     }))
   }
   private fun newContentTree(content:TextContent): TTarget {
-    val type = SelectableType.getContentType(content)
+    val type = content.contentType
     val tail = type.titleTail
     trace(".newContentTree: type=$type content=",content.text)
     val members = ArrayList<TTarget>()
