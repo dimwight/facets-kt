@@ -52,7 +52,7 @@ open class ContentingSurface(trace:Boolean)
     		activateChooser()
     	}
     }))
-    return facets.newTargetGroup(type.title, members.toList())
+    return facets.newTargetGroup(type.toString(), members.toList())
   }
 
 	override fun onRetargeted(activeTitle:String) {}

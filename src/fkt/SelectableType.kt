@@ -1,16 +1,12 @@
 package fkt
-import fkt.facets.util.Titled
 
-class SelectableType (override val title:String): Titled {
+enum class SelectableType(){
+  Standard,ShowChars,Chooser;
   val titleTail:String
     get() = if (this == ShowChars) SelectingTitles.CharsTail else ""
   companion object {
-    val Standard = SelectableType("Standard")
-    val ShowChars = SelectableType("ShowChars")
-    val Chooser = SelectableType("Chooser")
-    val values = listOf(Standard, ShowChars, Chooser)
-    fun getContentType(content:TextContent):SelectableType {
-      return if (content.text.length > 20) ShowChars else Standard
-    }
+    fun getContentType(content:TextContent):SelectableType =
+      if (content.text.length > 20) ShowChars else Standard
   }
 }
+

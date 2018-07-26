@@ -39,7 +39,7 @@ open class SelectingSurface(test: TargetTest,trace:Boolean)
 								facets.newTextualTarget(Simples.Indexed, object : TextualCoupler() {
 									override val getText = { _: String ->
 										val indexed = facets.getIndexingState(Titles.Select).indexed as TextContent
-										SelectableType.getContentType(indexed).title
+										SelectableType.getContentType(indexed).toString()
 									}
 								}),
 								facets.newTogglingTarget(Titles.Live, object : TogglingCoupler() {

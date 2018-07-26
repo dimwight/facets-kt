@@ -21,8 +21,8 @@ open class SelectingLayout(pane:Container, surface:SelectingSurface):PaneLayout(
 			JPanel(GridLayout(4, 1))//ShowChars
 		).withIndex()){
       cardsParent.add(card)
-      val type = SelectableType.values[at]
-      cards.addLayoutComponent(card, type.title)
+      val type = SelectableType.values()[at]
+      cards.addLayoutComponent(card, type.toString())
       val tail = type.titleTail
       card.add(newTextFieldFacet(Titles.EditText + tail, 20, false).mount)
       if (type == SelectableType.ShowChars)
@@ -37,7 +37,7 @@ open class SelectingLayout(pane:Container, surface:SelectingSurface):PaneLayout(
       override fun updateField(update:Any) {
         val content = facets.getIndexingState(Titles.Select).indexed as TextContent
         cards.show(cardsParent, if(!checkContent)update as String else
-          SelectableType.getContentType(content).title)
+          SelectableType.getContentType(content).toString())
       }
     }
   }

@@ -21,8 +21,8 @@ class ContentingLayout(pane: Container, surface: ContentingSurface)
       JPanel(GridLayout(4, 1))//Chooser
     ).withIndex()) {
       cardsParent.add(card)
-      val type = SelectableType.values[at]
-      val typeTitle = type.title
+      val type = SelectableType.values()[at]
+      val typeTitle = type.toString()
       cards.addLayoutComponent(card, typeTitle)
       if (type == SelectableType.Chooser) {
         val button = newButtonFacet(Titles.OpenEdit)
