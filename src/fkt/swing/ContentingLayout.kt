@@ -8,11 +8,11 @@ import fkt.SelectableType
 import java.awt.event.ActionEvent
 import fkt.SelectingTitles as Titles
 
-internal class ContentingLayout(pane: Container, surface: ContentingSurface)
+class ContentingLayout(pane: Container, surface: ContentingSurface)
   : SelectingLayout(pane, surface) {
   private val activeContentTitle=surface.facets.activeContentTitle
   override fun build() {
-    buildFacet(checkContent = false)
+    buildCardsBase(checkContent = false)
     pane.layout = GridLayout(1, 1)
     pane.add(cardsParent)
     for ((at, card) in arrayOf(

@@ -12,7 +12,8 @@ open class SelectingLayout(pane:Container, surface:SelectingSurface):PaneLayout(
   protected val cards = CardLayout()
   protected val cardsParent:JComponent = JPanel(cards)
   override fun build() {
-    buildFacet()
+    buildCardsBase()
+    pane.layout = GridLayout(2, 1)
     pane.add(newListFacet(Titles.Select).mount)
     pane.add(cardsParent)
     for ((at,card) in listOf(
@@ -29,8 +30,7 @@ open class SelectingLayout(pane:Container, surface:SelectingSurface):PaneLayout(
       card.add(newCheckBoxFacet(Titles.Live).mount)
     }
   }
-  protected fun buildFacet(checkContent: Boolean=true): Unit {
-    pane.layout = GridLayout(2, 1)
+  protected fun buildCardsBase(checkContent: Boolean=true): Unit {
     object:SwingFacet<JComponent>(cardsParent, facets.activeContentTitle, facets) {
       override val fieldState = ""
       override fun addFieldListener() {}
