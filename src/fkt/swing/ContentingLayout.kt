@@ -16,9 +16,9 @@ class ContentingLayout(pane: Container, surface: ContentingSurface)
     pane.layout = GridLayout(1, 1)
     pane.add(cardsParent)
     for ((at, card) in arrayOf(
-      JPanel(GridLayout(8, 1)),
-      JPanel(GridLayout(8, 1)),
-      JPanel(GridLayout(4, 1))
+      JPanel(GridLayout(8, 1)),//Standard
+      JPanel(GridLayout(8, 1)),//ShowChars
+      JPanel(GridLayout(4, 1))//Chooser
     ).withIndex()) {
       cardsParent.add(card)
       val type = SelectableType.values[at]

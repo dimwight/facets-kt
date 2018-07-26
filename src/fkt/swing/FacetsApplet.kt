@@ -7,6 +7,7 @@ import fkt.TargetTest
 import fkt.TargetTest.*
 import fkt.facets.util.Tracer
 import java.awt.GridLayout
+import java.awt.Point
 import java.awt.event.ComponentEvent
 import java.awt.event.ComponentListener
 import javax.swing.BorderFactory.*
@@ -15,6 +16,7 @@ import javax.swing.JFrame
 import javax.swing.JPanel
 import javax.swing.border.EtchedBorder
 import fkt.SimpleTitles as Titles
+val t= Tracer.newTopped("FacetsApplet")
 
 /**
  Superficial Host for [SurfaceCore]s
@@ -24,9 +26,6 @@ import fkt.SimpleTitles as Titles
  @param [args] passed from [main], specify flavour of surface
  */
 class FacetsApplet(private val args: Array<String>) : JApplet() {
-  companion object {
-    val t= Tracer.newTopped("FacetsApplet")
-  }
   /**
   Calls [SurfaceCore.buildSurface]] on an instance specified by [args]
    */
@@ -82,13 +81,14 @@ class FacetsApplet(private val args: Array<String>) : JApplet() {
   }
 }
 
+val frame = JFrame("FacetsApplet")
 fun main(args: Array<String>) {
-  val frame = JFrame("FacetsApplet")
   frame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
   val applet = FacetsApplet(args)
   frame.contentPane.add(applet)
   applet.init()
-  frame.size = applet.minimumSize
+  if(false)frame.size = applet.minimumSize
   frame.pack()
-  javax.swing.SwingUtilities.invokeLater { frame.isVisible = true }
+  frame.location=Point(1920,0)
+  javax.swing.SwingUtilities.invokeLater {frame.isVisible = true}
 }
