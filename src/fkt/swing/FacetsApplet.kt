@@ -5,7 +5,6 @@ import fkt.SelectingSurface
 import fkt.SimpleSurface
 import fkt.TargetTest
 import fkt.TargetTest.*
-import fkt.facets.util.Tracer
 import java.awt.GridLayout
 import java.awt.Point
 import java.awt.event.ComponentEvent
@@ -16,10 +15,9 @@ import javax.swing.JFrame
 import javax.swing.JPanel
 import javax.swing.border.EtchedBorder
 import fkt.SimpleTitles as Titles
-val t= Tracer.newTopped("FacetsApplet")
 
 /**
- Superficial Host for [SurfaceCore]s
+ Superficial Host for [fkt.SurfaceCore]s
 
  @param constructor
 
@@ -27,7 +25,7 @@ val t= Tracer.newTopped("FacetsApplet")
  */
 class FacetsApplet(private val args: Array<String>) : JApplet() {
   /**
-  Calls [SurfaceCore.buildSurface]] on an instance specified by [args]
+  Calls [fkt.SurfaceCore.buildSurface]] on an instance specified by [args]
    */
   override fun init() {
     val style=args.firstOrNull { !it.startsWith("_") }?:""
@@ -43,13 +41,13 @@ class FacetsApplet(private val args: Array<String>) : JApplet() {
     })
     val simples = TargetTest.simpleValues()
     val tests = when (style) {
-        "contenting" -> arrayOf(Contenting)
-        "selecting" -> arrayOf(Selecting )
-        else -> if (false) arrayOf(TargetTest.TogglingLive) else simples
+        "contenting" -> listOf(Contenting)
+        "selecting" -> listOf(Selecting )
+        else -> if (false) listOf(TargetTest.TogglingLive) else simples
       }
-    content.layout = GridLayout(if (tests.contentEquals(simples)) 3 else 1, 1)
+    content.layout = GridLayout(if (tests==simples) 3 else 1, 1)
     for (test in tests) {
-      if (false && (!(!tests.contentEquals(simples) || test == TogglingLive)))
+      if (false && (!(tests!=simples || test == TogglingLive)))
         continue
       val pane = JPanel()
       pane.border = createCompoundBorder(createEmptyBorder(10, 10, 10, 10),

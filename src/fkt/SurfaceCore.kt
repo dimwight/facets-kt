@@ -9,8 +9,8 @@ enum class TargetTest {
 	Textual, TogglingLive, Indexing, Numeric, Trigger, Selecting, Contenting;
 	val isSimple:Boolean get()=this.ordinal<Selecting.ordinal
 	companion object {
-		fun simpleValues():Array<TargetTest> {
-			return arrayOf(Textual, TogglingLive, Indexing, Numeric, Trigger)
+		fun simpleValues():List<TargetTest> {
+			return listOf(Textual, TogglingLive, Indexing, Numeric, Trigger)
 		}
 	}
 }
