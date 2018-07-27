@@ -183,15 +183,15 @@ class FacetsWorks(override var doTrace: Boolean,
     trace("Attaching facet: title=$title")
     val facet: Facet = object : Facet {
       override fun retarget(target: Targety) {
-        trace("Facet retargeted title=${target.title} state=${target.state()}")
-        updater(target.state())
+        trace("Facet retargeted title=${target.title} _state=${target.state}")
+        updater(target.state)
       }
     }
     t.attachFacet(facet)
   }
 
   override fun updateTargetState(title: String, update: Any) {
-    titleTarget(title).updateState(update)
+    titleTarget(title).state=update
     notifiable.notify(title)
   }
 
@@ -206,7 +206,7 @@ class FacetsWorks(override var doTrace: Boolean,
 
   override fun getTargetState(title: String): Any? {
     return try {
-      titleTarget(title).state()
+      titleTarget(title).state
     } catch (e: Error) {
       null
     }

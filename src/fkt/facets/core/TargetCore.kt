@@ -8,16 +8,20 @@ const val TargetCoreType = "Targety"
 open class TargetCore(title: String, var extra: Any? = null)
   : NotifyingCore(TargetCoreType, title), Targety {
   private var _live = true
-  val NoState = "No state set"
-  var state: Any = NoState
+  val NoState = "No _state set"
+  private var _state: Any = NoState
 
   init {
     if (false || extra != null && !(extra is TargetCoupler || extra is List<*>))
       throw Error("Bad extra ${Debug.info(extra)} in " + Debug.info(this))
   }
 
-  override fun state(): Any {
-    return state
+  override var state get()=_state
+  set(update: Any) {
+    _state = update
+    val extra = this.extra
+    if (!(extra == null || extra is Array<*>))
+      (extra as TargetCoupler).targetStateUpdated?.invoke(_state, this.title)
   }
 
   open fun notifiesTargeter() = if (extra == null) false else extra is Array<*>
@@ -35,13 +39,6 @@ open class TargetCore(title: String, var extra: Any? = null)
   }
 
   open fun lazyElements(): List<Targety> =listOf()
-
-  override fun updateState(update: Any) {
-    state = update
-    val extra = this.extra
-    if (!(extra == null || extra is Array<*>))
-      (extra as TargetCoupler).targetStateUpdated?.invoke(this.state(), this.title)
-  }
 
   open fun newTargeter(): Targeter =TargeterCore()
 

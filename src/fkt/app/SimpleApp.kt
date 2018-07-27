@@ -60,8 +60,8 @@ open class SimpleApp(test: TargetTest, trace: Boolean) : AppCore(trace, test) {
   private fun newTextual(title: String): TTarget {
     val coupler = newTextualCouplerCore(title)
     val passText = coupler.passText
-    trace(" > Generating textual target state=",
-      passText ?: coupler.getText?.invoke(title) ?: Error("No textual state"))
+    trace(" > Generating textual target _state=",
+      passText ?: coupler.getText?.invoke(title) ?: Error("No textual _state"))
     return facets.newTextualTarget(title, coupler)
   }
 
@@ -71,16 +71,16 @@ open class SimpleApp(test: TargetTest, trace: Boolean) : AppCore(trace, test) {
       override val min = 5.0
       override val max = 25.0
     }
-    trace(" > Generating numeric target state=", coupler.passValue)
+    trace(" > Generating numeric target _state=", coupler.passValue)
     return facets.newNumericTarget(title, coupler)
   }
 
   private fun newToggling(title: String, state: Boolean): TTarget {
-    trace(" > Generating toggling target state=", state)
+    trace(" > Generating toggling target _state=", state)
     val coupler = object : TogglingCoupler() {
       override val passSet = state
       override val targetStateUpdated = { state: Any, title: String ->
-        trace(" > Toggling state updated: title=$title state=", state)
+        trace(" > Toggling _state updated: title=$title _state=", state)
         facets.setTargetLive(Simples.Toggled, state as Boolean)
       }
     }
@@ -88,7 +88,7 @@ open class SimpleApp(test: TargetTest, trace: Boolean) : AppCore(trace, test) {
   }
 
   private fun newIndexing(title: String, indexables: List<String>, indexStart: Int): TTarget {
-    trace(" > Generating indexing target state=", indexStart)
+    trace(" > Generating indexing target _state=", indexStart)
     val coupler = object : IndexingCoupler() {
       override val getIndexables = { _: String -> indexables }
       override val newUiSelectable = { indexable: Any -> indexable as String }
@@ -128,7 +128,7 @@ open class SimpleApp(test: TargetTest, trace: Boolean) : AppCore(trace, test) {
       Simples.MasterTextual -> object : TextualCoupler() {
         override val getText = { _: String -> textTextual }
         override val targetStateUpdated = { state: Any, title: String ->
-          trace(" > Textual state updated: title=$title state=", state)
+          trace(" > Textual _state updated: title=$title _state=", state)
           facets.updateTargetState(Simples.SlaveTextual,
             Simples.MasterTextual + " has changed to: " + state)
         }

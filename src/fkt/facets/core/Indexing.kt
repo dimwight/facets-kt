@@ -12,10 +12,14 @@ class Indexing(title: String, coupler: IndexingCoupler) : TargetCore(title, coup
   }
 
   fun setIndex(index: Int) {
-    val first = this.state == NoState
-    this.state = index
-    if (!first) coupler().targetStateUpdated?.invoke(this.state, this.title)
+    val first = state == NoState
+    super.state = index
+    if (!first) coupler().targetStateUpdated?.invoke(state, this.title)
   }
+
+  override var state
+    get()=super.state
+    set(update) = this.setIndex(update as Int)
 
   fun indexables(): List<*> {
     val indexables: List<*> = coupler().getIndexables(this.title)
@@ -36,15 +40,12 @@ class Indexing(title: String, coupler: IndexingCoupler) : TargetCore(title, coup
   }
 
   fun indexed(): Any {
-    if (this.state == NoState) throw Error("No index in" + this.title)
-    else return this.indexables()[this.state as Int]as Any
+    if (state == NoState) throw Error("No index in" + this.title)
+    else return this.indexables()[state as Int]as Any
   }
 
   fun setIndexed(indexable: Any) {
     this.indexables().forEachIndexed { at, i -> if (i == indexable) this.setIndex(at) }
   }
 
-  override fun updateState(update: Any) {
-    this.setIndex(update as Int)
-  }
 }

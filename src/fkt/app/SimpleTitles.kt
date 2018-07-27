@@ -7,7 +7,7 @@ interface SimpleTitles {
     const val Index = "Pick Value"
     const val Indexed = "Picked"
     const val Toggling = "Click to toggle live"
-    const val Toggled = "Toggle state"
+    const val Toggled = "Toggle _state"
     const val NumericField = "Number"
     const val NumericValue = "Value"
     const val Trigger = "Click Me!"

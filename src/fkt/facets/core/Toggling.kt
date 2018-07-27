@@ -3,7 +3,7 @@ import fkt.facets.TogglingCoupler
 open class Toggling(title: String, coupler: TogglingCoupler)
   : TargetCore(title, coupler) {
   init {
-    state=coupler.passSet
+    super.state=coupler.passSet
   }
 }
 

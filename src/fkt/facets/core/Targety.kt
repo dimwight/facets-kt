@@ -4,8 +4,7 @@ import fkt.facets.TTarget
 
 interface Targety : Notifying, TTarget {
 override val elements: List<Targety>
-fun updateState(update:Any)
-fun state():Any
+var state:Any
 var live:Boolean
 }
 
