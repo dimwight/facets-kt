@@ -27,7 +27,7 @@ class FacetsWorks(override var doTrace: Boolean,
     override fun notify(notice: Any) {
       val rt = rootTargeter ?: throw Error("Null rootTargeter")
       trace("Notified with" + rt.title)
-      rt.retarget(rt.target())
+      rt.retarget(rt.target)
       callOnRetargeted()
       rt.retargetFacets()
     }
@@ -235,7 +235,7 @@ class FacetsWorks(override var doTrace: Boolean,
   }
 
   private fun titleTarget(title: String): Targety =
-    (titleTargeters[title] ?: throw Error("No targeter for$title")).target()
+    (titleTargeters[title] ?: throw Error("No targeter for$title")).target
 
   private var indexingFrames = 0
 }

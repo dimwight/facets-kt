@@ -23,7 +23,7 @@ open class TargeterCore(type: String = "Targeter") : NotifyingCore(type, "Untarg
   override val title: String
     get() = if (!::_target.isInitialized) super.title else _target.title
 
-  override fun target() = _target
+  override val target get() = _target
 
   override val elements get()= this._elements
 

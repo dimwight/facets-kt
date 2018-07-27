@@ -1,5 +1,6 @@
 package fkt.facets.core
-interface Retargetable{
-fun retarget(target:Targety):Unit
+
+interface Retargetable {
+  fun retarget(target: Targety)
 }
 

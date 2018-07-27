@@ -49,7 +49,7 @@ class IndexingFrameTargeter : TargeterCore("IndexingFrameTargeter") {
   }
 
   private fun updateToTarget() {
-    val frame = target() as IndexingFrame
+    val frame = target as IndexingFrame
     indexingTarget = frame.indexing()
     indexedTarget = frame.indexedTarget()
     indexedTitle = indexedTarget.title

@@ -11,9 +11,7 @@ abstract class NotifyingCore(type: String, override val title: String)
     _notifiable = n
   }
 
-  override fun notifiable(): Notifiable {
-    return _notifiable
-  }
+  override val notifiable get()=_notifiable
 
   override fun notifyParent() {
     if(!this::_notifiable.isInitialized)throw Error("Null _notifiable in "+Debug.info(this))
