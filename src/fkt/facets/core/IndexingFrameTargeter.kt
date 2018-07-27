@@ -16,9 +16,9 @@ class IndexingFrameTargeter : TargeterCore("IndexingFrameTargeter") {
     }
     indexing.setNotifiable(this)
     if (titleTargeters.size == 0) {
-      val atThen = indexingTarget.index()
+      val atThen = indexingTarget.index
       for (at in indexingTarget.indexables().indices) {
-        indexingTarget.setIndex(at)
+        indexingTarget.index=at
         updateToTarget()
         if(false)trace(".retarget: indexedTarget=",indexedTarget)
         indexed = (indexedTarget as TargetCore).newTargeter()
@@ -27,7 +27,7 @@ class IndexingFrameTargeter : TargeterCore("IndexingFrameTargeter") {
         indexed.retarget(indexedTarget)
         titleTargeters[indexedTitle] = indexed
       }
-      indexingTarget.setIndex(atThen)
+      indexingTarget.index=atThen
       updateToTarget()
     }
     indexing.retarget(indexingTarget)

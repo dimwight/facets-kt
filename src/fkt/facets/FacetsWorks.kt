@@ -140,7 +140,7 @@ class FacetsWorks(override val doTrace: Boolean,
 
   override fun newIndexingTarget(title: String, c: IndexingCoupler): Targety {
     val indexing = Indexing(title, c)
-    if (false && c.passIndex == null) indexing.setIndex(0)
+    if (false && c.passIndex == null) indexing.index=0
     trace("Created indexing title=$title")
     return indexing
   }

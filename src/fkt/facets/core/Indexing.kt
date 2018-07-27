@@ -4,22 +4,20 @@ import fkt.facets.IndexingCoupler
 
 class Indexing(title: String, coupler: IndexingCoupler) : TargetCore(title, coupler) {
   init {
-    setIndex(coupler.passIndex ?: 0)
+    super.state=coupler.passIndex ?: 0
   }
 
-  fun index(): Int {
-    return state as Int
-  }
-
-  fun setIndex(index: Int) {
-    val first = state == NoState
-    super.state = index
-    if (!first) coupler().targetStateUpdated?.invoke(state, this.title)
-  }
+  var index: Int
+    get()=state as Int
+    set(index) {
+      val first = state == NoState
+      super.state = index
+      if (!first) coupler().targetStateUpdated?.invoke(state, this.title)
+    }
 
   override var state
     get()=super.state
-    set(update) = this.setIndex(update as Int)
+    set(update){index=update as Int}
 
   fun indexables(): List<*> {
     val indexables: List<*> = coupler().getIndexables(this.title)
@@ -45,7 +43,7 @@ class Indexing(title: String, coupler: IndexingCoupler) : TargetCore(title, coup
   }
 
   fun setIndexed(indexable: Any) {
-    this.indexables().forEachIndexed { at, i -> if (i == indexable) this.setIndex(at) }
+    this.indexables().forEachIndexed { at, i -> if (i == indexable) index=at }
   }
 
 }
