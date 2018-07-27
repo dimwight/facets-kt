@@ -17,15 +17,15 @@ open class SelectingLayout(pane:Container, app: SelectingApp):PaneLayout(pane, a
     pane.add(newListFacet(Titles.Select).mount)
     pane.add(cardsParent)
     for ((at,card) in listOf(
-			JPanel(GridLayout(4, 1)),//Standard
-			JPanel(GridLayout(4, 1))//ShowChars
+			JPanel(GridLayout(4, 1)),//Short
+			JPanel(GridLayout(4, 1))//Long
 		).withIndex()){
       cardsParent.add(card)
       val type = SelectableType.values()[at]
       cards.addLayoutComponent(card, type.toString())
       val tail = type.titleTail
       card.add(newTextFieldFacet(Titles.EditText + tail, 20, false).mount)
-      if (type == SelectableType.ShowChars)
+      if (type == SelectableType.Long)
         card.add(newLabelFacet(Titles.CharsCount + tail).mount)
       card.add(newCheckBoxFacet(Titles.Live).mount)
     }

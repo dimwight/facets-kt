@@ -16,8 +16,8 @@ class ContentingLayout(pane: Container, app: ContentingApp)
     pane.layout = GridLayout(1, 1)
     pane.add(cardsParent)
     for ((at, card) in arrayOf(
-      JPanel(GridLayout(8, 1)),//Standard
-      JPanel(GridLayout(8, 1)),//ShowChars
+      JPanel(GridLayout(8, 1)),//Short
+      JPanel(GridLayout(8, 1)),//Long
       JPanel(GridLayout(4, 1))//Chooser
     ).withIndex()) {
       cardsParent.add(card)
@@ -37,7 +37,7 @@ class ContentingLayout(pane: Container, app: ContentingApp)
           else
             newLabelFacet(activeContentTitle)).mount)
         card.add(newTextFieldFacet(Titles.EditText + tail, 20, false).mount)
-        if (type == SelectableType.ShowChars)
+        if (type == SelectableType.Long)
           card.add(newLabelFacet(Titles.CharsCount + tail).mount)
         card.add(newButtonFacet(Titles.Save + tail).mount)
         card.add(newButtonFacet(Titles.Cancel + tail).mount)
