@@ -210,7 +210,7 @@ class FacetsWorks(override var doTrace: Boolean,
 
   private fun callOnRetargeted() {
     val title = root.title
-    trace("Calling disableAll with active=$title")
+    trace("Calling onRetargeted with active=$title")
     app.onRetargeted(title)
   }
 

@@ -75,6 +75,7 @@ Defines methods to be called from [Facets] instance.
 interface FacetsApp{
   /**
    Create a set of [TTarget] trees exposing app content.
+
    Will be called once from [Facets.buildApp]; must contain at least one of
    each possible tree structure.
    */
@@ -82,6 +83,8 @@ interface FacetsApp{
 
   /**
    Called on each retargeting of the content tree root, before facets are updated.
+
+   Typically used to update target live states.
    */
   fun onRetargeted(activeTitle:String)
   /**
