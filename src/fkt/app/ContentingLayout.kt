@@ -23,7 +23,10 @@ class ContentingLayout(pane: Container, app: ContentingApp)
       cards.addLayoutComponent(card, typeTitle)
       if (type == SelectableType.Chooser) {
         val button = newButtonFacet(Titles.OpenEdit)
-        val click2 = { button.actionPerformed(ActionEvent("", 0, "")) }
+        val click2 = {
+          if(facets.isTargetLive(Titles.OpenEdit))
+            button.actionPerformed(ActionEvent("", 0, ""))
+        }
         card.add(newListFacet(Titles.Select, click2).mount)
         card.add(button.mount)
       } else {
