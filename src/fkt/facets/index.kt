@@ -74,10 +74,15 @@ Defines methods to be called from [Facets] instance.
  */
 interface FacetsApp{
   /**
-  Create a set of [TTarget]s exposing app content.
+   Create a set of [TTarget] trees exposing app content.
+   Will be called once from [Facets.buildApp]; must contain at least one of
+   each possible tree structure.
    */
   fun newContentTrees(): Set<TTarget>
 
+  /**
+   Called on each retargeting of the content tree root.
+   */
   fun onRetargeted(activeTitle:String)
   /**
 

@@ -55,7 +55,6 @@ open class ContentingApp(trace:Boolean)
     return facets.newTargetGroup(type.toString(), members.toList())
   }
 
-	override fun onRetargeted(activeTitle:String) {}
   override fun buildLayout() {
     generateFacets(Titles.Select, Titles.EditText, Titles.EditText + Titles.CharsTail,
                    Titles.CharsCount + Titles.CharsTail)

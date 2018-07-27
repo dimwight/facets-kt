@@ -8,7 +8,7 @@ import fkt.facets.TextualCoupler
 import fkt.facets.TogglingCoupler
 import fkt.SimpleTitles as Simples
 
-open class SimpleApp(test: TargetTest, trace: Boolean) : SurfaceCore(trace, test) {
+open class SimpleApp(test: TargetTest, trace: Boolean) : AppCore(trace, test) {
   override fun newContentTrees(): Set<TTarget> {
     trace(" > Generating targets")
     return setOf(facets.newTargetGroup(title ="${test.toString()} Test", members = when (test) {
@@ -146,7 +146,6 @@ open class SimpleApp(test: TargetTest, trace: Boolean) : SurfaceCore(trace, test
     }
   }
 
-  override fun onRetargeted(activeTitle: String) {}
   override fun buildLayout() {
     when (test) {
       TargetTest.Textual -> generateFacets(Simples.MasterTextual)

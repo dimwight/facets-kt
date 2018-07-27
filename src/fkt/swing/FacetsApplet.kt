@@ -25,7 +25,7 @@ import fkt.SimpleTitles as Titles
  */
 class FacetsApplet(private val args: Array<String>) : JApplet() {
   /**
-  Calls [fkt.SurfaceCore.buildSurface]] on an instance specified by [args]
+  Calls [fkt.AppCore.buildSurface]] on an instance specified by [args]
    */
   override fun init() {
     val content = contentPane as JPanel

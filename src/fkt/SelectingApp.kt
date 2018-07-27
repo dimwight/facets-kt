@@ -28,7 +28,7 @@ class TextContent(var text: String) {
 }
 
 open class SelectingApp(test: TargetTest, trace: Boolean)
-  : SurfaceCore(trace, test) {
+  : AppCore(trace, test) {
   protected val list = mutableListOf(
     TextContent("Hello world!"),
     TextContent("Hello Dolly!"),
@@ -107,13 +107,9 @@ open class SelectingApp(test: TargetTest, trace: Boolean)
     val live = (facets.getTargetState(Titles.Live) ?: true) as Boolean
     val type = getIndexedType()
     val tail = type.titleTail
-    facets.setTargetLive(
-      Titles.EditText + tail,
-      live)
+    facets.setTargetLive(Titles.EditText + tail,live)
     if (type == SelectableType.ShowChars)
-      facets.setTargetLive(
-        Titles.CharsCount + tail,
-        live)
+      facets.setTargetLive(Titles.CharsCount + tail,live)
   }
 
   override fun buildLayout() {
