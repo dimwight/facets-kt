@@ -8,7 +8,7 @@ open class TargeterCore(type: String = "Targeter") : NotifyingCore(type, "Untarg
   private lateinit var _target: TargetCore
   override fun retarget(target: Targety) {
     _target = target as TargetCore
-    val targets = _target.elements()
+    val targets = _target.elements
     if(false)trace(".retarget: _target=${Debug.info(_target)} targets=",targets.size)
     if (!::_elements.isInitialized) _elements = targets.map {
       val element = (it as TargetCore).newTargeter()
@@ -25,9 +25,9 @@ open class TargeterCore(type: String = "Targeter") : NotifyingCore(type, "Untarg
 
   override fun target() = _target
 
-  override fun elements(): List<Targeter> = this._elements
+  override val elements get()= this._elements
 
-  open fun titleElements() = elements()
+  open val titleElements get() = elements
 
   override fun attachFacet(f: Facet) {
     if (!facets.contains(f)) facets.add(f)

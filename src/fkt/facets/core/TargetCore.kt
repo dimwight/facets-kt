@@ -24,7 +24,7 @@ open class TargetCore(title: String, var extra: Any? = null)
     return if (extra == null) false else extra is Array<*>
   }
 
-  final override fun elements(): List<Targety> {
+  final override val elements: List<Targety> get(){
     if (extra == null) extra = lazyElements()
     val isList = extra is List<*>
     if (false) trace(".elements: extra=", isList)
