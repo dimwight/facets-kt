@@ -122,6 +122,7 @@ class FacetsWorks(override val doTrace: Boolean,
 
   override fun newTriggerTarget(title: String, c: TargetCoupler): TTarget {
     val trigger = TargetCore(title, c)
+    trigger.state="Trigger"
     trace("Created trigger title=$title")
     return trigger
   }
