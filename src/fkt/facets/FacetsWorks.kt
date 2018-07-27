@@ -63,7 +63,7 @@ class FacetsWorks(override var doTrace: Boolean,
     }
   }
 
-  private val indexedTargetTitle={root.indexedTarget().title}
+  private fun indexedTargetTitle()=root.indexedTarget().title
 
   override val times = object : Times {
     private var resetWait = 1000
@@ -164,6 +164,7 @@ class FacetsWorks(override var doTrace: Boolean,
     trace("Created indexing$indexingTitle")
     val frame = object : IndexingFrame(frameTitle, indexing) {
       override fun lazyElements(): List<Targety> {
+        if(false)throw Error("Not implemented in "+Debug.info(this))
         val targets = p.newFrameTargets?.invoke() ?: return listOf()
         return targets.map { it as Targety }
       }
