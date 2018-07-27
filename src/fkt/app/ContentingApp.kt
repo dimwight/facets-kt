@@ -59,8 +59,7 @@ open class ContentingApp(trace: Boolean): SelectingApp(TargetTest.Contenting, tr
 
   override fun onRetargeted(activeTitle: String) {
     val content = facets.getIndexingState(Titles.Select).indexed as TextContent
-    val isLong = content.selectableType == SelectableType.Long
-    facets.setTargetLive(Titles.OpenEdit,!isLong)
+    facets.setTargetLive(Titles.OpenEdit, content.selectableType != SelectableType.Long)
   }
   override fun buildLayout() {
     generateFacets(Titles.Select, Titles.EditText, Titles.EditText + Titles.CharsTail,
