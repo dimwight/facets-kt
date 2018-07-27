@@ -3,10 +3,10 @@ package fkt.swing
 import java.awt.Container
 import java.awt.GridLayout
 import javax.swing.JPanel
-import fkt.ContentingApp
-import fkt.SelectableType
+import fkt.app.ContentingApp
+import fkt.app.SelectableType
 import java.awt.event.ActionEvent
-import fkt.SelectingTitles as Titles
+import fkt.app.SelectingTitles as Titles
 
 class ContentingLayout(pane: Container, app: ContentingApp)
   : SelectingLayout(pane, app) {

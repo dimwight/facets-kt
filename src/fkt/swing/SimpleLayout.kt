@@ -1,12 +1,12 @@
 package fkt.swing
-import fkt.AppCore
-import fkt.TargetTest.Indexing
-import fkt.TargetTest.Numeric
-import fkt.TargetTest.TogglingLive
-import fkt.TargetTest.Trigger
+import fkt.app.AppCore
+import fkt.app.TargetTest.Indexing
+import fkt.app.TargetTest.Numeric
+import fkt.app.TargetTest.TogglingLive
+import fkt.app.TargetTest.Trigger
 import java.awt.Container
 import java.awt.GridLayout
-import fkt.SimpleTitles as Titles
+import fkt.app.SimpleTitles as Titles
 class SimpleLayout(pane: Container, app: AppCore):PaneLayout(pane,app){
   override fun build() {
     pane.layout = GridLayout(4, 1, 5, 5)

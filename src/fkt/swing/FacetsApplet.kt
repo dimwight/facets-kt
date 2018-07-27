@@ -1,10 +1,10 @@
 package fkt.swing
 
-import fkt.ContentingApp
-import fkt.SelectingApp
-import fkt.SimpleApp
-import fkt.TargetTest
-import fkt.TargetTest.*
+import fkt.app.ContentingApp
+import fkt.app.SelectingApp
+import fkt.app.SimpleApp
+import fkt.app.TargetTest
+import fkt.app.TargetTest.*
 import java.awt.GridLayout
 import java.awt.Point
 import java.awt.event.ComponentEvent
@@ -14,7 +14,7 @@ import javax.swing.JApplet
 import javax.swing.JFrame
 import javax.swing.JPanel
 import javax.swing.border.EtchedBorder
-import fkt.SimpleTitles as Titles
+import fkt.app.SimpleTitles as Titles
 
 /**
  Superficial host for [fkt.facets.FacetsApp]s

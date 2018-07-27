@@ -43,7 +43,7 @@ fun setResetWait(millis:Int)
 fun elapsed():Int
 fun traceElapsed(msg:String?)
 }
-fun newFacets(trace: Boolean): Facets = FacetsWorks(trace)
+fun newFacets(trace: Boolean,app:FacetsApp): Facets = FacetsWorks(trace, app)
 interface Facets{
 val activeContentTitle:String
 val times: Times
@@ -81,7 +81,7 @@ interface FacetsApp{
   fun newContentTrees(): Set<TTarget>
 
   /**
-   Called on each retargeting of the content tree root.
+   Called on each retargeting of the content tree root, before facets are updated.
    */
   fun onRetargeted(activeTitle:String)
   /**

@@ -5,13 +5,14 @@ import fkt.facets.util.Debug
 import fkt.facets.util.Tracer
 import fkt.facets.util.Util
 
-class FacetsWorks(override var doTrace: Boolean, override val supplement: () -> Unit = {})
+class FacetsWorks(override var doTrace: Boolean,
+                  private val app: FacetsApp,
+                  override val supplement: () -> Unit = {})
   : Facets, Tracer("Facets") {
   private val titleTargeters = HashMap<String, Targeter?>()
   private val titleTrees = HashMap<String, Targety>()
   private val root: IndexingFrame
   private var rootTargeter: Targeter? = null
-  private lateinit var onRetargeted: (title: String) -> Any
   private val notifiable = object : Notifiable {
     override fun notify(notice: Any) {
       val rt = rootTargeter ?: throw Error("Null rootTargeter")
@@ -72,9 +73,6 @@ class FacetsWorks(override var doTrace: Boolean, override val supplement: () -> 
   }
 
   override fun buildApp(app: FacetsApp) {
-    onRetargeted = { title ->
-      app.onRetargeted(title)
-    }
     trace("Building trees for root ", root)
     app.newContentTrees().forEach { addContentTree(it) }
     trace("Building targeter tree for root=${root.title}")
@@ -213,7 +211,7 @@ class FacetsWorks(override var doTrace: Boolean, override val supplement: () -> 
   private fun callOnRetargeted() {
     val title = root.title
     trace("Calling disableAll with active=$title")
-    onRetargeted(title)
+    app.onRetargeted(title)
   }
 
   private fun addTitleTargeters(t: Targeter) {

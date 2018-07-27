@@ -1,6 +1,6 @@
 package fkt.swing
 
-import fkt.AppCore
+import fkt.app.AppCore
 import fkt.facets.Facets
 import fkt.facets.util.Tracer
 import java.awt.Container

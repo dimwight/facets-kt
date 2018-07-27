@@ -1,14 +1,14 @@
 package fkt.swing
-import fkt.SelectableType
-import fkt.SelectingApp
-import fkt.TextContent
+import fkt.app.SelectableType
+import fkt.app.SelectingApp
+import fkt.app.TextContent
 import java.awt.CardLayout
 import java.awt.Container
 import java.awt.GridLayout
 import javax.swing.JComponent
 import javax.swing.JPanel
-import fkt.SelectingTitles as Titles
-open class SelectingLayout(pane:Container, app:SelectingApp):PaneLayout(pane, app){
+import fkt.app.SelectingTitles as Titles
+open class SelectingLayout(pane:Container, app: SelectingApp):PaneLayout(pane, app){
   protected val cards = CardLayout()
   protected val cardsParent:JComponent = JPanel(cards)
   override fun build() {
