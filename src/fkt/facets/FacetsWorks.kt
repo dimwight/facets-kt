@@ -213,11 +213,11 @@ class FacetsWorks(override var doTrace: Boolean,
   }
 
   override fun setTargetLive(title: String, live: Boolean) {
-    titleTarget(title).setLive(live)
+    titleTarget(title).live=live
   }
 
   override fun isTargetLive(title: String): Boolean {
-    return titleTarget(title).isLive()
+    return titleTarget(title).live
   }
 
   private fun callOnRetargeted() {

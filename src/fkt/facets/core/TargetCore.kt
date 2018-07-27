@@ -7,7 +7,7 @@ const val TargetCoreType = "Targety"
 
 open class TargetCore(title: String, var extra: Any? = null)
   : NotifyingCore(TargetCoreType, title), Targety {
-  private var live = true
+  private var _live = true
   val NoState = "No state set"
   var state: Any = NoState
 
@@ -51,12 +51,10 @@ open class TargetCore(title: String, var extra: Any? = null)
     return TargeterCore()
   }
 
-  final override fun isLive(): Boolean {
-    return this.live
-  }
-
-  final override fun setLive(live: Boolean) {
-    this.live = live
-  }
+  final override var live: Boolean
+    get()=_live
+    set(live){
+        _live = live
+      }
 }
 
