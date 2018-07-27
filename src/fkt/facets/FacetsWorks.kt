@@ -1,6 +1,16 @@
-package fkt.facets.core
+package fkt.facets
 
-import fkt.facets.*
+import fkt.facets.core.Facet
+import fkt.facets.core.Indexing
+import fkt.facets.core.IndexingFrame
+import fkt.facets.core.Notifiable
+import fkt.facets.core.Numeric
+import fkt.facets.core.TargetCore
+import fkt.facets.core.Targeter
+import fkt.facets.core.TargeterCore
+import fkt.facets.core.Targety
+import fkt.facets.core.Textual
+import fkt.facets.core.Toggling
 import fkt.facets.util.Debug
 import fkt.facets.util.Tracer
 import fkt.facets.util.Util
@@ -34,7 +44,8 @@ class FacetsWorks(override var doTrace: Boolean,
       private var thenTrees: Collection<Targety>? = null
       override val getIndexables = fun(_: String): List<*> {
         val trees = titleTrees.values
-        if (!Util.arraysEqual(trees.toTypedArray(), thenTrees?.toTypedArray()?: arrayOf()))
+        if (!Util.arraysEqual(trees.toTypedArray(), thenTrees?.toTypedArray()
+            ?: arrayOf()))
           trace("New trees: size=${trees.size}")
         thenTrees = trees
         return trees.toList()
