@@ -36,7 +36,7 @@ abstract class PaneLayout(protected val pane: Container,
   /**
    Called from [fkt.facets.FacetsApp.buildLayout] in [SurfaceCore].
 
-   Expected to use [surface.facets]
+   Targets accessed in [SurfaceCore.facets] created by [surface].
    */
   abstract fun build()
   protected fun newListFacet(title: String, click2: () -> Unit = {

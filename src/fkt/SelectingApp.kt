@@ -27,16 +27,16 @@ class TextContent(var text: String) {
   }
 }
 
-open class SelectingSurface(test: TargetTest, trace: Boolean)
+open class SelectingApp(test: TargetTest, trace: Boolean)
   : SurfaceCore(trace, test) {
   protected val list = mutableListOf(
     TextContent("Hello world!"),
     TextContent("Hello Dolly!"),
     TextContent("Hello, good evening and welcome!"))
 
-  override fun getContentTrees(): List<TTarget> {
+  override fun newContentTrees(): Set<TTarget> {
     val appTitle = TargetTest.Selecting.toString()
-    return listOf(facets.newIndexingFrame(object : IndexingFramePolicy() {
+    return setOf(facets.newIndexingFrame(object : IndexingFramePolicy() {
       override val frameTitle = appTitle
       override val indexingTitle = Titles.Select
       override val getIndexables = { list }

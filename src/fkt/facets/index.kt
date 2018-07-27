@@ -68,9 +68,20 @@ fun setTargetLive(title:String,live:Boolean)
 fun isTargetLive(title:String):Boolean
 val supplement:()->Unit
 }
+
+/**
+Defines methods to be called from [Facets] instance.
+ */
 interface FacetsApp{
-fun getContentTrees(): List<TTarget>
-fun onRetargeted(activeTitle:String)
-fun buildLayout()
+  /**
+  Create a set of [TTarget]s exposing app content.
+   */
+  fun newContentTrees(): Set<TTarget>
+
+  fun onRetargeted(activeTitle:String)
+  /**
+
+   */
+  fun buildLayout()
 }
 

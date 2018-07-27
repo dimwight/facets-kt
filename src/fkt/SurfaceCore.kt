@@ -47,13 +47,13 @@ fun main(args: Array<String>) {
   val trace = true
   val tested= mutableListOf<FacetsApp>()
   listOf(
-    SimpleSurface(TargetTest.Textual, trace)
-    ,SimpleSurface(TargetTest.TogglingLive, trace)
-    ,SimpleSurface(TargetTest.Numeric, trace)
-    ,SimpleSurface(TargetTest.Trigger, trace)
-    ,SimpleSurface(TargetTest.Indexing, trace)
-    ,SelectingSurface(TargetTest.Selecting, trace)
-    ,ContentingSurface(trace)
+    SimpleApp(TargetTest.Textual, trace)
+    ,SimpleApp(TargetTest.TogglingLive, trace)
+    ,SimpleApp(TargetTest.Numeric, trace)
+    ,SimpleApp(TargetTest.Trigger, trace)
+    ,SimpleApp(TargetTest.Indexing, trace)
+    ,SelectingApp(TargetTest.Selecting, trace)
+    ,ContentingApp(trace)
     /*
     */
   ).forEach{ it ->

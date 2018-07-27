@@ -1,6 +1,6 @@
 package fkt.swing
 import fkt.SelectableType
-import fkt.SelectingSurface
+import fkt.SelectingApp
 import fkt.TextContent
 import java.awt.CardLayout
 import java.awt.Container
@@ -8,7 +8,7 @@ import java.awt.GridLayout
 import javax.swing.JComponent
 import javax.swing.JPanel
 import fkt.SelectingTitles as Titles
-open class SelectingLayout(pane:Container, surface:SelectingSurface):PaneLayout(pane, surface){
+open class SelectingLayout(pane:Container, app:SelectingApp):PaneLayout(pane, app){
   protected val cards = CardLayout()
   protected val cardsParent:JComponent = JPanel(cards)
   override fun build() {

@@ -3,14 +3,14 @@ package fkt.swing
 import java.awt.Container
 import java.awt.GridLayout
 import javax.swing.JPanel
-import fkt.ContentingSurface
+import fkt.ContentingApp
 import fkt.SelectableType
 import java.awt.event.ActionEvent
 import fkt.SelectingTitles as Titles
 
-class ContentingLayout(pane: Container, surface: ContentingSurface)
-  : SelectingLayout(pane, surface) {
-  private val activeContentTitle=surface.facets.activeContentTitle
+class ContentingLayout(pane: Container, app: ContentingApp)
+  : SelectingLayout(pane, app) {
+  private val activeContentTitle=app.facets.activeContentTitle
   override fun build() {
     buildCardsBase(checkContent = false)
     pane.layout = GridLayout(1, 1)

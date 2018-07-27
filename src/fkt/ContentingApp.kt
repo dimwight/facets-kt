@@ -5,12 +5,12 @@ import fkt.facets.TargetCoupler
 import fkt.facets.TextualCoupler
 import fkt.SelectingTitles as Titles
 import fkt.SimpleTitles as Simples
-open class ContentingSurface(trace:Boolean)
-		:SelectingSurface(TargetTest.Contenting,trace) {
+open class ContentingApp(trace:Boolean)
+		:SelectingApp(TargetTest.Contenting,trace) {
   private lateinit var active:TextContent
   private lateinit var edit:TextContent
-	override fun getContentTrees(): List<TTarget> {
-    return listOf(
+	override fun newContentTrees(): Set<TTarget> {
+    return setOf(
     		newContentTree(list[0]),
     		newContentTree(list[2]),
     		facets.newIndexingFrame(object: IndexingFramePolicy() {

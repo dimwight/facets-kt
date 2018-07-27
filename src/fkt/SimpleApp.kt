@@ -8,10 +8,10 @@ import fkt.facets.TextualCoupler
 import fkt.facets.TogglingCoupler
 import fkt.SimpleTitles as Simples
 
-open class SimpleSurface(test: TargetTest, trace: Boolean) : SurfaceCore(trace, test) {
-  override fun getContentTrees(): List<TTarget> {
+open class SimpleApp(test: TargetTest, trace: Boolean) : SurfaceCore(trace, test) {
+  override fun newContentTrees(): Set<TTarget> {
     trace(" > Generating targets")
-    return listOf(facets.newTargetGroup(title ="${test.toString()} Test", members = when (test) {
+    return setOf(facets.newTargetGroup(title ="${test.toString()} Test", members = when (test) {
       TargetTest.Textual -> listOf(
         newTextual(Simples.MasterTextual),
         newTextual(Simples.SlaveTextual)
