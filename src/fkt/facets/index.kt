@@ -70,7 +70,7 @@ val supplement:()->Unit
 }
 
 /**
-Defines methods to be called from [Facets] instance.
+Defines methods to be called from [Facets] instance on its containing app.
  */
 interface FacetsApp{
   /**
