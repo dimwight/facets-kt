@@ -20,9 +20,7 @@ open class TargetCore(title: String, var extra: Any? = null)
     return state
   }
 
-  open fun notifiesTargeter(): Boolean {
-    return if (extra == null) false else extra is Array<*>
-  }
+  open fun notifiesTargeter() = if (extra == null) false else extra is Array<*>
 
   final override val elements: List<Targety> get(){
     if (extra == null) extra = lazyElements()
@@ -36,9 +34,7 @@ open class TargetCore(title: String, var extra: Any? = null)
     } else listOf()
   }
 
-  open fun lazyElements(): List<Targety> {
-    return listOf()
-  }
+  open fun lazyElements(): List<Targety> =listOf()
 
   override fun updateState(update: Any) {
     state = update
@@ -47,9 +43,7 @@ open class TargetCore(title: String, var extra: Any? = null)
       (extra as TargetCoupler).targetStateUpdated?.invoke(this.state(), this.title)
   }
 
-  open fun newTargeter(): Targeter {
-    return TargeterCore()
-  }
+  open fun newTargeter(): Targeter =TargeterCore()
 
   final override var live: Boolean
     get()=_live
