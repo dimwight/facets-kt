@@ -6,8 +6,8 @@ class Numeric(title: String, coupler: NumericCoupler) : TargetCore(title,coupler
     super.state=coupler.passValue
   }
   override var state:Any
-    get()=state as Double
+    get()=super.state as Double
     set(update) {
-      state=update as Double
+      super.state=update as Double
     }
 }

@@ -10,7 +10,7 @@ class Textual(title:String,coupler: TextualCoupler) : TargetCore(title,coupler){
     get(){
       val coupler=extra as TextualCoupler
       return when {
-        state!=NoState -> state
+        super.state!=NoState -> super.state
         else -> coupler.getText?.invoke(title)?:throw Error("Missing text in ${Debug.info(this)}")
       }
     }

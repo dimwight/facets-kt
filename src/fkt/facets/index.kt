@@ -41,11 +41,11 @@ fun setResetWait(millis:Int)
 fun elapsed():Int
 fun traceElapsed(msg:String?)
 }
-fun newFacets(trace: Boolean,app:FacetsApp): Facets = FacetsWorks(trace, app)
+fun newFacets(trace: Boolean,app:FacetsApp): Facets = FacetsWorks(false||trace, app)
 interface Facets{
 val activeContentTitle:String
 val times: Times
-var doTrace:Boolean
+val doTrace:Boolean
 fun buildApp(app: FacetsApp)
 fun addContentTree(tree: TTarget)
 fun activateContentTree(title:String)

@@ -18,9 +18,10 @@ open class TargetCore(title: String, var extra: Any? = null)
 
   override var state get()=_state
   set(update: Any) {
+    val first=_state==NoState
     _state = update
     val extra = this.extra
-    if (!(extra == null || extra is Array<*>))
+    if (!(first||extra == null || extra is Array<*>))
       (extra as TargetCoupler).targetStateUpdated?.invoke(_state, this.title)
   }
 

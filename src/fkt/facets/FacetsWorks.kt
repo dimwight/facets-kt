@@ -15,7 +15,7 @@ import fkt.facets.util.Debug
 import fkt.facets.util.Tracer
 import fkt.facets.util.Util
 
-class FacetsWorks(override var doTrace: Boolean,
+class FacetsWorks(override val doTrace: Boolean,
                   private val app: FacetsApp,
                   override val supplement: () -> Unit = {})
   : Facets, Tracer("Facets") {
@@ -235,7 +235,7 @@ class FacetsWorks(override var doTrace: Boolean,
   }
 
   private fun titleTarget(title: String): Targety =
-    (titleTargeters[title] ?: throw Error("No targeter for$title")).target
+    (titleTargeters[title] ?: throw Error("No targeter for $title")).target
 
   private var indexingFrames = 0
 }
