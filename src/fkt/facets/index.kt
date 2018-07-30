@@ -57,13 +57,15 @@ interface Facets {
    whose state is always the title of the active content tree.
    */
   val activeContentTitle: String
-  val times: Times
-  val doTrace: Boolean
+  /**
+   Constructs a Superficial targeter tree from [TTarget] trees defined by [app];
+   initially retargets it; and prompts the [app] to add UI facets.
+   */
   fun buildApp(app: FacetsApp)
   /**
   Replaces any tree with the same title and calls [activateContentTree]
    */
-  fun openContentTree(tree: TTarget)
+  fun attachContentTree(tree: TTarget)
   fun activateContentTree(title: String)
   fun newTextualTarget(title: String, c: TextualCoupler): TTarget
   fun newTogglingTarget(title: String, c: TogglingCoupler): TTarget
@@ -81,6 +83,8 @@ interface Facets {
   fun setTargetLive(title: String, live: Boolean)
   fun isTargetLive(title: String): Boolean
   val supplement: () -> Unit
+  val times: Times
+  val doTrace: Boolean
 }
 
 /**

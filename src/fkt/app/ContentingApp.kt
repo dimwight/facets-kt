@@ -27,7 +27,7 @@ open class ContentingApp(trace: Boolean): SelectingApp(TargetTest.Contenting, tr
               override val targetStateUpdated = { _: Any, _: String ->
                 active = facets.getIndexingState(Titles.Select).indexed as TextContent
                 edit = active.clone()
-                facets.openContentTree(newContentTree(edit))
+                facets.attachContentTree(newContentTree(edit))
               }
             }
           ))
