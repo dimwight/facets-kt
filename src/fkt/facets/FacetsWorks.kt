@@ -97,14 +97,15 @@ class FacetsWorks(override val doTrace: Boolean,
   }
 
   override fun openContentTree(tree: TTarget) {
-    titleTrees[(tree as Targety).title] = tree
-    root.indexing().setIndexed(tree)
+    val title = (tree as Targety).title
+    titleTrees[title] = tree
+    activateContentTree(title)
   }
 
   override fun activateContentTree(title: String) {
     val tree = titleTrees[title] ?: throw Error("No tree for$title")
     root.indexing().setIndexed(tree)
-    notifiable.notify(title)
+    if(false)notifiable.notify(title)
   }
 
   override fun newTextualTarget(title: String, c: TextualCoupler): TTarget {
