@@ -60,7 +60,7 @@ interface Facets {
   val times: Times
   val doTrace: Boolean
   fun buildApp(app: FacetsApp)
-  fun addContentTree(tree: TTarget)
+  fun openContentTree(tree: TTarget)
   fun activateContentTree(title: String)
   fun newTextualTarget(title: String, c: TextualCoupler): TTarget
   fun newTogglingTarget(title: String, c: TogglingCoupler): TTarget

@@ -19,8 +19,8 @@ class FacetsWorks(override val doTrace: Boolean,
                   private val app: FacetsApp,
                   override val supplement: () -> Unit = {})
   : Facets, Tracer("Facets") {
-  private val titleTargeters = HashMap<String, Targeter?>()
-  private val titleTrees = HashMap<String, Targety>()
+  private val titleTargeters = mutableMapOf<String, Targeter?>()
+  private val titleTrees = mutableMapOf<String, Targety>()
   private val root: IndexingFrame
   private var rootTargeter: Targeter? = null
   private val notifiable = object : Notifiable {
@@ -84,7 +84,7 @@ class FacetsWorks(override val doTrace: Boolean,
 
   override fun buildApp(app: FacetsApp) {
     trace("Building trees for root ", root)
-    app.newContentTrees().forEach { addContentTree(it) }
+    app.newContentTrees().forEach { openContentTree(it) }
     trace("Building targeter tree for root=${root.title}")
     if (rootTargeter == null) rootTargeter = (root as TargetCore).newTargeter()
     val rt = rootTargeter!!
@@ -96,7 +96,7 @@ class FacetsWorks(override val doTrace: Boolean,
     app.buildLayout()
   }
 
-  override fun addContentTree(tree: TTarget) {
+  override fun openContentTree(tree: TTarget) {
     titleTrees[(tree as Targety).title] = tree
     root.indexing().setIndexed(tree)
   }
