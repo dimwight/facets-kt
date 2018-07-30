@@ -148,7 +148,7 @@ class FacetsWorks(override val doTrace: Boolean,
   override fun getIndexingState(title: String): IndexingState {
     val i: Indexing = titleTarget(title) as Indexing
     return object : IndexingState() {
-      override var uiSelectables = i.uiSelectables()
+      override var uiSelectables: List<String> = i.uiSelectables()
       override var indexed = i.indexed()
     }
   }

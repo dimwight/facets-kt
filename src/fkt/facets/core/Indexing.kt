@@ -25,12 +25,12 @@ class Indexing(title: String, coupler: IndexingCoupler) : TargetCore(title, coup
     else return indexables
   }
 
-  fun uiSelectables(): Array<String> {
+  fun uiSelectables(): List<String> {
     var selectables = 0
     val coupler = coupler()
     return indexables().map {
       coupler.newUiSelectable?.invoke(it!!) ?: (title + selectables++)
-    }.toTypedArray()
+    }
   }
 
   private fun coupler(): IndexingCoupler {

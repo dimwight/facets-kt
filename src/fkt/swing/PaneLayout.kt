@@ -139,7 +139,7 @@ abstract class PaneLayout(protected val pane: Container,
   }
 
   protected fun newComboBoxFacet(title: String): SwingFacet<JComboBox<String>> {
-    val field = JComboBox<String>(facets.getIndexingState(title).uiSelectables)
+    val field = JComboBox<String>(facets.getIndexingState(title).uiSelectables.toTypedArray())
     return object : SwingFacet<JComboBox<String>>(
       field,
       title, facets) {

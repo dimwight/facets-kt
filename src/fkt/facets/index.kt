@@ -25,11 +25,11 @@ abstract class NumericCoupler : TargetCoupler() {
 abstract class IndexingCoupler : TargetCoupler() {
   abstract val getIndexables: (String) -> List<Any>
   open val passIndex: Int? = null
-  open val newUiSelectable: ((Any) -> String)? = null
+  open val newUiSelectable: ((indexable:Any) -> String)? = null
 }
 
 abstract class IndexingState {
-  abstract val uiSelectables: Array<String>
+  abstract val uiSelectables: List<String>
   abstract val indexed: Any
 }
 
