@@ -92,7 +92,7 @@ interface Facets {
 }
 
 /**
-Defines methods to be called from [Facets] instance on its containing app.
+Defines methods to be called by a [Facets] instance on its containing app.
  */
 interface FacetsApp {
   /**
