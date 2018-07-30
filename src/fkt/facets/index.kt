@@ -88,24 +88,24 @@ Defines methods to be called from [Facets] instance on its containing app.
  */
 interface FacetsApp {
   /**
-  Create a set of [TTarget] trees exposing app content.
+  Create [TTarget] trees exposing app content.
 
-  To be called once from [Facets.buildApp]; must contain at least one of
+  Called once from [Facets.buildApp]; must contain one of
   each possible tree structure.
    */
   fun newContentTrees(): List<TTarget>
 
   /**
-  To be called on each retargeting of the content tree root, before facets are updated.
+  Called on each retargeting of the content tree root, before facets are updated.
 
   Typically used to update target live states.
    */
   fun onRetargeted(activeTitle: String)
 
   /**
-  To be called once from [Facets.buildApp], immediately following [onRetargeted].
+  Called once from [Facets.buildApp], immediately following [onRetargeted].
 
-  The app should create a Superficial layout using [Facets.attachFacet] etc.
+  Should create a Superficial layout using [Facets.attachFacet] etc.
    */
   fun buildLayout()
 }
