@@ -42,7 +42,7 @@ class FacetsWorks(override val doTrace: Boolean,
   init {
     val indexing = Indexing("RootIndexing", object : IndexingCoupler() {
       private var thenTrees: Collection<Targety>? = null
-      override val getIndexables = fun(_: String): List<*> {
+      override val getIndexables = fun(_: String): List<Any> {
         val trees = titleTrees.values
         if (!Util.arraysEqual(trees.toTypedArray(), thenTrees?.toTypedArray()
             ?: arrayOf()))

@@ -23,7 +23,7 @@ abstract class NumericCoupler : TargetCoupler() {
 }
 
 abstract class IndexingCoupler : TargetCoupler() {
-  abstract val getIndexables: (String) -> List<*>
+  abstract val getIndexables: (String) -> List<Any>
   open val passIndex: Int? = null
   open val newUiSelectable: ((Any) -> String)? = null
 }
@@ -37,10 +37,10 @@ abstract class IndexingFramePolicy {
   open val indexingTitle: String? = null
   abstract val getIndexables: () -> (List<Any>)
   open val frameTitle: String? = null
-  open val newUiSelectable: ((Any) -> String)? = null
+  open val newUiSelectable: ((indexable:Any) -> String)? = null
   open val newFrameTargets: (() -> (List<TTarget>))? = null
-  open val newIndexedTreeTitle: ((Any) -> String)? = null
-  open val newIndexedTree: ((Any, String) -> TTarget)? = null
+  open val newIndexedTreeTitle: ((indexed:Any) -> String)? = null
+  open val newIndexedTree: ((indexed:Any, title:String) -> TTarget)? = null
 }
 
 interface Times {
