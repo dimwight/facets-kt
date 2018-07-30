@@ -103,7 +103,7 @@ class FacetsWorks(override val doTrace: Boolean,
   }
 
   override fun activateContentTree(title: String) {
-    val tree = titleTrees[title] ?: throw Error("No tree for$title")
+    val tree = titleTrees[title] ?: throw Error("No tree for $title")
     root.indexing().setIndexed(tree)
     if(false)notifiable.notify(title)
   }

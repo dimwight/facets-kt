@@ -66,6 +66,10 @@ interface Facets {
   Replaces any tree with the same title and calls [activateContentTree]
    */
   fun attachContentTree(tree: TTarget)
+  /**
+   Sets the internal indexing frame to the content tree identified by [title];
+   complains if none such found.
+   */
   fun activateContentTree(title: String)
   fun newTextualTarget(title: String, c: TextualCoupler): TTarget
   fun newTogglingTarget(title: String, c: TogglingCoupler): TTarget
