@@ -12,12 +12,12 @@ import fkt.app.SelectingTitles as Titles
 open class SelectingLayout(pane: Container, app: SelectingApp) : PaneLayout(pane, app) {
   protected val cards = CardLayout()
   protected val cardsParent: JComponent = JPanel(cards)
-  private val listTitle = Titles.Select
+  private val selectTitle = Titles.Select
 
   override fun build() {
     buildCardsBase()
     pane.layout = GridLayout(2, 1)
-    pane.add(newListFacet(listTitle).mount)
+    pane.add(newListFacet(selectTitle).mount)
     pane.add(cardsParent)
     for ((at, card) in listOf(
       JPanel(GridLayout(4, 1)),//Short
@@ -40,7 +40,7 @@ open class SelectingLayout(pane: Container, app: SelectingApp) : PaneLayout(pane
       override fun addFieldListener() {}
       override fun updateField(update: Any) {
         val name = if (!checkContent) update as String
-        else (facets.getIndexingState(listTitle).indexed as TextContent)
+        else (facets.getIndexingState(selectTitle).indexed as TextContent)
           .selectableType.toString()
         cards.show(cardsParent, name)
       }

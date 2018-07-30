@@ -55,15 +55,14 @@ class FacetsWorks(override val doTrace: Boolean,
       override fun lazyElements(): List<Targety> {
         return listOf(
           Textual(activeContentTitle, object : TextualCoupler() {
-            override val getText: ((String) -> String)?
-              get() = { indexedTargetTitle() }
+            override val getText = {_:String-> indexedContentTitle() }
           })
         )
       }
     }
   }
 
-  private fun indexedTargetTitle()=root.indexedTarget().title
+  private fun indexedContentTitle()=root.indexedTarget().title
 
   override val times = object : Times {
     private var resetWait = 1000
@@ -222,7 +221,7 @@ class FacetsWorks(override val doTrace: Boolean,
   }
 
   private fun callOnRetargeted() {
-    val title = root.title
+    val title = root.indexedTarget().title
     trace("Calling onRetargeted with active=$title")
     app.onRetargeted(title)
   }

@@ -6,6 +6,8 @@ import javax.swing.JPanel
 import java.awt.event.ActionEvent
 import fkt.app.SelectingTitles as Titles
 
+private val openEdit = Titles.OpenEdit
+
 class ContentingLayout(pane: Container, app: ContentingApp)
   : SelectingLayout(pane, app) {
   override fun build() {
@@ -19,14 +21,13 @@ class ContentingLayout(pane: Container, app: ContentingApp)
     ).withIndex()) {
       cardsParent.add(card)
       val type = SelectableType.values()[at]
-      val typeTitle = type.toString()
-      cards.addLayoutComponent(card, typeTitle)
+      cards.addLayoutComponent(card, type.toString())
       if (type == SelectableType.Chooser) {
-        val button = newButtonFacet(Titles.OpenEdit)
+        val button = newButtonFacet(openEdit)
         val click2 = {
-          if(facets.isTargetLive(Titles.OpenEdit))
+          if(facets.isTargetLive(openEdit))
             if(false)button.actionPerformed(ActionEvent("", 0, ""))
-            else facets.updateTargetState(Titles.OpenEdit,"Fire")
+            else facets.updateTargetState(openEdit,"Fire")
         }
         card.add(newListFacet(Titles.Select, click2).mount)
         card.add(button.mount)

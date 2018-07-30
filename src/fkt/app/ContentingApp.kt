@@ -39,10 +39,10 @@ open class ContentingApp(trace: Boolean): SelectingApp(TargetTest.Contenting, tr
     val type = content.selectableType
     val tail = type.titleTail
     if(false)trace(".newContentTree: type=$type content=", content.text)
-    val members = ArrayList<TTarget>()
+    val members = mutableListOf<TTarget>()
     members.add(newEditTarget(content, tail))
     if (type == SelectableType.Long) members.add(newCharsTarget(tail))
-    val activateChooser = { facets.activateContentTree(Titles.Chooser) }
+    fun activateChooser () = facets.activateContentTree(Titles.Chooser)
     members.add(facets.newTriggerTarget(Titles.Save + tail, object : TargetCoupler() {
       override val targetStateUpdated = { _: Any, _: String ->
         active.copyClone(edit)
@@ -50,16 +50,15 @@ open class ContentingApp(trace: Boolean): SelectingApp(TargetTest.Contenting, tr
       }
     }))
     members.add(facets.newTriggerTarget(Titles.Cancel + tail, object : TargetCoupler() {
-      override val targetStateUpdated = { _: Any, _: String ->
-        activateChooser()
-      }
+      override val targetStateUpdated = { _: Any, _: String ->activateChooser()}
     }))
     return facets.newTargetGroup(type.toString(), members.toList())
   }
 
   override fun onRetargeted(activeTitle: String) {
     val content = facets.getIndexingState(Titles.Select).indexed as TextContent
-    facets.setTargetLive(Titles.OpenEdit, content.selectableType != SelectableType.Long)
+    if(false)facets.setTargetLive(Titles.OpenEdit,
+      content.selectableType != SelectableType.Long)
   }
   override fun buildLayout() {
     generateFacets(Titles.Select, Titles.EditText, Titles.EditText + Titles.CharsTail,
