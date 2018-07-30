@@ -68,7 +68,7 @@ interface Facets {
   fun attachContentTree(tree: TTarget)
   /**
    Sets the internal indexing frame to the content tree identified by [title];
-   complains if none such found.
+   complains if not found.
    */
   fun activateContentTree(title: String)
   fun newTextualTarget(title: String, c: TextualCoupler): TTarget
