@@ -33,9 +33,9 @@ open class SelectingApp(test: TargetTest, trace: Boolean)
     TextContent("Hello Dolly!"),
     TextContent("Hello, good evening and welcome!"))
 
-  override fun newContentTrees(): Set<TTarget> {
+  override fun newContentTrees(): List<TTarget> {
     val appTitle = TargetTest.Selecting.toString()
-    return setOf(facets.newIndexingFrame(object : IndexingFramePolicy() {
+    return listOf(facets.newIndexingFrame(object : IndexingFramePolicy() {
       override val frameTitle = appTitle
       override val indexingTitle = Titles.Select
       override val getIndexables = { list }

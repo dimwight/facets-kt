@@ -9,9 +9,9 @@ import fkt.facets.TogglingCoupler
 import fkt.app.SimpleTitles as Simples
 
 open class SimpleApp(test: TargetTest, trace: Boolean) : AppCore(trace, test) {
-  override fun newContentTrees(): Set<TTarget> {
+  override fun newContentTrees(): List<TTarget> {
     trace(" > Generating targets")
-    return setOf(facets.newTargetGroup(title ="${test.toString()} Test", members = when (test) {
+    return listOf(facets.newTargetGroup(title ="${test.toString()} Test", members = when (test) {
       TargetTest.Textual -> listOf(
         newTextual(Simples.MasterTextual),
         newTextual(Simples.SlaveTextual)

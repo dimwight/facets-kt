@@ -10,8 +10,8 @@ import fkt.app.SimpleTitles as Simples
 open class ContentingApp(trace: Boolean): SelectingApp(TargetTest.Contenting, trace) {
   private lateinit var active: TextContent
   private lateinit var edit: TextContent
-  override fun newContentTrees(): Set<TTarget> {
-    return setOf(
+  override fun newContentTrees(): List<TTarget> {
+    return listOf(
       newContentTree(list[0]),
       newContentTree(list[2]),
       facets.newIndexingFrame(object : IndexingFramePolicy() {

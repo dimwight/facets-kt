@@ -93,7 +93,7 @@ interface FacetsApp {
   To be called once from [Facets.buildApp]; must contain at least one of
   each possible tree structure.
    */
-  fun newContentTrees(): Set<TTarget>
+  fun newContentTrees(): List<TTarget>
 
   /**
   To be called on each retargeting of the content tree root, before facets are updated.
