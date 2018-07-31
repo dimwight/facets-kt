@@ -99,7 +99,7 @@ interface FacetsApp {
   Create [TTarget] trees exposing app content.
 
   Called once from [Facets.buildApp]; must contain one of
-  each possible tree structure.
+  each possible tree structure to enable UI construction in [buildLayout].
    */
   fun newContentTrees(): List<TTarget>
 

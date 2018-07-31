@@ -22,7 +22,7 @@ abstract class Tracer(protected val top:String?): Identified {
       doTraceMsg(trace)
   }
   protected open fun doTraceMsg(msg:String) {
-    println((if (false&&top != null) ("$top #$id") else Debug.info(this)) + " " + msg)
+    println((if (true&&top != null) ("$top #$id") else Debug.info(this)) + " " + msg)
   }
   private fun newArrayText(array:Array<*>):String {
     if (false) return Util.arrayPrintString(array)

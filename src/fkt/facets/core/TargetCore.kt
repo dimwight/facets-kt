@@ -3,10 +3,8 @@ package fkt.facets.core
 import fkt.facets.TargetCoupler
 import fkt.facets.util.Debug
 
-const val TargetCoreType = "Targety"
-
 open class TargetCore(title: String, var extra: Any? = null)
-  : NotifyingCore(TargetCoreType, title), Targety {
+  : NotifyingCore(Targety::class, title), Targety {
   private var _live = true
   val NoState = "No _state set"
   private var _state: Any = NoState
@@ -41,7 +39,7 @@ open class TargetCore(title: String, var extra: Any? = null)
 
   open fun lazyElements(): List<Targety> =listOf()
 
-  open fun newTargeter(): Targeter =TargeterCore()
+  open fun newTargeter(): Targeter =TargeterCore(IndexingFrameTargeter::class)
 
   final override var live: Boolean
     get()=_live
