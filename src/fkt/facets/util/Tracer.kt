@@ -1,9 +1,9 @@
 package fkt.facets.util
-abstract class Tracer(protected val top:String?): Identified {
+abstract class Tracer(protected val top:String?=null): Identified {
   private val id = ++ids
   private class Topped(top: String):Tracer(top) {
     override fun doTraceMsg(msg:String) {
-      if (doTrace()) println("$top:$msg")
+      if (doTrace()) println("$top: $msg")
     }
     private fun doTrace():Boolean {
       return true
@@ -22,7 +22,7 @@ abstract class Tracer(protected val top:String?): Identified {
       doTraceMsg(trace)
   }
   protected open fun doTraceMsg(msg:String) {
-    println((if (true&&top != null) ("$top #$id") else Debug.info(this)) + " " + msg)
+    println((if (top != null) ("$top #$id") else Debug.info(this)) + " " + msg)
   }
   private fun newArrayText(array:Array<*>):String {
     if (false) return Util.arrayPrintString(array)

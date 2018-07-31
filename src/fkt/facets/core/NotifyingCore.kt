@@ -2,14 +2,13 @@ package fkt.facets.core
 
 import fkt.facets.util.Debug
 import fkt.facets.util.Tracer
-import kotlin.reflect.KClass
 
-abstract class NotifyingCore(type: KClass<out Notifying>, override val title: String)
-    :Tracer(if(true)type.simpleName else null),Notifying {
+abstract class NotifyingCore(override val title: String)
+    :Tracer(),Notifying {
   private lateinit var _notifiable: Notifiable
 
   override fun setNotifiable(n: Notifiable) {
-    trace(".setNotifiable: this=",this)
+    if(false)trace(".setNotifiable: this=",this)
     _notifiable = n
   }
 

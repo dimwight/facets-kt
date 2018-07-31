@@ -1,9 +1,8 @@
 package fkt.facets.core
 
 import fkt.facets.util.Debug
-import kotlin.reflect.KClass
 
-open class TargeterCore(type: KClass<out Targeter>) : NotifyingCore(type, "Untargeted"), Targeter {
+open class TargeterCore : NotifyingCore("Untargeted"), Targeter {
   private val facets = mutableListOf<Facet>()
   private lateinit var _elements: List<Targeter>
   private lateinit var _target: TargetCore
