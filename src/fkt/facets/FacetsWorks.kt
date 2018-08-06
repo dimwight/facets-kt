@@ -44,9 +44,9 @@ class FacetsWorks(override val doTrace: Boolean,
       private var thenTrees: Collection<Targety>? = null
       override val getIndexables = fun(_: String): List<Any> {
         val trees = titleTrees.values
-        if (!Util.arraysEqual(trees.toTypedArray(), thenTrees?.toTypedArray()
+        if (true||!Util.arraysEqual(trees.toTypedArray(), thenTrees?.toTypedArray()
             ?: arrayOf()))
-          trace("New trees: size=${trees.size}")
+          trace("New trees: ",trees)
         thenTrees = trees
         return trees.toList()
       }
@@ -181,14 +181,13 @@ class FacetsWorks(override val doTrace: Boolean,
 
   override fun attachFacet(title: String, updater: FacetUpdater) {
     val t = titleTargeters[title] ?: throw Error("No targeter for $title")
-    trace("Attaching facet: title=$title")
-    val facet: Facet = object : Facet {
+    trace("Attaching facet for title=$title")
+    t.attachFacet(object : Facet {
       override fun retarget(target: Targety) {
-        trace("Facet retargeted title=${target.title} _state=${target.state}")
+        trace("Facet retargeted title=${target.title} state=${target.state}")
         updater(target.state)
       }
-    }
-    t.attachFacet(facet)
+    })
   }
 
   override fun updateTargetState(title: String, update: Any) {

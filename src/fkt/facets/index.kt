@@ -50,7 +50,7 @@ interface Times {
   fun traceElapsed(msg: String?)
 }
 
-fun newFacets(trace: Boolean, app: FacetsApp): Facets = FacetsWorks(false || trace, app)
+fun newFacets(trace: Boolean, app: FacetsApp): Facets = FacetsWorks(true || trace, app)
 interface Facets {
   /**
    Enables access to internal textual [TTarget]
