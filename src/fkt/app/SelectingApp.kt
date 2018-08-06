@@ -7,6 +7,18 @@ import fkt.facets.TTarget
 import fkt.app.SelectingTitles as Titles
 import fkt.app.SimpleTitles as Simples
 
+object SelectingTitles {
+  const val Select = "Select Content"
+  const val Chooser = "Chooser"
+  const val OpenEdit = "Edit Selection"
+  const val Save = "Save"
+  const val Cancel = "Cancel"
+  const val EditText = "Edit Text"
+  const val CharsCount = "Characters"
+  const val Live = "Live"
+  const val CharsTail = "|Long"
+}
+
 class TextContent(var text: String) {
   val selectableType: SelectableType
     get() =
