@@ -13,7 +13,6 @@ import fkt.facets.core.Textual
 import fkt.facets.core.Toggling
 import fkt.facets.util.Debug
 import fkt.facets.util.Tracer
-import fkt.facets.util.Util
 
 class FacetsWorks(override val doTrace: Boolean,
                   private val app: FacetsApp,
@@ -44,8 +43,7 @@ class FacetsWorks(override val doTrace: Boolean,
       private var thenTrees: Array<Targety>? = null
       override val getIndexables = fun(_: String): List<Any> {
         val trees = titleTrees.values.toTypedArray()
-        if (!trees.contentEquals(thenTrees?: arrayOf()))
-          trace("New trees: ",trees)
+        if (!trees.contentEquals(thenTrees?: arrayOf())) trace("New trees: ",trees)
         thenTrees = trees
         return trees.toList()
       }
@@ -170,7 +168,7 @@ class FacetsWorks(override val doTrace: Boolean,
       }
 
       override fun newIndexedTargets(indexed: Any): Targety {
-        val title = p.newIndexedTreeTitle?.invoke(indexed) ?: title+"|indexed"
+        val title = p.newIndexedTreeTitle?.invoke(indexed) ?: "$title|indexed"
         return (p.newIndexedTree?.invoke(indexed, title) ?: TargetCore(title)) as Targety
       }
     }
