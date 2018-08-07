@@ -189,12 +189,12 @@ class FacetsWorks(override val doTrace: Boolean,
 
   override fun updateTargetState(title: String, update: Any) {
     val target = titleTarget(title)
-    target.state=when(target){
-      is Textual->update as String
-      is Toggling->update as Boolean
-      is Indexing->update as Int
-      is Numeric->update as Double
-      else ->update//Trigger
+    target.state = when (target) {
+      is Textual -> update as String
+      is Toggling -> update as Boolean
+      is Indexing -> update as Int
+      is Numeric -> update as Double
+      else -> update//Trigger
     }
     notifiable.notify(title)
   }
