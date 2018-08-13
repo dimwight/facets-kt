@@ -25,6 +25,9 @@ abstract class NumericCoupler : TargetCoupler() {
   open val max: Double? = null
 }
 
+/**
+ [TargetCoupler] for an indexing [TTarget]
+ */
 abstract class IndexingCoupler : TargetCoupler() {
   abstract val getIndexables: () -> List<Any>
   open val passIndex: Int? = null
@@ -32,13 +35,20 @@ abstract class IndexingCoupler : TargetCoupler() {
 }
 
 /**
- Supplements the basic (integer) state of an indexing target.
+ Supplements the basic (integer) state of an indexing target,
+ based on values returned by the [IndexingCoupler] passed when
+ that target was created.
  */
 abstract class IndexingState {
   /**
-   Text values rendering the current
+   Text values rendering the current indexables,
+   as returned by [IndexingCoupler.newUiSelectable]
    */
   abstract val uiSelectables: List<String>
+  /**
+   As indexed by the current state of the target into
+   the current return of [IndexingCoupler.getIndexables]
+   */
   abstract val indexed: Any
 }
 
