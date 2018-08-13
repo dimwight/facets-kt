@@ -20,7 +20,7 @@ class Indexing(title: String, coupler: IndexingCoupler) : TargetCore(title, coup
     set(update){index=update as Int}
 
   fun indexables(): List<*> {
-    val indexables: List<*> = coupler().getIndexables(this.title)
+    val indexables: List<*> = coupler().getIndexables()
     if (indexables.isEmpty()) throw Error("Empty indexables in" + this)
     else return indexables
   }

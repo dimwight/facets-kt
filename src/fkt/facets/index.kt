@@ -1,5 +1,8 @@
 package fkt.facets
 
+/**
+ Marker type of Superficial targets (and trees) created in [Facets]
+ */
 interface TTarget
 typealias FacetUpdater = (state: Any) -> Unit
 
@@ -23,19 +26,25 @@ abstract class NumericCoupler : TargetCoupler() {
 }
 
 abstract class IndexingCoupler : TargetCoupler() {
-  abstract val getIndexables: (String) -> List<Any>
+  abstract val getIndexables: () -> List<Any>
   open val passIndex: Int? = null
   open val newUiSelectable: ((indexable:Any) -> String)? = null
 }
 
+/**
+ Supplements the basic (integer) state of an indexing target.
+ */
 abstract class IndexingState {
+  /**
+   Text values rendering the current
+   */
   abstract val uiSelectables: List<String>
   abstract val indexed: Any
 }
 
 abstract class IndexingFramePolicy {
   open val indexingTitle: String? = null
-  abstract val getIndexables: () -> (List<Any>)
+  abstract val getIndexables: () -> List<Any>
   open val frameTitle: String? = null
   open val newUiSelectable: ((indexable:Any) -> String)? = null
   open val newFrameTargets: (() -> (List<TTarget>))? = null
@@ -50,7 +59,7 @@ interface Times {
   fun traceElapsed(msg: String?)
 }
 
-fun newFacets(trace: Boolean, app: FacetsApp): Facets = FacetsWorks(true || trace, app)
+fun newFacets(trace: Boolean, app: FacetsApp): Facets = FacetsWorks(false || trace, app)
 interface Facets {
   /**
    Enables access to internal textual [TTarget]

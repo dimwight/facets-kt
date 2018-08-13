@@ -41,11 +41,11 @@ class FacetsWorks(override val doTrace: Boolean,
   init {
     val indexing = Indexing("RootIndexing", object : IndexingCoupler() {
       private var thenTrees: Array<Targety>? = null
-      override val getIndexables = fun(_: String): List<Any> {
+      override val getIndexables = {
         val trees = titleTrees.values.toTypedArray()
         if (!trees.contentEquals(thenTrees?: arrayOf())) trace("New trees: ",trees)
         thenTrees = trees
-        return trees.toList()
+        trees.toList()
       }
     })
     root = object : IndexingFrame("RootFrame", indexing) {
@@ -135,7 +135,7 @@ class FacetsWorks(override val doTrace: Boolean,
     return group
   }
 
-  override fun newIndexingTarget(title: String, c: IndexingCoupler): Targety {
+  override fun newIndexingTarget(title: String, c: IndexingCoupler): TTarget {
     val indexing = Indexing(title, c)
     if (false && c.passIndex == null) indexing.index=0
     trace("Created indexing title=$title")
@@ -150,11 +150,11 @@ class FacetsWorks(override val doTrace: Boolean,
     }
   }
 
-  override fun newIndexingFrame(p: IndexingFramePolicy): Targety {
+  override fun newIndexingFrame(p: IndexingFramePolicy): TTarget {
     val frameTitle = p.frameTitle ?: "IndexingFrame"+indexingFrames++
     val indexingTitle = p.indexingTitle ?: "$frameTitle.Indexing"
     val indexing = Indexing(indexingTitle, object : IndexingCoupler() {
-      override val getIndexables = { _: String -> p.getIndexables() }
+      override val getIndexables ={ p.getIndexables() }
       override val newUiSelectable = { indexable: Any ->
         p.newUiSelectable?.invoke(indexable) ?: throw Error()
       }
