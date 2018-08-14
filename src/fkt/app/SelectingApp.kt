@@ -94,7 +94,6 @@ open class SelectingApp(test: TargetTest, trace: Boolean)
 
   override fun buildSurface() {
     super.buildSurface()
-    if(false)facets.notifyTargetUpdated(Titles.Select)
     if (true) return
     val add = {
       list.add(TextContent("Hello sailor!"))

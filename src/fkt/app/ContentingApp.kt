@@ -44,6 +44,7 @@ open class ContentingApp(trace: Boolean): SelectingApp(TargetTest.Contenting, tr
     if (type == SelectableType.Long) members.add(newCharsTarget(tail))
     fun activateChooser () = facets.activateContentTree(Titles.Chooser)
     members.add(facets.newTriggerTarget(Titles.Save + tail, object : TargetCoupler() {
+      override val passLive = false
       override val targetStateUpdated = { _: Any, _: String ->
         active.copyClone(edit)
         activateChooser()

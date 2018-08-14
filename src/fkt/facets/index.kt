@@ -8,6 +8,7 @@ typealias FacetUpdater = (state: Any) -> Unit
 
 abstract class TargetCoupler {
   open val targetStateUpdated: ((Any, String) -> Unit)? = null
+  open val passLive=true
 }
 
 abstract class TextualCoupler : TargetCoupler() {
