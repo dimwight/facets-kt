@@ -107,7 +107,7 @@ open class SimpleApp(test: TargetTest, trace: Boolean) : AppCore(trace, test) {
   private fun newIndexing(title: String, indexables: List<String>, indexStart: Int): TTarget {
     trace(" > Generating indexing target _state=", indexStart)
     val coupler = object : IndexingCoupler() {
-      override val getIndexables = { indexables }
+      override fun getIndexables() = indexables
       override val newUiSelectable = { indexable: Any -> indexable as String }
       override val passIndex = indexStart
     }

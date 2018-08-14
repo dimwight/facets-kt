@@ -41,11 +41,11 @@ class FacetsWorks(override val doTrace: Boolean,
   init {
     val indexing = Indexing("RootIndexing", object : IndexingCoupler() {
       private var thenTrees: Array<Targety>? = null
-      override val getIndexables = {
+      override fun getIndexables (): List<Any> {
         val trees = titleTrees.values.toTypedArray()
         if (!trees.contentEquals(thenTrees?: arrayOf())) trace("New trees: ",trees)
         thenTrees = trees
-        trees.toList()
+        return trees.toList()
       }
     })
     root = object : IndexingFrame("RootFrame", indexing) {
@@ -158,7 +158,7 @@ class FacetsWorks(override val doTrace: Boolean,
     val frameTitle = p.frameTitle ?: "IndexingFrame"+indexingFrames++
     val indexingTitle = p.indexingTitle ?: "$frameTitle.Indexing"
     val indexing = Indexing(indexingTitle, object : IndexingCoupler() {
-      override val getIndexables ={ p.getIndexables() }
+      override fun getIndexables()= p.getIndexables() 
       override val newUiSelectable = { indexable: Any ->
         p.newUiSelectable?.invoke(indexable) ?: throw Error()
       }
