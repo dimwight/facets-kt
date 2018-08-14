@@ -19,6 +19,11 @@ object SelectingTitles {
   const val CharsTail = "|Long"
 }
 
+enum class SelectableType(){
+  Short,Long,Chooser;
+  val titleTail:String get() = if (this == Long) fkt.app.SelectingTitles.CharsTail else ""
+}
+
 class TextContent(var text: String) {
   val selectableType: SelectableType
     get() =
