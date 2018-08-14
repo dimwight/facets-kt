@@ -4,6 +4,11 @@ package fkt.facets
  Marker type of Superficial targets (and trees) created in [Facets]
  */
 interface TTarget
+/**
+ Defines UI response to regargeting of Superficial facet.
+
+ @param [state] of the facet's current target
+ */
 typealias FacetUpdater = (state: Any) -> Unit
 
 abstract class TargetCoupler {
