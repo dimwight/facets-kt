@@ -40,10 +40,13 @@ open class ContentingApp(trace: Boolean): SelectingApp(TargetTest.Contenting, tr
     val tail = type.titleTail
     if(false)trace(".newContentTree: type=$type content=", content.text)
     val members = mutableListOf<TTarget>()
-    members.add(newEditTarget(content, tail))
+    val saveTitle = Titles.Save + tail
+    members.add(newEditTarget(content, tail) {
+      facets.setTargetLive(saveTitle,true)
+    })
     if (type == SelectableType.Long) members.add(newCharsTarget(tail))
     fun activateChooser () = facets.activateContentTree(Titles.Chooser)
-    members.add(facets.newTriggerTarget(Titles.Save + tail, object : TargetCoupler() {
+    members.add(facets.newTriggerTarget(saveTitle, object : TargetCoupler() {
       override val passLive = false
       override val targetStateUpdated = { _: Any, _: String ->
         active.copyClone(edit)

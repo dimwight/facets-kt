@@ -130,13 +130,16 @@ open class SelectingApp(test: TargetTest, trace: Boolean)
       Titles.EditText)
   }
 
-  protected fun newEditTarget(indexed: TextContent, tail: String): TTarget =
+  protected fun newEditTarget(indexed: TextContent,
+                              tail:String,
+                              onStateChange:()->Unit={}): TTarget =
     facets.newTextualTarget(
       Titles.EditText + tail,
       object : TextualCoupler() {
         override val passText = indexed.text
         override val targetStateUpdated = { state: Any, _: String ->
           indexed.text = state as String
+          onStateChange()
         }
       }
     )
