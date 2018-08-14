@@ -11,8 +11,23 @@ interface TTarget
  */
 typealias FacetUpdater = (state: Any) -> Unit
 
+/**
+ Connects a [TTarget] with client code.
+ */
 abstract class TargetCoupler {
-  open val targetStateUpdated: ((Any, String) -> Unit)? = null
+  /**
+   Invoked (if non-```null```) when target state is updated from the UI or by client logic.
+
+   @param [state] as updated
+
+   @param [title] identifies the target updated
+   */
+  open val targetStateUpdated: ((state:Any, title:String) -> Unit)? = null
+  /**
+   Enables setting of initial Superficial live state.
+
+   Default is ```true```.
+   */
   open val passLive=true
 }
 
