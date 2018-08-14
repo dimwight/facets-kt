@@ -6,10 +6,9 @@ import javax.swing.JPanel
 import java.awt.event.ActionEvent
 import fkt.app.SelectingTitles as Titles
 
-private val openEdit = Titles.OpenEdit
-
 class ContentingLayout(pane: Container, app: ContentingApp)
   : SelectingLayout(pane, app) {
+  private val openEdit = Titles.OpenEdit
   override fun build() {
     buildCardsBase(checkContent = false)
     pane.layout = GridLayout(1, 1)
@@ -21,7 +20,7 @@ class ContentingLayout(pane: Container, app: ContentingApp)
     ).withIndex()) {
       cardsParent.add(card)
       val type = SelectableType.values()[at]
-      cards.addLayoutComponent(card, type.toString())
+      cards.addLayoutComponent(card, type.name)
       if (type == SelectableType.Chooser) {
         val button = newButtonFacet(openEdit)
         val click2 = {
@@ -40,5 +39,6 @@ class ContentingLayout(pane: Container, app: ContentingApp)
         card.add(newButtonFacet(Titles.Cancel + tail).mount)
       }
     }
+    cards.show(cardsParent, SelectableType.Chooser.name)
   }
 }

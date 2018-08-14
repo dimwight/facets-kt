@@ -81,8 +81,10 @@ class FacetsWorks(override val doTrace: Boolean,
 
   override fun buildApp(app: FacetsApp) {
     trace("Building trees for root ", root)
-    app.newContentTrees().forEach { attachContentTree(it) }
+    val trees = app.newContentTrees()
+    trees.forEach { attachContentTree(it) }
     trace("Building targeter tree for root=${root.title}")
+    if(false)root.indexing().setIndexed(trees[0])
     if (rootTargeter == null) rootTargeter = (root as TargetCore).newTargeter()
     val rt = rootTargeter!!
     rt.setNotifiable(notifiable)
@@ -91,6 +93,7 @@ class FacetsWorks(override val doTrace: Boolean,
     trace("Added targeter titles: ", titleTargeters.size)
     callOnRetargeted()
     app.buildLayout()
+    if(false)notifiable.notify("")
   }
 
   override fun attachContentTree(tree: TTarget) {
@@ -204,8 +207,7 @@ class FacetsWorks(override val doTrace: Boolean,
   }
 
   override fun notifyTargetUpdated(title: String) {
-    val target = titleTarget(title)
-    target.notifyParent()
+    titleTarget(title).notifyParent()
   }
 
   override fun getTargetState(title: String): Any? {
