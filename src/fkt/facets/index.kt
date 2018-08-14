@@ -16,7 +16,7 @@ typealias FacetUpdater = (state: Any) -> Unit
  */
 abstract class TargetCoupler {
   /**
-   Invoked (if non-```null```) when target state is updated from the UI or by client logic.
+   Invoked (if non-`null`) when target state is updated from the UI or by client logic.
 
    @param [state] as updated
 
@@ -26,7 +26,7 @@ abstract class TargetCoupler {
   /**
    Enables setting of initial Superficial live state.
 
-   Default is ```true```.
+   Default is `true`.
    */
   open val passLive=true
 }
