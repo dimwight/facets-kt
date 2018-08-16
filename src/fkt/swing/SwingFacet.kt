@@ -34,7 +34,7 @@ abstract class SwingFacet<C : JComponent>
 
   override fun actionPerformed(e: ActionEvent) {
     val state = fieldState
-    facets.updateTargetWithNotify(title, state)
+    facets.updateTarget(title, state)
   }
 
   protected abstract fun addFieldListener()

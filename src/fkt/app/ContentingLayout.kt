@@ -26,7 +26,7 @@ class ContentingLayout(pane: Container, app: ContentingApp)
         val click2 = {
           if(facets.isTargetLive(openEdit))
             if(false)button.actionPerformed(ActionEvent("", 0, ""))
-            else facets.updateTargetState(openEdit,"Fire")
+            else facets.updateTarget(openEdit,"Fire")
         }
         card.add(newListFacet(Titles.Select, click2).mount)
         card.add(button.mount)

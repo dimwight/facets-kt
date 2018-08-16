@@ -155,7 +155,7 @@ class FacetsWorks(override val doTrace: Boolean,
   }
 
   override fun newIndexingFrame(p: IndexingFramePolicy): TTarget {
-    val frameTitle = p.frameTitle ?: "IndexingFrame"+indexingFrames++
+    val frameTitle = p.frameTitle ?: "IndexingFrame${indexingFrames++}"
     val indexingTitle = p.indexingTitle ?: "$frameTitle.Indexing"
     val indexing = Indexing(indexingTitle, object : IndexingCoupler() {
       override fun getIndexables()= p.getIndexables() 
@@ -176,7 +176,7 @@ class FacetsWorks(override val doTrace: Boolean,
         return (p.newIndexedTree?.invoke(indexed, title) ?: TargetCore(title)) as Targety
       }
     }
-    trace("Created indexing frame$frameTitle")
+    trace("Created indexing frame $frameTitle")
     return frame
   }
 
@@ -191,24 +191,16 @@ class FacetsWorks(override val doTrace: Boolean,
     })
   }
 
-  override fun updateTargetState(title: String, update: Any) {
+  override fun updateTarget(title: String, state: Any?) {
     val target = titleTarget(title)
-    target.state = when (target) {
-      is Textual -> update as String
-      is Toggling -> update as Boolean
-      is Indexing -> update as Int
-      is Numeric -> update as Double
-      else -> update//Trigger
+    if(state!=null)target.state = when (target) {
+      is Textual -> state as String
+      is Toggling -> state as Boolean
+      is Indexing -> state as Int
+      is Numeric -> state as Double
+      else -> state//Trigger
     }
-    notifiable.notify(title)
-  }
-
-  override fun updateTargetWithNotify(title: String, update: Any) {
-    updateTargetState(title, update)
-  }
-
-  override fun notifyTargetUpdated(title: String) {
-    titleTarget(title).notifyParent()
+    if(false)target.notifyParent() else notifiable.notify(title)
   }
 
   override fun getTargetState(title: String): Any? {

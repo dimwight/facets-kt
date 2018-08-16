@@ -12,16 +12,19 @@ package fkt.facets
 
  ## Target flavours
  ### Stateful
- - *Textual*: Exposes client [String] value
- - *Toggling*: Exposes client [Boolean] value
- - *Numeric*: Exposes client [Number] value
- - *Trigger*: Exposes client action
- - *Indexing*: Exposes index into [List]] of client values
+ - *Textual*: Exposes a [String]
+ - *Toggling*: Exposes a [Boolean]
+ - *Numeric*: Exposes a [Number]
+ - *Trigger*: Exposes an action
+ - *Indexing*: Exposes an index into a [List] of values
 
  ### Group
  Container for [List] of [TTarget]s, enabling construction of [TTarget] trees.
 
- ### Frame
+ ### Framing
+ - Exposes a generic object.
+ - An *IndexingFrame* exposes an *Indexing* and a [TTarget] tree exposing the currently
+ indexed item.
  */
 interface TTarget
 /**
@@ -107,10 +110,25 @@ abstract class IndexingState {
   abstract val indexed: Any
 }
 
+/**
+ Supplies policy for an _IndexingFrame_ [TTarget].
+
+ __Note__ For values left as `null`, appropriate defaults are created.
+ */
 abstract class IndexingFramePolicy {
+  /**
+   Title for the _IndexingFrame_ itself.
+
+   Particularly useful where the frame is the root of a content tree
+   */
+  open val frameTitle: String? = null
+  /**
+   Title for the _Indexing_ framed.
+
+   Enables retrieval of the current [IndexingState] for the framed.
+   */
   open val indexingTitle: String? = null
   abstract val getIndexables: () -> List<Any>
-  open val frameTitle: String? = null
   open val newUiSelectable: ((indexable:Any) -> String)? = null
   open val newFrameTargets: (() -> (List<TTarget>))? = null
   open val newIndexedTreeTitle: ((indexed:Any) -> String)? = null
@@ -154,9 +172,7 @@ interface Facets {
   fun getIndexingState(title: String): IndexingState
   fun newIndexingFrame(p: IndexingFramePolicy): TTarget
   fun attachFacet(title: String, updater: FacetUpdater)
-  fun updateTargetState(title: String, update: Any)
-  fun notifyTargetUpdated(title: String)
-  fun updateTargetWithNotify(title: String, update: Any)
+  fun updateTarget(title: String, state: Any?=null)
   fun getTargetState(title: String): Any?
   fun setTargetLive(title: String, live: Boolean)
   fun isTargetLive(title: String): Boolean

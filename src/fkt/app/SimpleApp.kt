@@ -68,7 +68,7 @@ open class SimpleApp(test: TargetTest, trace: Boolean) : AppCore(trace, test) {
         val got: String? = facets.getTargetState(Titles.Triggerings) as String
         if (got != null) {
           val valueOf = (Integer.valueOf(got) + 1).toString()
-          facets.updateTargetState(Titles.Triggerings, valueOf)
+          facets.updateTarget(Titles.Triggerings, valueOf)
         }
       }
     })
@@ -146,7 +146,7 @@ open class SimpleApp(test: TargetTest, trace: Boolean) : AppCore(trace, test) {
         override val getText = { _: String -> textTextual }
         override val targetStateUpdated = { state: Any, title: String ->
           trace(" > Textual _state updated: title=$title _state=", state)
-          facets.updateTargetState(Titles.SlaveTextual,
+          facets.updateTarget(Titles.SlaveTextual,
             Titles.MasterTextual + " has changed to: " + state)
         }
       }
@@ -190,6 +190,6 @@ open class SimpleApp(test: TargetTest, trace: Boolean) : AppCore(trace, test) {
       TargetTest.Trigger -> Titles.Trigger
       else -> Titles.MasterTextual
     }
-    facets.updateTargetState(title, update)
+    facets.updateTarget(title, update)
   }
 }

@@ -98,19 +98,17 @@ open class SelectingApp(test: TargetTest, trace: Boolean)
     val add = {
       list.add(TextContent("Hello sailor!"))
       trace(" > Simulating input: update=", list[list.size - 1].text)
-      facets.notifyTargetUpdated(Titles.Select)
+      facets.updateTarget(Titles.Select)
     }
     val edit = {
       val update = "Hello !"
       trace(" > Simulating input: update=", update)
-      val title = Titles.EditText
-      facets.updateTargetWithNotify(title, update)
+      facets.updateTarget(Titles.EditText, update)
     }
     val select = {
       val update = 2
       trace(" > Simulating input: update=", update)
-      val title = Titles.Select
-      facets.updateTargetWithNotify(title, update)
+      facets.updateTarget(Titles.Select, update)
     }
     for (update in listOf(add, edit, select)) update()
   }
