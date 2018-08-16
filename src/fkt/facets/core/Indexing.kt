@@ -3,6 +3,7 @@ package fkt.facets.core
 import fkt.facets.IndexingCoupler
 
 class Indexing(title: String, coupler: IndexingCoupler) : TargetCore(title, coupler) {
+  private val coupler=extra as IndexingCoupler
   init {
     super.state=coupler.passIndex ?: 0
   }
@@ -12,7 +13,7 @@ class Indexing(title: String, coupler: IndexingCoupler) : TargetCore(title, coup
     set(index) {
       val first = state == NoState
       super.state = index
-      if (!first) coupler().targetStateUpdated?.invoke(state, this.title)
+      if (!first) coupler.targetStateUpdated?.invoke(state, this.title)
     }
 
   override var state
@@ -20,7 +21,7 @@ class Indexing(title: String, coupler: IndexingCoupler) : TargetCore(title, coup
     set(update){index=update as Int}
 
   fun indexables(): List<Any> {
-    val indexables: List<Any> = coupler().getIndexables()
+    val indexables: List<Any> = coupler.getIndexables()
     if (indexables.isEmpty()) throw Error("Empty indexables in" + this)
     else return indexables
   }
@@ -29,12 +30,8 @@ class Indexing(title: String, coupler: IndexingCoupler) : TargetCore(title, coup
     var selectables = 0
     return indexables().map {
       fun dummy() = "${selectables++}: $it"
-      if(true)coupler().newUiSelectable?.invoke(it) ?: dummy() else dummy()
+      if(true)coupler.newUiSelectable?.invoke(it) ?: dummy() else dummy()
     }
-  }
-
-  private fun coupler(): IndexingCoupler {
-    return extra as IndexingCoupler
   }
 
   fun indexed(): Any {

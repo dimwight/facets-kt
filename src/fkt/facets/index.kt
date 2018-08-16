@@ -1,7 +1,27 @@
 package fkt.facets
 
 /**
- Marker type of Superficial targets (and trees) created in [Facets]
+ Marker type of Superficial targets (and trees) created in [Facets].
+
+ A [TTarget]
+
+ - exposes client state or logic in the UI
+ - can be created in a range of flavours as listed below
+ - is created with an identifying [String] *title* that thereafter identifies it
+ - has a *live* state which can be used to enable its avatar in the UI
+
+ ## Target flavours
+ ### Stateful
+ - *Textual*: Exposes client [String] value
+ - *Toggling*: Exposes client [Boolean] value
+ - *Numeric*: Exposes client [Number] value
+ - *Trigger*: Exposes client action
+ - *Indexing*: Exposes index into [List]] of client values
+
+ ### Group
+ Container for [List] of [TTarget]s, enabling construction of [TTarget] trees.
+
+ ### Frame
  */
 interface TTarget
 /**
@@ -61,6 +81,11 @@ abstract class IndexingCoupler : TargetCoupler() {
    If `null`, the indexing will create a dummy value.
    */
   open val newUiSelectable: ((indexable:Any) -> String)? = null
+  /**
+   Define the initial state of the indexing.
+
+   If `null`, state will be `0`.
+   */
   open val passIndex: Int? = null
 }
 
