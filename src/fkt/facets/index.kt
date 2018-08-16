@@ -192,7 +192,6 @@ interface Facets {
   fun getTargetState(title: String): Any?
   fun setTargetLive(title: String, live: Boolean)
   fun isTargetLive(title: String): Boolean
-  val supplement: () -> Unit
   val times: Times
   val doTrace: Boolean
 }

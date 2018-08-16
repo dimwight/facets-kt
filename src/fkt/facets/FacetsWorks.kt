@@ -15,8 +15,7 @@ import fkt.facets.util.Debug
 import fkt.facets.util.Tracer
 
 class FacetsWorks(override val doTrace: Boolean,
-                  private val app: FacetsApp,
-                  override val supplement: () -> Unit = {})
+                  private val app: FacetsApp)
   : Facets, Tracer("Facets") {
   private val titleTargeters = mutableMapOf<String, Targeter?>()
   private val titleTrees = mutableMapOf<String, Targety>()
