@@ -19,8 +19,8 @@ class Indexing(title: String, coupler: IndexingCoupler) : TargetCore(title, coup
     get()=super.state
     set(update){index=update as Int}
 
-  fun indexables(): List<*> {
-    val indexables: List<*> = coupler().getIndexables()
+  fun indexables(): List<Any> {
+    val indexables: List<Any> = coupler().getIndexables()
     if (indexables.isEmpty()) throw Error("Empty indexables in" + this)
     else return indexables
   }
@@ -29,7 +29,7 @@ class Indexing(title: String, coupler: IndexingCoupler) : TargetCore(title, coup
     var selectables = 0
     val coupler = coupler()
     return indexables().map {
-      coupler.newUiSelectable?.invoke(it!!) ?: (title + selectables++)
+      coupler.newUiSelectable?.invoke(it) ?: (title + selectables++)
     }
   }
 
@@ -39,7 +39,7 @@ class Indexing(title: String, coupler: IndexingCoupler) : TargetCore(title, coup
 
   fun indexed(): Any {
     if (state == NoState) throw Error("No index in" + this.title)
-    else return this.indexables()[state as Int]as Any
+    else return this.indexables()[state as Int]
   }
 
   fun setIndexed(indexable: Any) {

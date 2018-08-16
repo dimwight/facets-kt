@@ -50,9 +50,16 @@ abstract class NumericCoupler : TargetCoupler() {
  [TargetCoupler] for an indexing [TTarget]
  */
 abstract class IndexingCoupler : TargetCoupler() {
+  /**
+   Return non-empty list of objects to be indexed
+   */
   abstract fun getIndexables(): List<Any>
-  open val passIndex: Int? = null
+
+  /**
+   Return
+   */
   open val newUiSelectable: ((indexable:Any) -> String)? = null
+  open val passIndex: Int? = null
 }
 
 /**
