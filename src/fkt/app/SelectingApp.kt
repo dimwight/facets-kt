@@ -70,9 +70,9 @@ open class SelectingApp(test: TargetTest, trace: Boolean)
           })
         )
       }
-      override val newIndexedTreeTitle = { indexed: Any ->
+      override val newIndexedTreeTitle = if(true)fun( indexed: Any)=
         appTitle + (indexed as TextContent).selectableType.titleTail
-      }
+      else null
       override val newIndexedTree = { indexed: Any, indexedTreeTitle: String ->
         val content = indexed as TextContent
         val type = content.selectableType

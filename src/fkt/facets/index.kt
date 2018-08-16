@@ -138,10 +138,16 @@ abstract class IndexingFramePolicy {
    */
   open val newUiSelectable: ((indexable:Any) -> String)? = null
   /**
-   Return (permanent) [TTarget]s 
+   Return (permanent) [TTarget]s grouped under the frame itself.
    */
   open val newFrameTargets: (() -> (List<TTarget>))? = null
+  /**
+   Return title to pass to [newIndexedTree]
+   */
   open val newIndexedTreeTitle: ((indexed:Any) -> String)? = null
+  /**
+   Return a [TTarget] tree exposing the current [IndexingState.indexed]
+   */
   open val newIndexedTree: ((indexed:Any, title:String) -> TTarget)? = null
 }
 
