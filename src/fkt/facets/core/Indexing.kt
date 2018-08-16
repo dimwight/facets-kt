@@ -29,8 +29,8 @@ class Indexing(title: String, coupler: IndexingCoupler) : TargetCore(title, coup
     var selectables = 0
     val coupler = coupler()
     return indexables().map {
-      val dummy = "${selectables++}: $it"
-      if(true)coupler.newUiSelectable?.invoke(it) ?: dummy else dummy
+      fun dummy() = "${selectables++}: $it"
+      if(true)coupler.newUiSelectable?.invoke(it) ?: dummy() else dummy()
     }
   }
 
