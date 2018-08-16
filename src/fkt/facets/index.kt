@@ -128,8 +128,18 @@ abstract class IndexingFramePolicy {
    Enables retrieval of the current [IndexingState] for the framed.
    */
   open val indexingTitle: String? = null
+
+  /**
+   Delegate for [IndexingCoupler.getIndexables] in the framed _Indexing_
+   */
   abstract fun getIndexables(): List<Any>
+  /**
+  Delegate for [IndexingCoupler.newUiSelectable] in the framed _Indexing_
+   */
   open val newUiSelectable: ((indexable:Any) -> String)? = null
+  /**
+   Return (permanent) [TTarget]s 
+   */
   open val newFrameTargets: (() -> (List<TTarget>))? = null
   open val newIndexedTreeTitle: ((indexed:Any) -> String)? = null
   open val newIndexedTree: ((indexed:Any, title:String) -> TTarget)? = null

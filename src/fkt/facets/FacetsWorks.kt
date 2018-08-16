@@ -167,8 +167,7 @@ class FacetsWorks(override val doTrace: Boolean,
     val frame = object : IndexingFrame(frameTitle, indexing) {
       override fun lazyElements(): List<Targety> {
         if(false)throw Error("Not implemented in "+Debug.info(this))
-        val targets = p.newFrameTargets?.invoke() ?: return listOf()
-        return targets.map { it as Targety }
+        return (p.newFrameTargets?.invoke() ?: listOf()).map { it as Targety }
       }
 
       override fun newIndexedTargets(indexed: Any): Targety {
