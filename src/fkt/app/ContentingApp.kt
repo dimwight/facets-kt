@@ -1,5 +1,6 @@
 package fkt.app
 
+import com.sun.jmx.snmp.EnumRowStatus.active
 import fkt.facets.IndexingFramePolicy
 import fkt.facets.TTarget
 import fkt.facets.TargetCoupler
@@ -17,7 +18,7 @@ open class ContentingApp(trace: Boolean): SelectingApp(TargetTest.Contenting, tr
       facets.newIndexingFrame(object : IndexingFramePolicy() {
         override val frameTitle = Titles.Chooser
         override val indexingTitle = Titles.Select
-        override val getIndexables = { list }
+        override fun getIndexables() =  list
         override val newUiSelectable = { indexable: Any ->
           (indexable as TextContent).text
         }

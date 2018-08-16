@@ -55,7 +55,7 @@ open class SelectingApp(test: TargetTest, trace: Boolean)
     return listOf(facets.newIndexingFrame(object : IndexingFramePolicy() {
       override val frameTitle = appTitle
       override val indexingTitle = Titles.Select
-      override val getIndexables = { list }
+      override fun getIndexables() =  list
       override val newUiSelectable = { indexable: Any -> (indexable as TextContent).text }
       override val newFrameTargets = {
         listOf(
