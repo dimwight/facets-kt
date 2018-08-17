@@ -19,10 +19,9 @@ open class SelectingLayout(pane: Container, app: SelectingApp) : PaneLayout(pane
     pane.layout = GridLayout(2, 1)
     pane.add(newListFacet(selectTitle).mount)
     pane.add(cardsParent)
-    for ((at, card) in listOf(
-      JPanel(GridLayout(4, 1)),//Short
-      JPanel(GridLayout(4, 1))//Long
-    ).withIndex()) {
+    for ((at, card) in Array(2){
+      JPanel(GridLayout(4, 1))
+    }.withIndex()) {
       cardsParent.add(card)
       val type = SelectableType.values()[at]
       cards.addLayoutComponent(card, type.toString())
