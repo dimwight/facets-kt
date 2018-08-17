@@ -13,11 +13,15 @@ class ContentingLayout(pane: Container, app: ContentingApp)
     buildCardsBase(checkContent = false)
     pane.layout = GridLayout(1, 1)
     pane.add(cardsParent)
-    for ((at, card) in arrayOf(
-      JPanel(GridLayout(8, 1)),//Short
-      JPanel(GridLayout(8, 1)),//Long
-      JPanel(GridLayout(4, 1))//Chooser
-    ).withIndex()) {
+    fun newCard(): (Int) -> JPanel {
+      return { at ->
+        JPanel(GridLayout(when (at) {
+          2 -> 4    //Chooser
+          else -> 8 //Short, Long
+        }, 1))
+      }
+    }
+    for ((at, card) in Array(3, newCard()).withIndex()) {
       cardsParent.add(card)
       val type = SelectableType.values()[at]
       cards.addLayoutComponent(card, type.name)
