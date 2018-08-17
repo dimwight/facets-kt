@@ -13,8 +13,8 @@ class ContentingLayout(pane: Container, app: ContentingApp)
     buildCardsBase(checkContent = false)
     pane.layout = GridLayout(1, 1)
     pane.add(cardsParent)
-    for ((at, card) in Array(3) { at->
-      JPanel(GridLayout(when(at){
+    for ((at, card) in Array(3) {
+      JPanel(GridLayout(when(it){
         2->4
         else ->8
       }, 1))
@@ -25,9 +25,10 @@ class ContentingLayout(pane: Container, app: ContentingApp)
       if (type == SelectableType.Chooser) {
         val button = newButtonFacet(openEdit)
         val click2 = {
-          if(facets.isTargetLive(openEdit))
+          if(facets.isTargetLive(openEdit)) {
             if(false)button.actionPerformed(ActionEvent("", 0, ""))
             else facets.updateTarget(openEdit,"Fire")
+          }
         }
         card.add(newListFacet(Titles.Select, click2).mount)
         card.add(button.mount)
