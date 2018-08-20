@@ -29,6 +29,14 @@ class SwingApp(private val args: Array<String>) : JComponent() {
   Calls [fkt.app.AppCore.buildSurface]] on an instance specified by [args]
    */
   fun init() {
+    val simples = TargetTest.simpleValues
+    val style=args.firstOrNull { !it.startsWith("_") }?:""
+    val tests = when (style) {
+        "contenting" -> listOf(Contenting)
+        "selecting" -> listOf(Selecting )
+        else -> if (false) listOf(TargetTest.TogglingLive) else simples
+      }
+    layout = GridLayout(if (tests==simples) 3 else 1, 1)
     if(false)addComponentListener(object : ComponentListener {
       override fun componentResized(e: ComponentEvent) {
         println("componentResized: $size")
@@ -38,14 +46,6 @@ class SwingApp(private val args: Array<String>) : JComponent() {
       override fun componentMoved(e: ComponentEvent) {}
       override fun componentHidden(e: ComponentEvent) {}
     })
-    val simples = TargetTest.simpleValues
-    val style=args.firstOrNull { !it.startsWith("_") }?:""
-    val tests = when (style) {
-        "contenting" -> listOf(Contenting)
-        "selecting" -> listOf(Selecting )
-        else -> if (false) listOf(TargetTest.TogglingLive) else simples
-      }
-    layout = GridLayout(if (tests==simples) 3 else 1, 1)
     for (test in tests) {
       if (false && !(tests!=simples || test == TogglingLive)) continue
       val pane = JPanel()
