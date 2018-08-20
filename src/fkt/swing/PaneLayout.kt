@@ -4,6 +4,7 @@ import fkt.app.AppCore
 import fkt.facets.Facets
 import fkt.facets.util.Tracer
 import java.awt.Container
+import java.awt.Dimension
 import java.awt.Font
 import java.awt.event.ActionEvent
 import java.awt.event.MouseAdapter
@@ -14,7 +15,9 @@ import javax.swing.BorderFactory
 import javax.swing.JButton
 import javax.swing.JCheckBox
 import javax.swing.JComboBox
+import javax.swing.JComponent
 import javax.swing.JFormattedTextField
+import javax.swing.JFrame
 import javax.swing.JLabel
 import javax.swing.JList
 import javax.swing.JTextField
@@ -108,6 +111,9 @@ abstract class PaneLayout(protected val pane: Container,
 
   protected fun newCheckBoxFacet(title: String): SwingFacet<JCheckBox> {
     return object : SwingFacet<JCheckBox>(JCheckBox(), title, facets) {
+      init {
+        mount.minimumSize= Dimension(100,50)
+      }
       override val fieldState: Boolean
         get() = this.field.isSelected
 

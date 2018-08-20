@@ -3,6 +3,8 @@ package fkt.swing
 import fkt.facets.FacetUpdater
 import fkt.facets.util.Tracer
 import fkt.facets.Facets
+import fkt.facets.util.Debug
+import java.awt.Dimension
 import java.awt.FlowLayout
 import java.awt.event.ActionEvent
 import java.awt.event.ActionListener
@@ -11,10 +13,13 @@ import javax.swing.JComponent
 import javax.swing.JLabel
 import javax.swing.JPanel
 
-abstract class SwingFacet<C : JComponent>
-(val field: C, val title: String, val facets: Facets,
- val mount: JPanel = JPanel(FlowLayout(FlowLayout.LEFT)))
-  : Tracer("SwingFacet"), ActionListener {
+abstract class SwingFacet<C : JComponent>(val field: C,
+                                          val title: String,
+                                          val facets: Facets
+) : Tracer("SwingFacet"), ActionListener {
+  val mount: JPanel = object: JPanel(FlowLayout(FlowLayout.LEFT)){
+    override fun getPreferredSize() = Dimension(200,super.getPreferredSize().height)
+  }
   private lateinit var label: JLabel
   protected abstract val fieldState: Any
   private val updater: FacetUpdater = {
