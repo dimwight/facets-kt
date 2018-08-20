@@ -3,11 +3,11 @@ import fkt.app.TargetTest.Indexing
 import fkt.app.TargetTest.Numeric
 import fkt.app.TargetTest.TogglingLive
 import fkt.app.TargetTest.Trigger
-import fkt.swing.PaneLayout
+import fkt.swing.SwingLayout
 import java.awt.Container
 import java.awt.GridLayout
 import fkt.app.SimpleTitles as Titles
-class SimpleLayout(pane: Container, app: AppCore): PaneLayout(pane,app){
+class SimpleLayout(pane: Container, app: AppCore): SwingLayout(pane,app){
   override fun build() {
     pane.layout = GridLayout(4, 1, 5, 5)
     for (facet in when(app.test){

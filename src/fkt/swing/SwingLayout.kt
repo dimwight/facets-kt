@@ -31,8 +31,8 @@ Implements the Superficial layout concept for [AppCore] in [SwingApp].
 @param [app] defines the targets the layout will expose, provides instance of [Facets]
  that creates and manages them
  */
-abstract class PaneLayout(protected val pane: Container,
-                          val app: AppCore) : Tracer("PaneLayout") {
+abstract class SwingLayout(protected val pane: Container,
+                           val app: AppCore) : Tracer("SwingLayout") {
   val facets = app.facets
   /**
    Called from [fkt.facets.FacetsApp.buildLayout] in [AppCore].
@@ -57,12 +57,12 @@ abstract class PaneLayout(protected val pane: Container,
 
       override fun actionPerformed(e: ActionEvent) {
         if (field.selectedIndex < 0) return
-        if (this@PaneLayout.facets.getTargetState(title) != (field.selectedIndex))
+        if (this@SwingLayout.facets.getTargetState(title) != (field.selectedIndex))
           super.actionPerformed(e)
       }
 
       override fun updateField(update: Any) {
-        val selectables = this@PaneLayout.facets.getIndexingState(title).uiSelectables
+        val selectables = this@SwingLayout.facets.getIndexingState(title).uiSelectables
         field.model = object : AbstractListModel<String>() {
           override fun getSize() = selectables.size
           override fun getElementAt(index: Int): String {

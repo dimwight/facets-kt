@@ -1,6 +1,6 @@
 package fkt.app
 
-import fkt.swing.PaneLayout
+import fkt.swing.SwingLayout
 import fkt.swing.SwingFacet
 import java.awt.CardLayout
 import java.awt.Container
@@ -9,7 +9,7 @@ import javax.swing.JComponent
 import javax.swing.JPanel
 import fkt.app.SelectingTitles as Titles
 
-open class SelectingLayout(pane: Container, app: SelectingApp) : PaneLayout(pane, app) {
+open class SelectingLayout(pane: Container, app: SelectingApp) : SwingLayout(pane, app) {
   protected val cards = CardLayout()
   protected val cardsParent: JComponent = JPanel(cards)
   private val selectTitle = Titles.Select
