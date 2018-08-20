@@ -13,28 +13,25 @@ import java.awt.Point
 import java.awt.event.ComponentEvent
 import java.awt.event.ComponentListener
 import javax.swing.BorderFactory.*
-import javax.swing.JApplet
+import javax.swing.JComponent
 import javax.swing.JFrame
 import javax.swing.JPanel
 import javax.swing.border.EtchedBorder
 import fkt.app.SimpleTitles as Titles
 
 /**
- Superficial host for [fkt.facets.FacetsApp]s
-
- @param constructor
+ Superficial host for [fkt.facets.FacetsApp]s.
 
  @param [args] passed from [main], specify flavour of app
  */
-class FacetsApplet(private val args: Array<String>) : JApplet() {
+class SwingApp(private val args: Array<String>) : JComponent() {
   /**
   Calls [fkt.app.AppCore.buildSurface]] on an instance specified by [args]
    */
-  override fun init() {
-    val content = contentPane as JPanel
-    if(false)content.addComponentListener(object : ComponentListener {
+  fun init() {
+    if(false)addComponentListener(object : ComponentListener {
       override fun componentResized(e: ComponentEvent) {
-        println("componentResized: " + content.size)
+        println("componentResized: $size")
       }
 
       override fun componentShown(e: ComponentEvent) {}
@@ -46,15 +43,15 @@ class FacetsApplet(private val args: Array<String>) : JApplet() {
     val tests = when (style) {
         "contenting" -> listOf(Contenting)
         "selecting" -> listOf(Selecting )
-        else -> if (true) listOf(TargetTest.TogglingLive) else simples
+        else -> if (false) listOf(TargetTest.TogglingLive) else simples
       }
-    content.layout = GridLayout(if (tests==simples) 3 else 1, 1)
+    layout = GridLayout(if (tests==simples) 3 else 1, 1)
     for (test in tests) {
       if (false && !(tests!=simples || test == TogglingLive)) continue
       val pane = JPanel()
       pane.border = createCompoundBorder(createEmptyBorder(10, 10, 10, 10),
         createEtchedBorder(EtchedBorder.LOWERED))
-      content.add(pane)
+      add(pane)
       val trace = false
       when {
         test.isSimple -> object : SimpleApp(test, trace) {
@@ -80,9 +77,9 @@ class FacetsApplet(private val args: Array<String>) : JApplet() {
 }
 
 fun main(args: Array<String>) {
-  val frame = JFrame("FacetsApplet")
+  val frame = JFrame("SwingApp")
   frame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
-  val applet = FacetsApplet(args)
+  val applet = SwingApp(args)
   frame.contentPane.add(applet)
   applet.init()
   if(false)frame.size = applet.minimumSize

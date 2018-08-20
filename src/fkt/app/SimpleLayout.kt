@@ -29,8 +29,8 @@ class SimpleLayout(pane: Container, app: AppCore): PaneLayout(pane,app){
 					 newLabelFacet(Titles.Triggerings)
     		 )
        else->arrayOf(
-					 newTextFieldFacet(Titles.MasterTextual, 20, false),
-					 newTextFieldFacet(Titles.SlaveTextual, 20, false),
+					 newTextFieldFacet(Titles.MasterTextual, 12, false),
+					 newTextFieldFacet(Titles.SlaveTextual, 12, false),
 					 newLabelFacet(Titles.MasterTextual),
 					 newLabelFacet(Titles.SlaveTextual)
     		 )

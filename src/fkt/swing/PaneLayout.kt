@@ -15,9 +15,7 @@ import javax.swing.BorderFactory
 import javax.swing.JButton
 import javax.swing.JCheckBox
 import javax.swing.JComboBox
-import javax.swing.JComponent
 import javax.swing.JFormattedTextField
-import javax.swing.JFrame
 import javax.swing.JLabel
 import javax.swing.JList
 import javax.swing.JTextField
@@ -26,7 +24,7 @@ import javax.swing.event.DocumentEvent
 import javax.swing.event.DocumentListener
 
 /**
-Implements the Superficial layout concept for [AppCore] in [FacetsApplet].
+Implements the Superficial layout concept for [AppCore] in [SwingApp].
 
 @property [pane] container for layout elements
 
