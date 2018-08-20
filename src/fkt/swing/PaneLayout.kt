@@ -27,7 +27,7 @@ Implements the Superficial layout concept for [AppCore] in [FacetsApplet].
 
 @property [pane] container for layout elements
 
-@param[app] defined the targets the layout will expose, provides instance of [Facets]
+@param [app] defines the targets the layout will expose, provides instance of [Facets]
  that creates and manages them
  */
 abstract class PaneLayout(protected val pane: Container,
