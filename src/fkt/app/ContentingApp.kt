@@ -1,8 +1,7 @@
 package fkt.app
 
-import com.sun.jmx.snmp.EnumRowStatus.active
 import fkt.facets.IndexingFramePolicy
-import fkt.facets.TTarget
+import fkt.facets.Target
 import fkt.facets.TargetCoupler
 import fkt.facets.TextualCoupler
 import fkt.app.SelectingTitles as Titles
@@ -11,7 +10,7 @@ import fkt.app.SimpleTitles as Simples
 open class ContentingApp(trace: Boolean): SelectingApp(TargetTest.Contenting, trace) {
   private lateinit var active: TextContent
   private lateinit var edit: TextContent
-  override fun newContentTrees(): List<TTarget> {
+  override fun newContentTrees(): List<Target> {
     return listOf(
       newContentTree(list[0]),
       newContentTree(list[2]),
@@ -36,11 +35,11 @@ open class ContentingApp(trace: Boolean): SelectingApp(TargetTest.Contenting, tr
       }))
   }
 
-  private fun newContentTree(content: TextContent): TTarget {
+  private fun newContentTree(content: TextContent): Target {
     val type = content.selectableType
     val tail = type.titleTail
     if(false)trace(".newContentTree: type=$type content=", content.text)
-    val members = mutableListOf<TTarget>()
+    val members = mutableListOf<Target>()
     val saveTitle = Titles.Save + tail
     members.add(newEditTarget(content, tail) {
       facets.setTargetLive(saveTitle,true)

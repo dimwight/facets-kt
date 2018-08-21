@@ -3,7 +3,7 @@ package fkt.facets
 /**
  Marker type of Superficial targets (and trees) created in [Facets].
 
- A [TTarget]
+ A [Target]
 
  - exposes client state or logic in the UI
  - can be created in a range of flavours as listed below
@@ -19,14 +19,14 @@ package fkt.facets
  - *Indexing*: Exposes an index into a [List] of values
 
  ### Group
- Container for [List] of [TTarget]s, enabling construction of [TTarget] trees.
+ Container for [List] of [Target]s, enabling construction of [Target] trees.
 
  ### Framing
  - Exposes a generic object.
- - An *IndexingFrame* exposes an *Indexing* and a [TTarget] tree exposing the currently
+ - An *IndexingFrame* exposes an *Indexing* and a [Target] tree exposing the currently
  indexed item.
  */
-interface TTarget
+interface Target
 /**
  Defines UI response to regargeting of Superficial facet.
 
@@ -35,7 +35,7 @@ interface TTarget
 typealias FacetUpdater = (state: Any) -> Unit
 
 /**
- Connects a [TTarget] with client code.
+ Connects a [Target] with client code.
  */
 abstract class TargetCoupler {
   /**
@@ -70,7 +70,7 @@ abstract class NumericCoupler : TargetCoupler() {
 }
 
 /**
- [TargetCoupler] for an indexing [TTarget]
+ [TargetCoupler] for an indexing [Target]
  */
 abstract class IndexingCoupler : TargetCoupler() {
   /**
@@ -111,7 +111,7 @@ abstract class IndexingState {
 }
 
 /**
- Supplies policy for an _IndexingFrame_ [TTarget].
+ Supplies policy for an _IndexingFrame_ [Target].
 
  __Note__ For values left as `null`, appropriate defaults are created.
  */
@@ -138,17 +138,17 @@ abstract class IndexingFramePolicy {
    */
   open val newUiSelectable: ((indexable:Any) -> String)? = null
   /**
-   Return (permanent) [TTarget]s grouped under the frame itself.
+   Return (permanent) [Target]s grouped under the frame itself.
    */
-  open val newFrameTargets: (() -> (List<TTarget>))? = null
+  open val newFrameTargets: (() -> (List<Target>))? = null
   /**
    Return title to pass to [newIndexedTree]
    */
   open val newIndexedTreeTitle: ((indexed:Any) -> String)? = null
   /**
-   Return a [TTarget] tree exposing the current [IndexingState.indexed]
+   Return a [Target] tree exposing the current [IndexingState.indexed]
    */
-  open val newIndexedTree: ((indexed:Any, title:String) -> TTarget)? = null
+  open val newIndexedTree: ((indexed:Any, title:String) -> Target)? = null
 }
 
 interface Times {
@@ -161,32 +161,32 @@ interface Times {
 fun newFacets(trace: Boolean, app: FacetsApp): Facets = FacetsWorks(false || trace, app)
 interface Facets {
   /**
-   Enables access to internal textual [TTarget]
+   Enables access to internal textual [Target]
    whose state is always the title of the active content tree.
    */
   val activeContentTitle: String
   /**
-   Constructs a Superficial targeter tree from [TTarget] trees defined by [app];
+   Constructs a Superficial targeter tree from [Target] trees defined by [app];
    initially retargets it; and prompts the [app] to add UI facets.
    */
   fun buildApp(app: FacetsApp)
   /**
   Replaces any tree with the same title and calls [activateContentTree]
    */
-  fun attachContentTree(tree: TTarget)
+  fun attachContentTree(tree: Target)
   /**
    Sets the internal indexing frame to the content tree identified by [title];
    complains if not found.
    */
   fun activateContentTree(title: String)
-  fun newTextualTarget(title: String, c: TextualCoupler): TTarget
-  fun newTogglingTarget(title: String, c: TogglingCoupler): TTarget
-  fun newTriggerTarget(title: String, c: TargetCoupler): TTarget
-  fun newNumericTarget(title: String, c: NumericCoupler): TTarget
-  fun newTargetGroup(title: String, members: List<TTarget>): TTarget
-  fun newIndexingTarget(title: String, c: IndexingCoupler): TTarget
+  fun newTextualTarget(title: String, c: TextualCoupler): Target
+  fun newTogglingTarget(title: String, c: TogglingCoupler): Target
+  fun newTriggerTarget(title: String, c: TargetCoupler): Target
+  fun newNumericTarget(title: String, c: NumericCoupler): Target
+  fun newTargetGroup(title: String, members: List<Target>): Target
+  fun newIndexingTarget(title: String, c: IndexingCoupler): Target
   fun getIndexingState(title: String): IndexingState
-  fun newIndexingFrame(p: IndexingFramePolicy): TTarget
+  fun newIndexingFrame(p: IndexingFramePolicy): Target
   fun attachFacet(title: String, updater: FacetUpdater)
   fun updateTarget(title: String, state: Any?=null)
   fun getTargetState(title: String): Any?
@@ -201,12 +201,12 @@ Defines methods to be called by a [Facets] instance on its containing app.
  */
 interface FacetsApp {
   /**
-  Create [TTarget] trees exposing app content.
+  Create [Target] trees exposing app content.
 
   Called once from [Facets.buildApp]; must contain one of
   each possible tree structure to enable UI construction in [buildLayout].
    */
-  fun newContentTrees(): List<TTarget>
+  fun newContentTrees(): List<Target>
 
   /**
   Called on each retargeting of the content tree root, before facets are updated.

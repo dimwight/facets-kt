@@ -3,7 +3,7 @@ package fkt.app
 import fkt.facets.IndexingFramePolicy
 import fkt.facets.TextualCoupler
 import fkt.facets.TogglingCoupler
-import fkt.facets.TTarget
+import fkt.facets.Target
 import fkt.app.SelectingTitles as Titles
 import fkt.app.SimpleTitles as Simples
 
@@ -50,7 +50,7 @@ open class SelectingApp(test: TargetTest, trace: Boolean)
     TextContent("Hello Dolly!"),
     TextContent("Hello, good evening and welcome!"))
 
-  override fun newContentTrees(): List<TTarget> {
+  override fun newContentTrees(): List<Target> {
     val appTitle = TargetTest.Selecting.toString()
     return listOf(facets.newIndexingFrame(object : IndexingFramePolicy() {
       override val frameTitle = appTitle
@@ -130,7 +130,7 @@ open class SelectingApp(test: TargetTest, trace: Boolean)
 
   protected fun newEditTarget(indexed: TextContent,
                               tail:String,
-                              onStateChange:()->Unit={}): TTarget =
+                              onStateChange:()->Unit={}): Target =
     facets.newTextualTarget(
       Titles.EditText + tail,
       object : TextualCoupler() {
@@ -142,7 +142,7 @@ open class SelectingApp(test: TargetTest, trace: Boolean)
       }
     )
 
-  protected fun newCharsTarget(tail: String): TTarget =
+  protected fun newCharsTarget(tail: String): Target =
     facets.newTextualTarget(Titles.CharsCount + tail, object : TextualCoupler() {
       override val getText = { _: String ->
         "" + (facets.getTargetState(Titles.EditText + Titles.CharsTail) as String).length

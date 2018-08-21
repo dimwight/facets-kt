@@ -2,7 +2,7 @@ package fkt.app
 
 import fkt.facets.IndexingCoupler
 import fkt.facets.NumericCoupler
-import fkt.facets.TTarget
+import fkt.facets.Target
 import fkt.facets.TargetCoupler
 import fkt.facets.TextualCoupler
 import fkt.facets.TogglingCoupler
@@ -26,7 +26,7 @@ object SimpleTitles {
 }
 
 open class SimpleApp(test: TargetTest, trace: Boolean) : AppCore(trace, test) {
-  override fun newContentTrees(): List<TTarget> {
+  override fun newContentTrees(): List<Target> {
     trace(" > Generating targets")
     return listOf(facets.newTargetGroup(title ="${test.toString()} Test", members = when (test) {
       TargetTest.Textual -> listOf(
@@ -61,7 +61,7 @@ open class SimpleApp(test: TargetTest, trace: Boolean) : AppCore(trace, test) {
     if (true && facets.doTrace) super.doTraceMsg(msg)
   }
 
-  private fun newTrigger(title: String): TTarget {
+  private fun newTrigger(title: String): Target {
     return facets.newTriggerTarget(title, object : TargetCoupler() {
       override val targetStateUpdated = { _: Any, title: String ->
         trace(" > Trigger fired: title=$title")
@@ -74,7 +74,7 @@ open class SimpleApp(test: TargetTest, trace: Boolean) : AppCore(trace, test) {
     })
   }
 
-  private fun newTextual(title: String): TTarget {
+  private fun newTextual(title: String): Target {
     val coupler = newTextualCouplerCore(title)
     val passText = coupler.passText
     trace(" > Generating textual target _state=",
@@ -82,7 +82,7 @@ open class SimpleApp(test: TargetTest, trace: Boolean) : AppCore(trace, test) {
     return facets.newTextualTarget(title, coupler)
   }
 
-  private fun newNumeric(title: String): TTarget {
+  private fun newNumeric(title: String): Target {
     val coupler = object : NumericCoupler() {
       override val passValue = Titles.StartNumber
       override val min = 5.0
@@ -92,7 +92,7 @@ open class SimpleApp(test: TargetTest, trace: Boolean) : AppCore(trace, test) {
     return facets.newNumericTarget(title, coupler)
   }
 
-  private fun newToggling(title: String, state: Boolean): TTarget {
+  private fun newToggling(title: String, state: Boolean): Target {
     trace(" > Generating toggling target _state=", state)
     val coupler = object : TogglingCoupler() {
       override val passSet = state
@@ -104,7 +104,7 @@ open class SimpleApp(test: TargetTest, trace: Boolean) : AppCore(trace, test) {
     return facets.newTogglingTarget(title, coupler)
   }
 
-  private fun newIndexing(title: String, indexables: List<String>, indexStart: Int): TTarget {
+  private fun newIndexing(title: String, indexables: List<String>, indexStart: Int): Target {
     trace(" > Generating indexing target _state=", indexStart)
     val coupler = object : IndexingCoupler() {
       override fun getIndexables() = indexables

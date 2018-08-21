@@ -95,7 +95,7 @@ class FacetsWorks(override val doTrace: Boolean,
     if(false)notifiable.notify("")
   }
 
-  override fun attachContentTree(tree: TTarget) {
+  override fun attachContentTree(tree: Target) {
     val title = (tree as Targety).title
     titleTrees[title] = tree
     activateContentTree(title)
@@ -107,19 +107,19 @@ class FacetsWorks(override val doTrace: Boolean,
     if(false)notifiable.notify(title)
   }
 
-  override fun newTextualTarget(title: String, c: TextualCoupler): TTarget {
+  override fun newTextualTarget(title: String, c: TextualCoupler): Target {
     val textual = Textual(title, c)
     trace("Created textual title=$title")
     return textual
   }
 
-  override fun newTogglingTarget(title: String, c: TogglingCoupler): TTarget {
+  override fun newTogglingTarget(title: String, c: TogglingCoupler): Target {
     val toggling = Toggling(title, c)
     trace("Created toggling title=$title")
     return toggling
   }
 
-  override fun newTriggerTarget(title: String, c: TargetCoupler): TTarget {
+  override fun newTriggerTarget(title: String, c: TargetCoupler): Target {
     val trigger = TargetCore(title, c)
     trigger.state="Trigger"
     trigger.live=c.passLive
@@ -127,18 +127,18 @@ class FacetsWorks(override val doTrace: Boolean,
     return trigger
   }
 
-  override fun newNumericTarget(title: String, c: NumericCoupler): TTarget {
+  override fun newNumericTarget(title: String, c: NumericCoupler): Target {
     return Numeric(title, c)
   }
 
-  override fun newTargetGroup(title: String, members: List<TTarget>): TTarget {
+  override fun newTargetGroup(title: String, members: List<Target>): Target {
     val grouped = members.map { it as Targety }
     val group = TargetCore(title, grouped)
     if(false)trace("Created group title=$title elements=${group.elements.size}")
     return group
   }
 
-  override fun newIndexingTarget(title: String, c: IndexingCoupler): TTarget {
+  override fun newIndexingTarget(title: String, c: IndexingCoupler): Target {
     val indexing = Indexing(title, c)
     if (false && c.passIndex == null) indexing.index=0
     trace("Created indexing title=$title")
@@ -153,7 +153,7 @@ class FacetsWorks(override val doTrace: Boolean,
     }
   }
 
-  override fun newIndexingFrame(p: IndexingFramePolicy): TTarget {
+  override fun newIndexingFrame(p: IndexingFramePolicy): Target {
     val frameTitle = p.frameTitle ?: "IndexingFrame${indexingFrames++}"
     val indexingTitle = p.indexingTitle ?: "$frameTitle.Indexing"
     val indexing = Indexing(indexingTitle, object : IndexingCoupler() {

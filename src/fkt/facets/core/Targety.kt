@@ -1,10 +1,10 @@
 package fkt.facets.core
 
-import fkt.facets.TTarget
+import fkt.facets.Target
 
-interface Targety : Notifying, TTarget {
-override val elements: List<Targety>
-var state:Any
-var live:Boolean
+interface Targety : Notifying, Target {
+  override val elements: List<Targety>
+  var state: Any
+  var live: Boolean
 }
 
