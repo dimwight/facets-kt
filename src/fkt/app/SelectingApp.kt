@@ -1,6 +1,7 @@
 package fkt.app
 
 import fkt.facets.IndexingFramePolicy
+import fkt.facets.SimpleState
 import fkt.facets.TextualCoupler
 import fkt.facets.TogglingCoupler
 import fkt.facets.Target

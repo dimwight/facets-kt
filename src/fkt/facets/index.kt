@@ -46,7 +46,7 @@ abstract class TargetCoupler {
 
    @param [title] identifies the target updated
    */
-  open val targetStateUpdated: ((state:Any, title:String) -> Unit)? = null
+  open val targetStateUpdated: ((state: SimpleState, title: String) -> Unit)? = null
   /**
    Enables setting of initial Superficial live state.
 

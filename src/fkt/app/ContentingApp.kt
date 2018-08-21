@@ -1,6 +1,7 @@
 package fkt.app
 
 import fkt.facets.IndexingFramePolicy
+import fkt.facets.SimpleState
 import fkt.facets.Target
 import fkt.facets.TargetCoupler
 import fkt.facets.TextualCoupler
@@ -24,7 +25,7 @@ open class ContentingApp(trace: Boolean): SelectingApp(TargetTest.Contenting, tr
         override val newFrameTargets = {
           listOf(facets.newTriggerTarget(Titles.OpenEdit,
             object : TextualCoupler() {
-              override val targetStateUpdated = { _: Any, _: String ->
+              override val targetStateUpdated: ((state: SimpleState, title: String) -> Unit)? = { _: Any, _: String ->
                 active = facets.getIndexingState(Titles.Select).indexed as TextContent
                 edit = active.clone()
                 facets.attachContentTree(newContentTree(edit))
@@ -48,13 +49,13 @@ open class ContentingApp(trace: Boolean): SelectingApp(TargetTest.Contenting, tr
     fun activateChooser () = facets.activateContentTree(Titles.Chooser)
     members.add(facets.newTriggerTarget(saveTitle, object : TargetCoupler() {
       override val passLive = false
-      override val targetStateUpdated = { _: Any, _: String ->
+      override val targetStateUpdated: ((state: SimpleState, title: String) -> Unit)? = { _: Any, _: String ->
         active.copyClone(edit)
         activateChooser()
       }
     }))
     members.add(facets.newTriggerTarget(Titles.Cancel + tail, object : TargetCoupler() {
-      override val targetStateUpdated = { _: Any, _: String ->activateChooser()}
+      override val targetStateUpdated: ((state: SimpleState, title: String) -> Unit)? = { _: Any, _: String ->activateChooser()}
     }))
     return facets.newTargetGroup(type.toString(), members.toList())
   }

@@ -2,6 +2,7 @@ package fkt.app
 
 import fkt.facets.IndexingCoupler
 import fkt.facets.NumericCoupler
+import fkt.facets.SimpleState
 import fkt.facets.Target
 import fkt.facets.TargetCoupler
 import fkt.facets.TextualCoupler
@@ -63,7 +64,7 @@ open class SimpleApp(test: TargetTest, trace: Boolean) : AppCore(trace, test) {
 
   private fun newTrigger(title: String): Target {
     return facets.newTriggerTarget(title, object : TargetCoupler() {
-      override val targetStateUpdated = { _: Any, title: String ->
+      override val targetStateUpdated: ((state: SimpleState, title: String) -> Unit)? = { _: Any, title: String ->
         trace(" > Trigger fired: title=$title")
         val got: String? = facets.getTargetState(Titles.Triggerings) as String
         if (got != null) {
@@ -96,7 +97,7 @@ open class SimpleApp(test: TargetTest, trace: Boolean) : AppCore(trace, test) {
     trace(" > Generating toggling target _state=", state)
     val coupler = object : TogglingCoupler() {
       override val passSet = state
-      override val targetStateUpdated = { state: Any, title: String ->
+      override val targetStateUpdated: ((state: SimpleState, title: String) -> Unit)? = { state: Any, title: String ->
         trace(" > Toggling _state updated: title=$title _state=", state)
         facets.setTargetLive(Titles.Toggled, state as Boolean)
       }
@@ -144,7 +145,7 @@ open class SimpleApp(test: TargetTest, trace: Boolean) : AppCore(trace, test) {
       }
       Titles.MasterTextual -> object : TextualCoupler() {
         override val getText = { _: String -> textTextual }
-        override val targetStateUpdated = { state: Any, title: String ->
+        override val targetStateUpdated: ((state: SimpleState, title: String) -> Unit)? = { state: Any, title: String ->
           trace(" > Textual _state updated: title=$title _state=", state)
           facets.updateTarget(Titles.SlaveTextual,
             Titles.MasterTextual + " has changed to: " + state)
@@ -152,7 +153,7 @@ open class SimpleApp(test: TargetTest, trace: Boolean) : AppCore(trace, test) {
       }
       Titles.Triggerings -> object : TextualCoupler() {
         override val passText = "0"
-        override val targetStateUpdated = { state: Any, _: String ->
+        override val targetStateUpdated: ((state: SimpleState, title: String) -> Unit)? = { state: Any, _: String ->
           if (Integer.valueOf(state as String) > 4)
             facets.setTargetLive(Titles.Trigger, false)
         }
