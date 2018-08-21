@@ -27,12 +27,13 @@ package fkt.facets
  indexed item.
  */
 interface Target
+typealias SimpleState=Any
 /**
  Defines UI response to regargeting of Superficial facet.
 
  @param [state] of the facet's current target
  */
-typealias FacetUpdater = (state: Any) -> Unit
+typealias FacetUpdater = (state: SimpleState) -> Unit
 
 /**
  Connects a [Target] with client code.

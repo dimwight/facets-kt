@@ -3,7 +3,7 @@ package fkt.swing
 import fkt.facets.FacetUpdater
 import fkt.facets.util.Tracer
 import fkt.facets.Facets
-import fkt.facets.util.Debug
+import fkt.facets.SimpleState
 import java.awt.Dimension
 import java.awt.FlowLayout
 import java.awt.event.ActionEvent
@@ -21,7 +21,7 @@ abstract class SwingFacet<C : JComponent>(val field: C,
     override fun getPreferredSize() = Dimension(200,super.getPreferredSize().height)
   }
   private lateinit var label: JLabel
-  protected abstract val fieldState: Any
+  protected abstract val fieldState: SimpleState
   private val updater: FacetUpdater = {
     updateField(it)
     val live = facets.isTargetLive(title)
@@ -43,7 +43,7 @@ abstract class SwingFacet<C : JComponent>(val field: C,
   }
 
   protected abstract fun addFieldListener()
-  protected abstract fun updateField(update: Any)
+  protected abstract fun updateField(update: SimpleState)
 
   companion object {
     fun stripTitleTail(title: String) = title.replace(("\\|.*").toRegex(), "")

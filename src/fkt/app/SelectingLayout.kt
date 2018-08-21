@@ -1,5 +1,6 @@
 package fkt.app
 
+import fkt.facets.SimpleState
 import fkt.swing.SwingLayout
 import fkt.swing.SwingFacet
 import java.awt.CardLayout
@@ -37,7 +38,7 @@ open class SelectingLayout(pane: Container, app: SelectingApp) : SwingLayout(pan
     object: SwingFacet<JComponent>(cardsParent, facets.activeContentTitle, facets) {
       override val fieldState = ""
       override fun addFieldListener() {}
-      override fun updateField(update: Any) {
+      override fun updateField(update: SimpleState) {
         val name = if (!checkContent) update as String
         else (facets.getIndexingState(selectTitle).indexed as TextContent)
           .selectableType.toString()

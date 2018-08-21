@@ -2,6 +2,7 @@ package fkt.swing
 
 import fkt.app.AppCore
 import fkt.facets.Facets
+import fkt.facets.SimpleState
 import fkt.facets.util.Tracer
 import java.awt.Container
 import java.awt.Dimension
@@ -61,7 +62,7 @@ abstract class SwingLayout(protected val pane: Container,
           super.actionPerformed(e)
       }
 
-      override fun updateField(update: Any) {
+      override fun updateField(update: SimpleState) {
         val selectables = this@SwingLayout.facets.getIndexingState(title).uiSelectables
         field.model = object : AbstractListModel<String>() {
           override fun getSize() = selectables.size
@@ -87,7 +88,7 @@ abstract class SwingLayout(protected val pane: Container,
 
       override fun addFieldListener() = button.addActionListener(this)
 
-      override fun updateField(update: Any) {}
+      override fun updateField(update: SimpleState) {}
     }
   }
 
@@ -99,7 +100,7 @@ abstract class SwingLayout(protected val pane: Container,
       override val fieldState: String
         get() = this.field.text
 
-      override fun updateField(update: Any) {
+      override fun updateField(update: SimpleState) {
         field.text = update as String
       }
 
@@ -115,7 +116,7 @@ abstract class SwingLayout(protected val pane: Container,
       override val fieldState: Boolean
         get() = this.field.isSelected
 
-      override fun updateField(update: Any) {
+      override fun updateField(update: SimpleState) {
         field.isSelected = update as Boolean
       }
 
@@ -134,7 +135,7 @@ abstract class SwingLayout(protected val pane: Container,
       override val fieldState: Double
         get() = java.lang.Double.valueOf(this.field.text)
 
-      override fun updateField(update: Any) {
+      override fun updateField(update: SimpleState) {
         field.text = formatter.format(update as Double)
       }
 
@@ -155,7 +156,7 @@ abstract class SwingLayout(protected val pane: Container,
           super.actionPerformed(e)
       }
 
-      override fun updateField(update: Any) {
+      override fun updateField(update: SimpleState) {
         field.selectedIndex = update as Int
       }
 
@@ -167,7 +168,7 @@ abstract class SwingLayout(protected val pane: Container,
     val field = JTextField()
     val facet = object : SwingFacet<JTextField>(field, title, facets) {
       override val fieldState: Any get() = this.field.text
-      override fun updateField(update: Any) {
+      override fun updateField(update: SimpleState) {
         field.text = update as String
       }
 
