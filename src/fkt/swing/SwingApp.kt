@@ -5,7 +5,6 @@ import fkt.app.ContentingLayout
 import fkt.app.SelectingApp
 import fkt.app.SelectingLayout
 import fkt.app.SimpleApp
-import fkt.app.SimpleLayout
 import fkt.app.TargetTest
 import fkt.app.TargetTest.*
 import java.awt.GridLayout

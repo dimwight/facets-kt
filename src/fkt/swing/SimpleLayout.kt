@@ -1,9 +1,9 @@
-package fkt.app
+package fkt.swing
+import fkt.app.AppCore
 import fkt.app.TargetTest.Indexing
 import fkt.app.TargetTest.Numeric
 import fkt.app.TargetTest.TogglingLive
 import fkt.app.TargetTest.Trigger
-import fkt.swing.SwingLayout
 import java.awt.Container
 import java.awt.GridLayout
 import fkt.app.SimpleTitles as Titles
