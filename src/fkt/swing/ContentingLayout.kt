@@ -1,5 +1,7 @@
-package fkt.app
+package fkt.swing
 
+import fkt.app.ContentingApp
+import fkt.app.SelectableType
 import java.awt.Container
 import java.awt.GridLayout
 import javax.swing.JPanel

@@ -1,8 +1,9 @@
-package fkt.app
+package fkt.swing
 
+import fkt.app.SelectableType
+import fkt.app.SelectingApp
+import fkt.app.TextContent
 import fkt.facets.SimpleState
-import fkt.swing.SwingLayout
-import fkt.swing.SwingFacet
 import java.awt.CardLayout
 import java.awt.Container
 import java.awt.GridLayout
