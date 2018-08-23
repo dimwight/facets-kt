@@ -41,7 +41,7 @@ abstract class SwingLayout(protected val pane: Container,
    Targets accessed in [AppCore.facets] created by [app].
    */
   abstract fun build()
-  protected fun newListFacet(title: String, click2: () -> Unit = {
+  protected fun newListFacet(title: String, itemDblClicked: () -> Unit = {
     trace(".newListFacet: doubleClick!")
   }): SwingFacet<JList<String>> {
     return object : SwingFacet<JList<String>>(JList(), title, facets) {
@@ -49,7 +49,7 @@ abstract class SwingLayout(protected val pane: Container,
         field.border = BorderFactory.createLoweredBevelBorder()
         field.addMouseListener(object : MouseAdapter() {
           override fun mouseClicked(e: MouseEvent) {
-            if (e.clickCount == 2) click2.invoke()
+            if (e.clickCount == 2) itemDblClicked.invoke()
           }
         })
       }
