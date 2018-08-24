@@ -80,11 +80,11 @@ abstract class IndexingCoupler : TargetCoupler() {
   abstract fun getIndexables(): List<Any>
 
   /**
-   Return text value representing the [indexable].
+   Return (usually) text value representing the [indexable].
 
-   If `null`, the indexing will create a dummy value.
+   If `null`, the indexing will create a dummy string value.
    */
-  open val newUiSelectable: ((indexable:Any) -> String)? = null
+  open val newUiSelectable: ((indexable:Any) -> Any)? = null
   /**
    Define the initial state of the indexing.
 
@@ -137,7 +137,7 @@ abstract class IndexingFramePolicy {
   /**
   Delegate for [IndexingCoupler.newUiSelectable] in the framed _Indexing_
    */
-  open val newUiSelectable: ((indexable:Any) -> String)? = null
+  open val newUiSelectable: ((indexable:Any) -> Any)? = null
   /**
    Return (permanent) [Target]s grouped under the frame itself.
    */

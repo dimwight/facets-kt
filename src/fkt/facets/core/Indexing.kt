@@ -30,7 +30,7 @@ class Indexing(title: String, coupler: IndexingCoupler) : TargetCore(title, coup
     var selectables = 0
     return indexables().map {
       fun dummy() = "${selectables++}: $it"
-      if(true)coupler.newUiSelectable?.invoke(it) ?: dummy() else dummy()
+      (if(true)coupler.newUiSelectable?.invoke(it) ?: dummy() else dummy()) as String
     }
   }
 
